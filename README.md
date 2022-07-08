@@ -5,7 +5,7 @@ ___
 
 
 
-## Is an attempt at crystalizing the essence of global CSA efforts into a minimum viable crypto-economic protocol.
+### Is an attempt at crystalizing the essence of global CSA efforts into a minimum viable crypto-economic protocol.
 
 <br>
 
