@@ -1,6 +1,6 @@
 ### potato.bond
 ___
-### "in potato veritas"
+#### "in potato veritas"
 <br>
 
 
@@ -13,10 +13,10 @@ ___
 
 <br>
 
-- ### seeks continous inspiration in the essence and simplicity of potato 
+- ##### seeks continous inspiration in the essence and simplicity of potato 
 
-- ### summons potato spirit to deliver us from the temptations of false innovation
-- ### makes potato great again
+- ##### summons potato spirit to deliver us from the temptations of false innovation
+- ##### makes potato great again
 
 <br>
 
