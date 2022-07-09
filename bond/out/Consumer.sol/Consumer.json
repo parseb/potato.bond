@@ -1,0 +1,58 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212207f0682f4c21eff062f385a2fb56f5477552762a477ed4bddd2e9ebd6c2ddf83b64736f6c634300080f0033",
+    "sourceMap": "65:20:9:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600080fdfea26469706673582212207f0682f4c21eff062f385a2fb56f5477552762a477ed4bddd2e9ebd6c2ddf83b64736f6c634300080f0033",
+    "sourceMap": "65:20:9:-:0;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {},
+  "ast": {
+    "absolutePath": "src/Consumer.sol",
+    "id": 21121,
+    "exportedSymbols": {
+      "Consumer": [
+        21120
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:47:9",
+    "nodes": [
+      {
+        "id": 21119,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:9",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 21120,
+        "nodeType": "ContractDefinition",
+        "src": "65:20:9",
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Consumer",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          21120
+        ],
+        "name": "Consumer",
+        "nameLocation": "74:8:9",
+        "scope": 21121,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 9
+}

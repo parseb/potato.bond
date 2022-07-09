@@ -1,0 +1,58 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212204b13f85a2072eeb9e1fad32f419ed210e8a80e6228340b532a8c95b1019f4da864736f6c634300080f0033",
+    "sourceMap": "65:16:7:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600080fdfea26469706673582212204b13f85a2072eeb9e1fad32f419ed210e8a80e6228340b532a8c95b1019f4da864736f6c634300080f0033",
+    "sourceMap": "65:16:7:-:0;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {},
+  "ast": {
+    "absolutePath": "src/Areal.sol",
+    "id": 21115,
+    "exportedSymbols": {
+      "Area": [
+        21114
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:43:7",
+    "nodes": [
+      {
+        "id": 21113,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:7",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 21114,
+        "nodeType": "ContractDefinition",
+        "src": "65:16:7",
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Area",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          21114
+        ],
+        "name": "Area",
+        "nameLocation": "74:4:7",
+        "scope": 21115,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 7
+}

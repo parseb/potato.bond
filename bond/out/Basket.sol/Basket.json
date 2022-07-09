@@ -1,0 +1,58 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220580a432a7a7463b9fd11f5b2d4e70a7da60751f3c3cae6588ca79641c94f90ea64736f6c634300080f0033",
+    "sourceMap": "65:18:8:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600080fdfea2646970667358221220580a432a7a7463b9fd11f5b2d4e70a7da60751f3c3cae6588ca79641c94f90ea64736f6c634300080f0033",
+    "sourceMap": "65:18:8:-:0;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {},
+  "ast": {
+    "absolutePath": "src/Basket.sol",
+    "id": 21118,
+    "exportedSymbols": {
+      "Basket": [
+        21117
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:45:8",
+    "nodes": [
+      {
+        "id": 21116,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:8",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 21117,
+        "nodeType": "ContractDefinition",
+        "src": "65:18:8",
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Basket",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          21117
+        ],
+        "name": "Basket",
+        "nameLocation": "74:6:8",
+        "scope": 21118,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 8
+}
