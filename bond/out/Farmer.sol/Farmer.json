@@ -1,0 +1,58 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea264697066735822122068f75f4e61d72b0f6e7383ac58ccde4f22e4fa48f56ee824104d7de20c007b9764736f6c634300080f0033",
+    "sourceMap": "65:18:10:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600080fdfea264697066735822122068f75f4e61d72b0f6e7383ac58ccde4f22e4fa48f56ee824104d7de20c007b9764736f6c634300080f0033",
+    "sourceMap": "65:18:10:-:0;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {},
+  "ast": {
+    "absolutePath": "src/Farmer.sol",
+    "id": 21124,
+    "exportedSymbols": {
+      "Farmer": [
+        21123
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:45:10",
+    "nodes": [
+      {
+        "id": 21122,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:10",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 21123,
+        "nodeType": "ContractDefinition",
+        "src": "65:18:10",
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Farmer",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          21123
+        ],
+        "name": "Farmer",
+        "nameLocation": "74:6:10",
+        "scope": 21124,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 10
+}
