@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data_url: MyString
+  farmer_address: MyString
+  customer_address: MyString
+  state: MyString
+  nft_id: MyString
+
+two:
+  data_url: MyString
+  farmer_address: MyString
+  customer_address: MyString
+  state: MyString
+  nft_id: MyString
