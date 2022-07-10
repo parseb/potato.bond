@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_09_173214) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_10_092733) do
+  create_table "areas", force: :cascade do |t|
+    t.string "owner"
+    t.string "nrc"
+    t.string "nrf"
+    t.string "area_name"
+    t.string "rules_address"
+    t.string "data_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "baskets", force: :cascade do |t|
     t.string "data_url"
     t.string "farmer_address"
@@ -30,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_173214) do
     t.string "area_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "area_name"
   end
 
   create_table "farmers", force: :cascade do |t|
@@ -45,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_173214) do
     t.string "area_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "area_name"
   end
 
   create_table "users", primary_key: "address", id: :string, force: :cascade do |t|
