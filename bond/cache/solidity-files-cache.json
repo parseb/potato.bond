@@ -742,8 +742,8 @@
       }
     },
     "src/Area.sol": {
-      "lastModificationDate": 1657529807440,
-      "contentHash": "01ff247e12eb2de58807fbacc8357c56",
+      "lastModificationDate": 1657563839259,
+      "contentHash": "eed7980848c5989a797179b53e6cd7b0",
       "sourceName": "src/Area.sol",
       "solcConfig": {
         "settings": {
@@ -776,11 +776,12 @@
         "lib/openzeppelin-contracts/contracts/token/ERC1155/IERC1155.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC1155/IERC1155Receiver.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
         "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
         "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
-        "lib/solmate/src/auth/Owned.sol"
+        "src/interfaces/IFarmer.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
@@ -1033,8 +1034,8 @@
       }
     },
     "src/interfaces/IFarmer.sol": {
-      "lastModificationDate": 1657477344361,
-      "contentHash": "13c626c1b524e2808725e1a320d1209e",
+      "lastModificationDate": 1657563915231,
+      "contentHash": "a740d2d6d857e490f807afc7a993c4c6",
       "sourceName": "src/interfaces/IFarmer.sol",
       "solcConfig": {
         "settings": {
@@ -1125,7 +1126,8 @@
         "src/Basket.sol",
         "src/Consumer.sol",
         "src/Farmer.sol",
-        "src/interfaces/IArea.sol"
+        "src/interfaces/IArea.sol",
+        "src/interfaces/IFarmer.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {

@@ -158,6 +158,29 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_uri",
+          "type": "string"
+        }
+      ],
+      "name": "mintFarmer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256",
           "name": "tokenId",
           "type": "uint256"
@@ -320,6 +343,7 @@
     "balanceOf(address)": "70a08231",
     "getApproved(uint256)": "081812fc",
     "isApprovedForAll(address,address)": "e985e9c5",
+    "mintFarmer(address,uint256,string)": "8de6e633",
     "ownerOf(uint256)": "6352211e",
     "safeTransferFrom(address,address,uint256)": "42842e0e",
     "safeTransferFrom(address,address,uint256,bytes)": "b88d4fde",
@@ -330,25 +354,25 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IFarmer.sol",
-    "id": 142,
+    "id": 24244,
     "exportedSymbols": {
       "IERC165": [
-        127
+        21210
       ],
       "IERC721": [
-        115
+        20822
       ],
       "IFarmer": [
-        141
+        24243
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "39:345:2",
+    "src": "39:616:22",
     "nodes": [
       {
-        "id": 129,
+        "id": 24221,
         "nodeType": "PragmaDirective",
-        "src": "39:24:2",
+        "src": "39:24:22",
         "literals": [
           "solidity",
           ">=",
@@ -357,30 +381,30 @@
         ]
       },
       {
-        "id": 130,
+        "id": 24222,
         "nodeType": "ImportDirective",
-        "src": "65:67:2",
+        "src": "65:67:22",
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "file": "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 142,
-        "sourceUnit": 116,
+        "scope": 24244,
+        "sourceUnit": 20823,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 141,
+        "id": 24243,
         "nodeType": "ContractDefinition",
-        "src": "134:250:2",
+        "src": "134:521:22",
         "nodes": [
           {
-            "id": 140,
+            "id": 24232,
             "nodeType": "FunctionDefinition",
-            "src": "313:68:2",
+            "src": "313:68:22",
             "documentation": {
-              "id": 133,
+              "id": 24225,
               "nodeType": "StructuredDocumentation",
-              "src": "170:138:2",
+              "src": "170:138:22",
               "text": "@notice returns the token uri for farmer metadata storage location\n @param id id of the token for which it retrieves string uri"
             },
             "functionSelector": "c87b56dd",
@@ -388,20 +412,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "tokenURI",
-            "nameLocation": "322:8:2",
+            "nameLocation": "322:8:22",
             "parameters": {
-              "id": 136,
+              "id": 24228,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 135,
+                  "id": 24227,
                   "mutability": "mutable",
                   "name": "id",
-                  "nameLocation": "339:2:2",
+                  "nameLocation": "339:2:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 140,
-                  "src": "331:10:2",
+                  "scope": 24232,
+                  "src": "331:10:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -409,10 +433,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 134,
+                    "id": 24226,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "331:7:2",
+                    "src": "331:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -421,21 +445,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "330:12:2"
+              "src": "330:12:22"
             },
             "returnParameters": {
-              "id": 139,
+              "id": 24231,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 138,
+                  "id": 24230,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 140,
-                  "src": "366:13:2",
+                  "scope": 24232,
+                  "src": "366:13:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -443,10 +467,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 137,
+                    "id": 24229,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "366:6:2",
+                    "src": "366:6:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -455,10 +479,126 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "365:15:2"
+              "src": "365:15:22"
             },
-            "scope": 141,
+            "scope": 24243,
             "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 24242,
+            "nodeType": "FunctionDefinition",
+            "src": "576:75:22",
+            "documentation": {
+              "id": 24233,
+              "nodeType": "StructuredDocumentation",
+              "src": "388:183:22",
+              "text": "@notice mints new farmer to given address\n @param _to address of owner of created farmer token\n @param _id type (farmer)\n @param _uri farmer metadata location"
+            },
+            "functionSelector": "8de6e633",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "mintFarmer",
+            "nameLocation": "585:10:22",
+            "parameters": {
+              "id": 24240,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24235,
+                  "mutability": "mutable",
+                  "name": "_to",
+                  "nameLocation": "604:3:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24242,
+                  "src": "596:11:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 24234,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "596:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 24237,
+                  "mutability": "mutable",
+                  "name": "_id",
+                  "nameLocation": "617:3:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24242,
+                  "src": "609:11:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 24236,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "609:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 24239,
+                  "mutability": "mutable",
+                  "name": "_uri",
+                  "nameLocation": "636:4:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24242,
+                  "src": "622:18:22",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 24238,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "622:6:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "595:46:22"
+            },
+            "returnParameters": {
+              "id": 24241,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "650:0:22"
+            },
+            "scope": 24243,
+            "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
@@ -467,15 +607,15 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 131,
+              "id": 24223,
               "name": "IERC721",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 115,
-              "src": "155:7:2"
+              "referencedDeclaration": 20822,
+              "src": "155:7:22"
             },
-            "id": 132,
+            "id": 24224,
             "nodeType": "InheritanceSpecifier",
-            "src": "155:7:2"
+            "src": "155:7:22"
           }
         ],
         "canonicalName": "IFarmer",
@@ -483,17 +623,17 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          141,
-          115,
-          127
+          24243,
+          20822,
+          21210
         ],
         "name": "IFarmer",
-        "nameLocation": "144:7:2",
-        "scope": 142,
+        "nameLocation": "144:7:22",
+        "scope": 24244,
         "usedErrors": []
       }
     ],
     "license": "UNLICENSED"
   },
-  "id": 2
+  "id": 22
 }

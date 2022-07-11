@@ -1,5 +1,17 @@
 # Let Thee With Potato Bond Be
 
+## Short Description
+
+Teikei 🇯🇵 <br>
+(https://en.wikipedia.org/wiki/Community-supported_agriculture)[Community Supported Agriculture] 🇺🇸 <br>
+AMAP🇫🇷 <br>
+ASAT🇷🇴 <br>
+leverages local coincidences of needs and wants for change. <br>
+potato.bond aims to be permissionless infrastructure in service of locally aware and globally conscious modes of production, distribution and ownership.
+
+
+
+
 ## Farmer
 First there was the farmer. Without the farmer there was no potato. Praised be.
 

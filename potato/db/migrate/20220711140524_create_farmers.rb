@@ -11,6 +11,9 @@ class CreateFarmers < ActiveRecord::Migration[7.0]
       t.string :farmsize
       t.string :data_url
       t.string :area_address
+      t.string :area_name
+      t.string :nft_id
+      t.string :area_id
 
       t.timestamps
     end

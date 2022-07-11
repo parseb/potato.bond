@@ -7,6 +7,7 @@ class CreateAreas < ActiveRecord::Migration[7.0]
       t.string :area_name
       t.string :rules_address
       t.string :data_url
+      t.string :area_id
 
       t.timestamps
     end
