@@ -6,6 +6,7 @@ class CreateBaskets < ActiveRecord::Migration[7.0]
       t.string :customer_address
       t.string :state
       t.string :nft_id
+      t.string :area_id
 
       t.timestamps
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_10_092733) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_11_140535) do
   create_table "areas", force: :cascade do |t|
     t.string "owner"
     t.string "nrc"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_092733) do
     t.string "area_name"
     t.string "rules_address"
     t.string "data_url"
+    t.string "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,6 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_092733) do
     t.string "customer_address"
     t.string "state"
     t.string "nft_id"
+    t.string "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -39,9 +41,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_092733) do
     t.string "claimed"
     t.string "data_url"
     t.string "area_address"
+    t.string "area_name"
+    t.string "nft_id"
+    t.string "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "area_name"
   end
 
   create_table "farmers", force: :cascade do |t|
@@ -55,17 +59,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_092733) do
     t.string "farmsize"
     t.string "data_url"
     t.string "area_address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "area_name"
-  end
-
-  create_table "users", primary_key: "address", id: :string, force: :cascade do |t|
-    t.datetime "last_seen", precision: nil
-    t.string "name"
+    t.string "nft_id"
+    t.string "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["address"], name: "index_users_on_address", unique: true
   end
 
 end

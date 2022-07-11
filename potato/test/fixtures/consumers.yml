@@ -7,6 +7,9 @@ one:
   claimed: MyString
   data_url: MyString
   area_address: MyString
+  area_name: MyString
+  nft_id: MyString
+  area_id: MyString
 
 two:
   address: MyString
@@ -15,3 +18,6 @@ two:
   claimed: MyString
   data_url: MyString
   area_address: MyString
+  area_name: MyString
+  nft_id: MyString
+  area_id: MyString

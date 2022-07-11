@@ -6,6 +6,7 @@ one:
   customer_address: MyString
   state: MyString
   nft_id: MyString
+  area_id: MyString
 
 two:
   data_url: MyString
@@ -13,3 +14,4 @@ two:
   customer_address: MyString
   state: MyString
   nft_id: MyString
+  area_id: MyString
