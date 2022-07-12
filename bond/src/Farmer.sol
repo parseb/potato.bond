@@ -18,13 +18,16 @@ contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
         return farmerIdURI[id];
     }
 
-    function mintFarmer(address _to, uint256 _id, string memory _uri) external onlyOwner() returns(bool) {
-        _safeMint(_to, _id);
+    function mintFarmer(address _to, uint256 _id, string memory _uri) external onlyOwner() returns(bool s) {
+        uint b0 = balanceOf(_to);
         farmerIdURI[_id] = _uri;
+        _safeMint(_to, _id);
+        s= (b0 < balanceOf(_to));
     } 
 
 
     /// Override ////////////////////////
+
 
     function transferFrom(
         address from,

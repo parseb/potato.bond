@@ -28,9 +28,10 @@ contract ContractTest is Test {
     function setUp() public {
         vm.prank(theOwner);
         A = new Area();
-        F = new Farmer(address(A));
-        C = new Consumer(address(A));
-        B = new Basket(address(A));
+        // F = new Farmer(address(A));
+        // C = new Consumer(address(A));
+        // B = new Basket(address(A));
+        
     }
 
 

@@ -4,16 +4,21 @@ pragma solidity ^0.8.13;
 import "openzeppelin-contracts/contracts/token/ERC1155/ERC1155.sol";
 // import "solmate/auth/Owned.sol";
 
-import "./interfaces/IFarmer.sol";
+import "./Farmer.sol";
+import "./Consumer.sol";
+import "./Basket.sol";
 
-contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
+
+// is ERC1155("https://potato.bond/api/v1/{id}")
+contract Area {
     
 
     /// ### Storage ##################
+    string constant base_uri = "https://potato.bond/api/v1/";
 
-    IFarmer F;
-    IERC721 C;
-    IERC721 B;
+    Farmer F;
+    Consumer C;
+    Basket B;
 
     mapping(uint256 => address) areaIdCustomRulesContract;
     mapping(uint256 => address) areaGovernor; /// @dev alternative: isFarmer[0[InArea OR Gov == CustomRules 
@@ -21,6 +26,26 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
     mapping(address => address) farmChain;
 
     uint256 public globalId;
+
+    /// ### Errors ##################
+
+    /// ### Events ##################
+
+    event fcbComplete(address indexed _this, address _f, address _c, address _b);
+    event newFarmerJoinedArea(uint256 indexed _areaID, address indexed _who, uint256 farmerid);
+    event newAreaCreated(uint256 indexed _areaId, address indexed _byWho, uint256 farmerid);
+    event newFarmerNominatedForArea(uint256 indexed _areaId, address indexed _bywho, address nominated);
+
+    constructor() {
+        /// @dev reconsider I ! store cc
+        F= new Farmer(address(this));
+        C= new Consumer(address(this));
+        B= new Basket(address(this));
+
+        emit fcbComplete(address(this), address(F), address(C), address(B));
+    }
+
+
     /// ### Modifiers ##################
 
 
@@ -31,27 +56,34 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         require(__customRulesAfter(_areaID, msg.sig));
     }
 
+
     /// ### Errors ##################
 
     /// ### Public ##################
 
     /// ### External ##################
-    function becomeFarmer(uint256 _areaID, string memory _uri) external returns (uint256 farmerId) {
+    function becomeFarmer(uint256 _areaID) external returns (string memory farmerUri) {
         require(! belongsTo(msg.sender, _areaID), "Already in");
+
         globalIncrement();
-        farmerId = F.balanceOf(msg.sender);
+
+        farmerUri = string.concat(base_uri, string(abi.encodePacked(globalId)));
 
         if (belongsTo(farmChain[msg.sender], _areaID)) {
              areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
              /// Call Farmer to mint to msg.sender
-            _mintFarmer(msg.sender, globalId, _uri);
-            require(farmerId < F.balanceOf(msg.sender), 'mint failed');
-            farmerId = globalId;
-            /// increment farmert
+            require( _mintFarmer(msg.sender, globalId, farmerUri));
+            
+            emit newFarmerJoinedArea(_areaID, msg.sender, globalId);
         }
 
-        if(areaParticipantId[_areaID].length == 0 ) {
-            return 0; /// no farmer in existence to chain to.
+        if(_areaID == 0) {
+             areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
+             farmChain[msg.sender] = address(uint160(globalId));
+
+             require( _mintFarmer(msg.sender, globalId, farmerUri));
+             
+             emit newAreaCreated(globalId, msg.sender, globalId);
         }
     }
 
@@ -60,6 +92,12 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         return 1;
     }
 
+    function nominateFarmer(address _newFarmer, uint256 _area) external returns (bool) {
+        require(farmChain[_newFarmer] == address(0) && belongsTo(msg.sender, _area));
+        /// allows multiple nominations
+        farmChain[_newFarmer] == msg.sender;
+        emit newFarmerNominatedForArea(_area, msg.sender, _newFarmer);
+    }
 
     function _changeCustumAreaRules(uint256 _areaID, address _newRulesAddress) external returns(bool) {
         require(areaGovernor[_areaID] == msg.sender, "Unauthorized");
@@ -79,7 +117,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         unchecked { ++ globalId; }
     }
 
-    function _mintFarmer(address _becomesFarmer, uint256 _id, string memory _uri) private {
+    function _mintFarmer(address _becomesFarmer, uint256 _id, string memory _uri) private returns (bool) {
         return F.mintFarmer(_becomesFarmer, _id, _uri);
     }
 
@@ -87,5 +125,9 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
 
         function belongsTo(address who, uint256 areaId) public view returns (bool) {
             if (areaParticipantId[areaId][uint256(uint160(who))] != 0) return true; 
+        }
+
+        function getFCB() external view returns (address,address,address) {
+            return (address(F), address(B), address(C));
         }
 }
