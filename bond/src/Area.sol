@@ -15,6 +15,7 @@ contract Area {
 
     /// ### Storage ##################
     string constant base_uri = "https://potato.bond/api/v1/";
+    uint constant MAX= type(uint256).max -1;
 
     Farmer F;
     Consumer C;
@@ -22,7 +23,7 @@ contract Area {
 
     mapping(uint256 => address) areaIdCustomRulesContract;
     mapping(uint256 => address) areaGovernor; /// @dev alternative: isFarmer[0[InArea OR Gov == CustomRules 
-    mapping(uint256 => uint256[]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
+    mapping(uint256 => uint256[11579208923731619542357098500868790785326998464007930619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
     mapping(address => address) farmChain;
 
     uint256 public globalId;
@@ -64,26 +65,32 @@ contract Area {
     /// ### External ##################
     function becomeFarmer(uint256 _areaID) external returns (string memory farmerUri) {
         require(! belongsTo(msg.sender, _areaID), "Already in");
+        require(_areaID <= globalId, "Invalid Id");
 
         globalIncrement();
 
         farmerUri = string.concat(base_uri, string(abi.encodePacked(globalId)));
+        
+        if(_areaID == 0) {
+            areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
+            farmChain[msg.sender] = address(uint160(globalId));
 
-        if (belongsTo(farmChain[msg.sender], _areaID)) {
-             areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
+            require( _mintFarmer(msg.sender, globalId, farmerUri));
+             
+            emit newAreaCreated(globalId, msg.sender, globalId);
+            return farmerUri;
+        }
+
+        if (belongsTo(farmChain[msg.sender], _areaID)) 
+        {
+            areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
              /// Call Farmer to mint to msg.sender
             require( _mintFarmer(msg.sender, globalId, farmerUri));
             
             emit newFarmerJoinedArea(_areaID, msg.sender, globalId);
-        }
-
-        if(_areaID == 0) {
-             areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
-             farmChain[msg.sender] = address(uint160(globalId));
-
-             require( _mintFarmer(msg.sender, globalId, farmerUri));
-             
-             emit newAreaCreated(globalId, msg.sender, globalId);
+            return farmerUri;
+        } else {
+            revert("Uninvited");
         }
     }
 
@@ -92,16 +99,23 @@ contract Area {
         return 1;
     }
 
-    function nominateFarmer(address _newFarmer, uint256 _area) external returns (bool) {
+    function nominateFarmer(address _newFarmer, uint256 _area) external  {
         require(farmChain[_newFarmer] == address(0) && belongsTo(msg.sender, _area));
         /// allows multiple nominations
-        farmChain[_newFarmer] == msg.sender;
+        farmChain[_newFarmer] = msg.sender;
         emit newFarmerNominatedForArea(_area, msg.sender, _newFarmer);
     }
 
     function _changeCustumAreaRules(uint256 _areaID, address _newRulesAddress) external returns(bool) {
-        require(areaGovernor[_areaID] == msg.sender, "Unauthorized");
+        require(farmChain[msg.sender] == address(uint160(_areaID)), "UnAuth");
+
         areaIdCustomRulesContract[_areaID] = _newRulesAddress;
+    }
+
+    function _changeAreaGovernor(uint256 _areaID, address _govAddress) external returns(bool) {
+        require(farmChain[msg.sender] == address(uint160(_areaID)) || farmChain[msg.sender] == address(0), "UnAuth");
+        
+        farmChain[_govAddress] = farmChain[_govAddress] == address(0) ? address(uint160(_areaID)) : address(0);
     } 
 
     /// ### Private ##################
@@ -130,4 +144,5 @@ contract Area {
         function getFCB() external view returns (address,address,address) {
             return (address(F), address(B), address(C));
         }
+
 }

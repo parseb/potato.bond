@@ -742,8 +742,8 @@
       }
     },
     "src/Area.sol": {
-      "lastModificationDate": 1657600730316,
-      "contentHash": "dcebef3ef94deb5093f2fadb0d1a1838",
+      "lastModificationDate": 1657645766796,
+      "contentHash": "6b5f923fa47e3ad099f681c09f8aa394",
       "sourceName": "src/Area.sol",
       "solcConfig": {
         "settings": {
@@ -1078,8 +1078,8 @@
       }
     },
     "test/HappyArea.t.sol": {
-      "lastModificationDate": 1657598760742,
-      "contentHash": "840f2fd3e78362da327c9367f1f3188d",
+      "lastModificationDate": 1657645699884,
+      "contentHash": "6f737c2304a02de8f8616d210ec96ac9",
       "sourceName": "test/HappyArea.t.sol",
       "solcConfig": {
         "settings": {
