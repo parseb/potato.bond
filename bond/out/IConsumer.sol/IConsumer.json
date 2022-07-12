@@ -330,10 +330,10 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IConsumer.sol",
-    "id": 23879,
+    "id": 24320,
     "exportedSymbols": {
       "IConsumer": [
-        23878
+        24319
       ],
       "IERC165": [
         21210
@@ -343,12 +343,12 @@
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "39:350:23",
+    "src": "39:350:24",
     "nodes": [
       {
-        "id": 23866,
+        "id": 24307,
         "nodeType": "PragmaDirective",
-        "src": "39:24:23",
+        "src": "39:24:24",
         "literals": [
           "solidity",
           ">=",
@@ -357,30 +357,30 @@
         ]
       },
       {
-        "id": 23867,
+        "id": 24308,
         "nodeType": "ImportDirective",
-        "src": "65:67:23",
+        "src": "65:67:24",
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "file": "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 23879,
+        "scope": 24320,
         "sourceUnit": 20823,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 23878,
+        "id": 24319,
         "nodeType": "ContractDefinition",
-        "src": "134:255:23",
+        "src": "134:255:24",
         "nodes": [
           {
-            "id": 23877,
+            "id": 24318,
             "nodeType": "FunctionDefinition",
-            "src": "318:68:23",
+            "src": "318:68:24",
             "documentation": {
-              "id": 23870,
+              "id": 24311,
               "nodeType": "StructuredDocumentation",
-              "src": "173:140:23",
+              "src": "173:140:24",
               "text": "@notice returns the token uri for consumer metadata storage location\n @param id id of the token for which it retrieves string uri"
             },
             "functionSelector": "c87b56dd",
@@ -388,20 +388,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "tokenURI",
-            "nameLocation": "327:8:23",
+            "nameLocation": "327:8:24",
             "parameters": {
-              "id": 23873,
+              "id": 24314,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 23872,
+                  "id": 24313,
                   "mutability": "mutable",
                   "name": "id",
-                  "nameLocation": "344:2:23",
+                  "nameLocation": "344:2:24",
                   "nodeType": "VariableDeclaration",
-                  "scope": 23877,
-                  "src": "336:10:23",
+                  "scope": 24318,
+                  "src": "336:10:24",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -409,10 +409,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 23871,
+                    "id": 24312,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "336:7:23",
+                    "src": "336:7:24",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -421,21 +421,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "335:12:23"
+              "src": "335:12:24"
             },
             "returnParameters": {
-              "id": 23876,
+              "id": 24317,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 23875,
+                  "id": 24316,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 23877,
-                  "src": "371:13:23",
+                  "scope": 24318,
+                  "src": "371:13:24",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -443,10 +443,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 23874,
+                    "id": 24315,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "371:6:23",
+                    "src": "371:6:24",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -455,9 +455,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "370:15:23"
+              "src": "370:15:24"
             },
-            "scope": 23878,
+            "scope": 24319,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -467,15 +467,15 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 23868,
+              "id": 24309,
               "name": "IERC721",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 20822,
-              "src": "157:7:23"
+              "src": "157:7:24"
             },
-            "id": 23869,
+            "id": 24310,
             "nodeType": "InheritanceSpecifier",
-            "src": "157:7:23"
+            "src": "157:7:24"
           }
         ],
         "canonicalName": "IConsumer",
@@ -483,17 +483,17 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          23878,
+          24319,
           20822,
           21210
         ],
         "name": "IConsumer",
-        "nameLocation": "144:9:23",
-        "scope": 23879,
+        "nameLocation": "144:9:24",
+        "scope": 24320,
         "usedErrors": []
       }
     ],
     "license": "UNLICENSED"
   },
-  "id": 23
+  "id": 24
 }

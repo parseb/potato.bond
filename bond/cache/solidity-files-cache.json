@@ -742,8 +742,8 @@
       }
     },
     "src/Area.sol": {
-      "lastModificationDate": 1657563839259,
-      "contentHash": "eed7980848c5989a797179b53e6cd7b0",
+      "lastModificationDate": 1657600730316,
+      "contentHash": "dcebef3ef94deb5093f2fadb0d1a1838",
       "sourceName": "src/Area.sol",
       "solcConfig": {
         "settings": {
@@ -776,12 +776,15 @@
         "lib/openzeppelin-contracts/contracts/token/ERC1155/IERC1155.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC1155/IERC1155Receiver.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
-        "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
         "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
         "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
-        "src/interfaces/IFarmer.sol"
+        "lib/solmate/src/auth/Owned.sol",
+        "lib/solmate/src/tokens/ERC721.sol",
+        "src/Basket.sol",
+        "src/Consumer.sol",
+        "src/Farmer.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
@@ -873,8 +876,8 @@
       }
     },
     "src/Farmer.sol": {
-      "lastModificationDate": 1657526921349,
-      "contentHash": "a589b02809f1e4ab4639ef76fe51bc4a",
+      "lastModificationDate": 1657592357002,
+      "contentHash": "19150d68c9181b5cac9c7ab966dc6118",
       "sourceName": "src/Farmer.sol",
       "solcConfig": {
         "settings": {
@@ -1075,8 +1078,8 @@
       }
     },
     "test/HappyArea.t.sol": {
-      "lastModificationDate": 1657528353900,
-      "contentHash": "48638402a41399e216b6f439f2b23144",
+      "lastModificationDate": 1657598760742,
+      "contentHash": "840f2fd3e78362da327c9367f1f3188d",
       "sourceName": "test/HappyArea.t.sol",
       "solcConfig": {
         "settings": {
@@ -1126,8 +1129,7 @@
         "src/Basket.sol",
         "src/Consumer.sol",
         "src/Farmer.sol",
-        "src/interfaces/IArea.sol",
-        "src/interfaces/IFarmer.sol"
+        "src/interfaces/IArea.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
