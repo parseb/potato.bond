@@ -18,12 +18,23 @@ import "src/interfaces/IArea.sol";
 contract ContractTest is Test {
 
     address theOwner = address(306);
+
     address aConsummer = address(101);
+    address bConsummer = address(105);
+    address cConsummer = address(108);
+
     address aFarmer = address(69);
+    address bFarmer = address(70);
+    address cFarmer = address(77);
+
     Area A;
-    Farmer F;
-    Consumer C;
-    Basket B;
+    uint256 gId;
+    // Farmer F;
+    // Consumer C;
+    // Basket B;
+    IERC721 F;
+    IERC721 C;
+    IERC721 B;
 
     function setUp() public {
         vm.prank(theOwner);
@@ -31,15 +42,62 @@ contract ContractTest is Test {
         // F = new Farmer(address(A));
         // C = new Consumer(address(A));
         // B = new Basket(address(A));
+        (address f, address c, address b) = A.getFCB();
+        F= IERC721(f);
+        C= IERC721(c);
+        B= IERC721(b);
         
+        gId = A.globalId();
     }
 
 
-    function testBecomesFarmer() public {
 
-        /// letThereBeAFarmer
-        //A.becomeFarmer();
-        //assertTrue(false);
+    function testBecomesFarmer() public {
+        assertTrue(gId == 0);
+        vm.prank(aFarmer);
+        A.becomeFarmer(0);
+        assertTrue(A.globalId() == 1);
+        vm.prank(bFarmer);
+        A.becomeFarmer(0);
+        assertTrue(A.globalId() == 2);
+
+        vm.prank(cFarmer);
+        vm.expectRevert("Uninvited");
+        A.becomeFarmer(1);
+        vm.prank(cFarmer);
+        vm.expectRevert("Invalid Id");
+        A.becomeFarmer(9001);
+
+        assertTrue(A.belongsTo(aFarmer,1), "Farmer not belonging");
+
+
+        vm.prank(aFarmer);
+        A.nominateFarmer(cFarmer, 1);
+
+        assertTrue(A.belongsTo(aFarmer,1), "Farmer not belonging");
+        
+        vm.prank(cFarmer);
+        assertTrue(F.balanceOf(cFarmer) == 0, "Is farmer Already");
+        vm.prank(cFarmer);
+        A.becomeFarmer(1);
+        vm.prank(cFarmer);
+        vm.expectRevert("Already in");
+        A.becomeFarmer(1);
+        
+        vm.prank(address(999));
+        vm.expectRevert("Uninvited");
+        A.becomeFarmer(1);
+        
+        vm.prank(cFarmer);
+        A.nominateFarmer(address(999), 1);
+        vm.prank(address(999));
+        A.becomeFarmer(1);
+
+        vm.prank(address(999));
+        vm.expectRevert("Already in");
+        A.becomeFarmer(1);
+
+
     }
 
     function testRolesNotTransferable() public {
