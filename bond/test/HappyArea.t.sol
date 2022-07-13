@@ -9,6 +9,10 @@ import "src/Basket.sol";
 import "src/Farmer.sol";
 import "src/Consumer.sol";
 
+import "src/interfaces/IBasket.sol";
+import "src/interfaces/IFarmer.sol";
+import "src/interfaces/IConsumer.sol";
+
 /// Interfaces
 import "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol";
 import "src/interfaces/IArea.sol";
@@ -29,23 +33,27 @@ contract ContractTest is Test {
 
     Area A;
     uint256 gId;
-    // Farmer F;
-    // Consumer C;
-    // Basket B;
-    IERC721 F;
-    IERC721 C;
-    IERC721 B;
+    Farmer Fa;
+    Consumer Co;
+    Basket Ba;
+    IFarmer F;
+    IConsumer C;
+    IBasket B;
 
     function setUp() public {
         vm.prank(theOwner);
         A = new Area();
-        // F = new Farmer(address(A));
-        // C = new Consumer(address(A));
-        // B = new Basket(address(A));
+        Fa = new Farmer(address(A));
+        Co = new Consumer(address(A));
+        Ba = new Basket(address(A));
+        
+        vm.prank(theOwner);
+        A.setFCB(address(Fa), address(Co), address(Ba));
+
         (address f, address c, address b) = A.getFCB();
-        F= IERC721(f);
-        C= IERC721(c);
-        B= IERC721(b);
+        F= IFarmer(f);
+        C= IConsumer(c);
+        B= IBasket(b);
         
         gId = A.globalId();
     }

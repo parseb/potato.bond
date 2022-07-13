@@ -14,6 +14,6 @@ interface IFarmer is IERC721 {
     /// @param _to address of owner of created farmer token
     /// @param _id type (farmer)
     /// @param _uri farmer metadata location
-    function mintFarmer(address _to, uint256 _id, string memory _uri) external; 
+    function mintFarmer(address _to, uint256 _id, string memory _uri) external returns (bool); 
 
 }

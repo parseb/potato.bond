@@ -80,17 +80,17 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IArea.sol",
-    "id": 24292,
+    "id": 24490,
     "exportedSymbols": {
       "IArea": [
-        24291
+        24489
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "39:809:22",
+    "src": "39:835:22",
     "nodes": [
       {
-        "id": 24264,
+        "id": 24462,
         "nodeType": "PragmaDirective",
         "src": "39:24:22",
         "literals": [
@@ -101,16 +101,16 @@
         ]
       },
       {
-        "id": 24291,
+        "id": 24489,
         "nodeType": "ContractDefinition",
-        "src": "66:782:22",
+        "src": "66:808:22",
         "nodes": [
           {
-            "id": 24272,
+            "id": 24470,
             "nodeType": "FunctionDefinition",
             "src": "219:79:22",
             "documentation": {
-              "id": 24265,
+              "id": 24463,
               "nodeType": "StructuredDocumentation",
               "src": "90:124:22",
               "text": "@notice returns the metadata storage access url provided an existing id\n @param areaID numeric ID of ordered area"
@@ -122,17 +122,17 @@
             "name": "getAreaMetaData",
             "nameLocation": "228:15:22",
             "parameters": {
-              "id": 24268,
+              "id": 24466,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24267,
+                  "id": 24465,
                   "mutability": "mutable",
                   "name": "areaID",
                   "nameLocation": "252:6:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24272,
+                  "scope": 24470,
                   "src": "244:14:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -141,7 +141,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 24266,
+                    "id": 24464,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "244:7:22",
@@ -156,17 +156,17 @@
               "src": "243:16:22"
             },
             "returnParameters": {
-              "id": 24271,
+              "id": 24469,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24270,
+                  "id": 24468,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24272,
+                  "scope": 24470,
                   "src": "283:13:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -175,7 +175,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 24269,
+                    "id": 24467,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "283:6:22",
@@ -189,17 +189,17 @@
               ],
               "src": "282:15:22"
             },
-            "scope": 24291,
+            "scope": 24489,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 24282,
+            "id": 24480,
             "nodeType": "FunctionDefinition",
             "src": "551:85:22",
             "documentation": {
-              "id": 24273,
+              "id": 24471,
               "nodeType": "StructuredDocumentation",
               "src": "305:241:22",
               "text": "@notice checks if address part of area; returns bool true if so computes\n @param who suspected address, belonging of which to be verified\n @param areaId id as identifier of plane on which _who's apartenence will be checked\\"
@@ -211,17 +211,17 @@
             "name": "belongsTo",
             "nameLocation": "560:9:22",
             "parameters": {
-              "id": 24278,
+              "id": 24476,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24275,
+                  "id": 24473,
                   "mutability": "mutable",
                   "name": "who",
                   "nameLocation": "578:3:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24282,
+                  "scope": 24480,
                   "src": "570:11:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -230,7 +230,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 24274,
+                    "id": 24472,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "570:7:22",
@@ -244,12 +244,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 24277,
+                  "id": 24475,
                   "mutability": "mutable",
                   "name": "areaId",
                   "nameLocation": "591:6:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24282,
+                  "scope": 24480,
                   "src": "583:14:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -258,7 +258,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 24276,
+                    "id": 24474,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "583:7:22",
@@ -273,17 +273,17 @@
               "src": "569:29:22"
             },
             "returnParameters": {
-              "id": 24281,
+              "id": 24479,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24280,
+                  "id": 24478,
                   "mutability": "mutable",
                   "name": "belongs",
                   "nameLocation": "627:7:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24282,
+                  "scope": 24480,
                   "src": "622:12:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -292,7 +292,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 24279,
+                    "id": 24477,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "622:4:22",
@@ -306,40 +306,40 @@
               ],
               "src": "621:14:22"
             },
-            "scope": 24291,
+            "scope": 24489,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 24290,
+            "id": 24488,
             "nodeType": "FunctionDefinition",
-            "src": "767:78:22",
+            "src": "793:78:22",
             "documentation": {
-              "id": 24283,
+              "id": 24481,
               "nodeType": "StructuredDocumentation",
-              "src": "642:120:22",
-              "text": "@notice this function might make you a farmer\n @param areaId the area in which you were nominated as a farmer"
+              "src": "642:146:22",
+              "text": "@notice this function might make you a farmer\n @param areaId the area in which you were nominated as a farmer pass 0 to create new area"
             },
             "functionSelector": "821ebdbf",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "becomeFarmer",
-            "nameLocation": "776:12:22",
+            "nameLocation": "802:12:22",
             "parameters": {
-              "id": 24286,
+              "id": 24484,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24285,
+                  "id": 24483,
                   "mutability": "mutable",
                   "name": "areaId",
-                  "nameLocation": "797:6:22",
+                  "nameLocation": "823:6:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24290,
-                  "src": "789:14:22",
+                  "scope": 24488,
+                  "src": "815:14:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -347,10 +347,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 24284,
+                    "id": 24482,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "789:7:22",
+                    "src": "815:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -359,21 +359,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "788:16:22"
+              "src": "814:16:22"
             },
             "returnParameters": {
-              "id": 24289,
+              "id": 24487,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24288,
+                  "id": 24486,
                   "mutability": "mutable",
                   "name": "farmerID",
-                  "nameLocation": "835:8:22",
+                  "nameLocation": "861:8:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24290,
-                  "src": "827:16:22",
+                  "scope": 24488,
+                  "src": "853:16:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -381,10 +381,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 24287,
+                    "id": 24485,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "827:7:22",
+                    "src": "853:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -393,9 +393,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "826:18:22"
+              "src": "852:18:22"
             },
-            "scope": 24291,
+            "scope": 24489,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -408,11 +408,11 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          24291
+          24489
         ],
         "name": "IArea",
         "nameLocation": "76:5:22",
-        "scope": 24292,
+        "scope": 24490,
         "usedErrors": []
       }
     ],

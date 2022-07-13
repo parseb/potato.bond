@@ -1,6 +1,6 @@
 _____________
 
-rails g model Area owner nrc nrf area_name rules_address data_url area_id
+rails g model Area governor nrc nrf area_name rule_contract data_url area_id
 
 _____________
 

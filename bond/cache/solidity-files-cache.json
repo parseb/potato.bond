@@ -742,8 +742,8 @@
       }
     },
     "src/Area.sol": {
-      "lastModificationDate": 1657645766796,
-      "contentHash": "6b5f923fa47e3ad099f681c09f8aa394",
+      "lastModificationDate": 1657709308233,
+      "contentHash": "ef9cc83a7d0a282d7ffce4e95d2607b0",
       "sourceName": "src/Area.sol",
       "solcConfig": {
         "settings": {
@@ -776,15 +776,14 @@
         "lib/openzeppelin-contracts/contracts/token/ERC1155/IERC1155.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC1155/IERC1155Receiver.sol",
         "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "lib/openzeppelin-contracts/contracts/utils/Context.sol",
         "lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol",
         "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol",
-        "lib/solmate/src/auth/Owned.sol",
-        "lib/solmate/src/tokens/ERC721.sol",
-        "src/Basket.sol",
-        "src/Consumer.sol",
-        "src/Farmer.sol"
+        "src/interfaces/IBasket.sol",
+        "src/interfaces/IConsumer.sol",
+        "src/interfaces/IFarmer.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
@@ -794,7 +793,7 @@
       }
     },
     "src/Basket.sol": {
-      "lastModificationDate": 1657477054353,
+      "lastModificationDate": 1657592389963,
       "contentHash": "ac5c46b1f26457526bb45d8844420973",
       "sourceName": "src/Basket.sol",
       "solcConfig": {
@@ -835,8 +834,8 @@
       }
     },
     "src/Consumer.sol": {
-      "lastModificationDate": 1657526854554,
-      "contentHash": "7d83ca14d93c52d27319e68a6f390d5c",
+      "lastModificationDate": 1657704763554,
+      "contentHash": "54c0c969d0eda8f58674d4ce423b3e29",
       "sourceName": "src/Consumer.sol",
       "solcConfig": {
         "settings": {
@@ -876,8 +875,8 @@
       }
     },
     "src/Farmer.sol": {
-      "lastModificationDate": 1657592357002,
-      "contentHash": "19150d68c9181b5cac9c7ab966dc6118",
+      "lastModificationDate": 1657704608478,
+      "contentHash": "21009bcc71fc884be2c4e164b93242c4",
       "sourceName": "src/Farmer.sol",
       "solcConfig": {
         "settings": {
@@ -917,8 +916,8 @@
       }
     },
     "src/interfaces/IArea.sol": {
-      "lastModificationDate": 1657530860574,
-      "contentHash": "dd58071b9bfe2ce02c102f22849ad4aa",
+      "lastModificationDate": 1657704394092,
+      "contentHash": "aa39a0ad31551618a802ed118951e5b2",
       "sourceName": "src/interfaces/IArea.sol",
       "solcConfig": {
         "settings": {
@@ -1037,8 +1036,8 @@
       }
     },
     "src/interfaces/IFarmer.sol": {
-      "lastModificationDate": 1657563915231,
-      "contentHash": "a740d2d6d857e490f807afc7a993c4c6",
+      "lastModificationDate": 1657709283742,
+      "contentHash": "d5b338a23a4a30e621582c33bfd8797e",
       "sourceName": "src/interfaces/IFarmer.sol",
       "solcConfig": {
         "settings": {
@@ -1078,8 +1077,8 @@
       }
     },
     "test/HappyArea.t.sol": {
-      "lastModificationDate": 1657645699884,
-      "contentHash": "6f737c2304a02de8f8616d210ec96ac9",
+      "lastModificationDate": 1657709047686,
+      "contentHash": "01422085fd74fccc0e89c33ef2e72c32",
       "sourceName": "test/HappyArea.t.sol",
       "solcConfig": {
         "settings": {
@@ -1129,7 +1128,10 @@
         "src/Basket.sol",
         "src/Consumer.sol",
         "src/Farmer.sol",
-        "src/interfaces/IArea.sol"
+        "src/interfaces/IArea.sol",
+        "src/interfaces/IBasket.sol",
+        "src/interfaces/IConsumer.sol",
+        "src/interfaces/IFarmer.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
