@@ -14,7 +14,7 @@ struct A {
     address governor;
     address rule_contract;
     string data_url;
-    uint256[3] FCB; // [ F , C , B ] nr of
+    uint256[3] fcb; // [ F , C , B ] nr of
 }
 
 // is ERC1155("https://potato.bond/api/v1/{id}")
@@ -87,7 +87,8 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
             getAreaById[globalId].area_id = globalId+1;
             getAreaById[globalId].governor = msg.sender;
             getAreaById[globalId].data_url = string.concat(base_uri, string(abi.encodePacked(globalId)));
-            
+            getAreaById[globalId].fcb[0] = 1;
+
             bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
             _mint(msg.sender, 0, 1, data);
             _mint(msg.sender, globalId + 1, ONE, data);
@@ -99,13 +100,13 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
 
         else if (belongsTo(farmChain[msg.sender], _areaID)) 
         {
-            // areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId+1;
             farmerUri = _makeFarmer();
             bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
             areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
 
             _mint(msg.sender, _areaID +1, ONE, data);
-
+            unchecked { ++ getAreaById[globalId].fcb[0]; }
+            
             emit newFarmerJoinedArea(_areaID, msg.sender, globalId);
             return farmerUri;
         } else {
@@ -156,13 +157,6 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
     }
 
     /// ### Private ##################
-    function __customRulesBefore(uint256 areaId, bytes4 funcSing) private returns (bool) {
-        true;
-    }
-
-    function __customRulesAfter(uint256 areaId, bytes4 funcSing) private returns (bool) {
-        true;
-    }
 
     function _makeFarmer() private returns (string memory fU) {
         if(F.balanceOf(msg.sender) == 0) {
