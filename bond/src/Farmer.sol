@@ -16,7 +16,7 @@ contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
 
 
     mapping(uint256 => string) farmerIdURI;
-
+    mapping(address => uint) idOf;
     constructor(address _Area) {
         owner = _Area;
     }
@@ -44,6 +44,7 @@ contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
     } 
 
     function _mint(address to, uint256 id) internal override {
+        idOf[to] = id;
         _balanceOf[to] == 0 ? super._mint(to, id) : revert("is farmer");
     } 
 
@@ -55,5 +56,8 @@ contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
         revert("C'est ne pas possible.");
      }
 
+    function getIdOf(address _who) public view returns(uint) {
+        idOf[_who];
+    }
 
 }
