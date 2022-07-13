@@ -23,6 +23,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
     /// ### Storage ##################
     string constant base_uri = "https://potato.bond/api/v1/";
     uint constant MAX= type(uint256).max -1;
+    uint immutable ONE = 1 * (10 ** 18); 
 
     address initOwner;
     IFarmer F;
@@ -32,7 +33,6 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
     mapping(uint256 => A) getAreaById; 
     mapping(uint256 => uint256[1157920892373161954235709850086879078532699830619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
     mapping(address => address) farmChain;
-
     uint256 public globalId;
     
     /// ### Errors ##################
@@ -45,32 +45,27 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
     event newFarmerNominatedForArea(uint256 indexed _areaID, address indexed _bywho, address nominated);
     event FailedToJoinOrBecome(uint256 indexed _areaID, address _sender); 
     event plusOne(uint256 _gid);
+    event changedGovernorOfAreaTo(uint indexed _areaID, address indexed _to);
+    event changedRulesOfArea(uint256 indexed areaID, address indexed _newRulesAddress);
 
-    constructor() {
-        // /// @dev reconsider I ! store cc
-        // F= new Farmer(address(this));
-        // C= new Consumer(address(this));
-        // B= new Basket(address(this));
-
-        // emit fcbComplete(address(this), address(F), address(C), address(B));
-        initOwner = msg.sender;
-    }
-
-    function setFCB(address _f, address _c, address _b) external{
+    constructor() { initOwner = msg.sender; }
+    
+    function setFCB(address _f, address _c, address _b) external {
         require(msg.sender == initOwner);
         F = IFarmer(_f);
         C = IConsumer(_c);
         B = IBasket(_b);
         initOwner = address(1337);
+
+        emit fcbComplete(address(this), _f, _c, _b);
     }
+
     /// ### Modifiers ##################
 
 
-    /// @dev good way to execute arbitrary code. assess risk scope
-    modifier CustomAreaRules(uint256 _areaID){
-        require( __customRulesBefore(_areaID, msg.sig));
+    modifier onlyAreaGovernor(uint _areaID) {
+        require(getAreaById[_areaID].governor == msg.sender, "Not Area Goveror");
         _;
-        require(__customRulesAfter(_areaID, msg.sig));
     }
 
     /// ### Errors ##################
@@ -85,32 +80,31 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
 
         
         if(_areaID == 0) {
-            farmChain[msg.sender] = address(uint160(globalId));
-            
-            /// @dev duplicate balance check reconsider
+            farmChain[msg.sender] = address(uint160(globalId+2));
+
             farmerUri = _makeFarmer();
-            bytes  memory data = bytes(abi.encodePacked(msg.sender));
-            // mint area
-            _mint(msg.sender, 0, 1,data);
+
+            getAreaById[globalId].area_id = globalId+1;
+            getAreaById[globalId].governor = msg.sender;
+            getAreaById[globalId].data_url = string.concat(base_uri, string(abi.encodePacked(globalId)));
+            
+            bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
+            _mint(msg.sender, 0, 1, data);
+            _mint(msg.sender, globalId + 1, ONE, data);
             areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
 
-            // assign area
-             
             emit newAreaCreated(globalId, msg.sender, globalId);
             return farmerUri;
         }
 
         else if (belongsTo(farmChain[msg.sender], _areaID)) 
         {
+            // areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId+1;
+            farmerUri = _makeFarmer();
+            bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
             areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
 
-             /// if no farmer nft, mints
-            farmerUri = _makeFarmer();
-
-            bytes  memory data = bytes(abi.encodePacked(msg.sender));
-            // mint area
-            _mint(msg.sender, 0, 1,data);
-            areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
+            _mint(msg.sender, _areaID +1, ONE, data);
 
             emit newFarmerJoinedArea(_areaID, msg.sender, globalId);
             return farmerUri;
@@ -127,23 +121,23 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
 
     function inviteFarmer(address _newFarmer, uint256 _area) external  {
         require(farmChain[_newFarmer] == address(0) && belongsTo(msg.sender, _area));
-        /// allows multiple nominations
+
+        emit fcbComplete(address(this), address(F), address(C), address(B));
         farmChain[_newFarmer] = msg.sender;
         emit newFarmerNominatedForArea(_area, msg.sender, _newFarmer);
     }
 
-    // function _changeCustumAreaRules(uint256 _areaID, address _newRulesAddress) external returns(bool) {
-    //     require(farmChain[msg.sender] == address(uint160(_areaID)), "UnAuth");
+    function changeAreaGovernor(uint _areaID, address _newGov) external  onlyAreaGovernor(_areaID) returns(address) {
+        require(_newGov != address(0), "Can't do 0");
+        getAreaById[_areaID].governor = _newGov;
+        emit changedGovernorOfAreaTo(_areaID, _newGov);
+    }
 
-    //     areaIdCustomRulesContract[_areaID] = _newRulesAddress;
-    // }
-
-    // function _changeAreaGovernor(uint256 _areaID, address _govAddress) external returns(bool) {
-    //     require(farmChain[msg.sender] == address(uint160(_areaID)) || farmChain[msg.sender] == address(0), "UnAuth");
-        
-    //     farmChain[_govAddress] = farmChain[_govAddress] == address(0) ? address(uint160(_areaID)) : address(0);
-    // } 
-
+    function changeRulesOfArea(uint _areaID, address _newRulesAddress) external onlyAreaGovernor(_areaID) {
+        require(_newRulesAddress.code.length > 0, "Need contract for rules.");
+        getAreaById[_areaID].rule_contract = _newRulesAddress;
+        emit changedRulesOfArea(_areaID, _newRulesAddress);
+    }
 
     /// ### Override ##################
 
@@ -154,9 +148,10 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         bytes memory data
     ) internal override (ERC1155) {
 
-        globalIncrement();
-        id = globalId;
-
+        if (id == 0) {
+            globalIncrement();
+            id = globalId;
+         }
         super._mint(to,id,amount,data);
     }
 
@@ -174,6 +169,8 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
                 fU = string.concat(base_uri, string(abi.encodePacked(globalId)));
                 globalIncrement();
                 F.mintFarmer(msg.sender, globalId, fU); 
+            } else {
+                fU = string.concat(base_uri, string(abi.encodePacked(F.getIdOf(msg.sender))));
             }
     }
 

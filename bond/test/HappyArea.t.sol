@@ -65,9 +65,11 @@ contract ContractTest is Test {
         vm.prank(aFarmer);
         A.becomeFarmer(0);
         assertTrue(A.globalId() == 2);
+        assertTrue(A.belongsTo(aFarmer, 2));
         vm.prank(bFarmer);
         A.becomeFarmer(0);
         assertTrue(A.globalId() == 4);
+        assertTrue(A.belongsTo(bFarmer, 4));
 
         vm.prank(cFarmer);
         vm.expectRevert("Uninvited");
@@ -76,18 +78,17 @@ contract ContractTest is Test {
         vm.expectRevert("Invalid Id");
         A.becomeFarmer(9001);
 
-        assertTrue(A.belongsTo(aFarmer,2), "Farmer not belonging");
-
+        assertTrue(A.belongsTo(aFarmer,2), "aFarmer not belonging");
 
         vm.prank(aFarmer);
         A.inviteFarmer(cFarmer, 2);
-
-        assertTrue(A.belongsTo(aFarmer,2), "Farmer not belonging");
+        assertTrue(A.belongsTo(aFarmer,2), "aFarmer not belonging");
         
         vm.prank(cFarmer);
         assertTrue(F.balanceOf(cFarmer) == 0, "Is farmer Already");
         vm.prank(cFarmer);
         A.becomeFarmer(2);
+        assertTrue(A.belongsTo(cFarmer,2), "cFarmer not belonging");
         vm.prank(cFarmer);
         vm.expectRevert("Already in");
         A.becomeFarmer(2);
@@ -105,7 +106,15 @@ contract ContractTest is Test {
         vm.expectRevert("Already in");
         A.becomeFarmer(2);
 
+    }
 
+
+    function testChangesGovernor() public {
+        assertTrue(false);
+    }
+
+    function testChangesRulesContract() public {
+        assertTrue(false);
     }
 
     function testRolesNotTransferable() public {

@@ -16,4 +16,5 @@ interface IFarmer is IERC721 {
     /// @param _uri farmer metadata location
     function mintFarmer(address _to, uint256 _id, string memory _uri) external; 
 
+    function getIdOf(address _who) external returns (uint);
 }
