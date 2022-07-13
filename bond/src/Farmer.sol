@@ -5,6 +5,13 @@ import "solmate/tokens/ERC721.sol";
 import "solmate/auth/Owned.sol";
 
 
+struct F {
+    uint256 area_id;
+    uint256[2] AIF; // amount [ issued , fulfilled ]
+    string data_url;
+}
+
+
 contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
 
 

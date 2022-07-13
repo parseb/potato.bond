@@ -174,7 +174,13 @@
         }
       ],
       "name": "mintFarmer",
-      "outputs": [],
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -354,7 +360,7 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IFarmer.sol",
-    "id": 24344,
+    "id": 24544,
     "exportedSymbols": {
       "IERC165": [
         21210
@@ -363,14 +369,14 @@
         20822
       ],
       "IFarmer": [
-        24343
+        24543
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "39:616:25",
+    "src": "39:631:25",
     "nodes": [
       {
-        "id": 24321,
+        "id": 24519,
         "nodeType": "PragmaDirective",
         "src": "39:24:25",
         "literals": [
@@ -381,28 +387,28 @@
         ]
       },
       {
-        "id": 24322,
+        "id": 24520,
         "nodeType": "ImportDirective",
         "src": "65:67:25",
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "file": "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 24344,
+        "scope": 24544,
         "sourceUnit": 20823,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 24343,
+        "id": 24543,
         "nodeType": "ContractDefinition",
-        "src": "134:521:25",
+        "src": "134:536:25",
         "nodes": [
           {
-            "id": 24332,
+            "id": 24530,
             "nodeType": "FunctionDefinition",
             "src": "313:68:25",
             "documentation": {
-              "id": 24325,
+              "id": 24523,
               "nodeType": "StructuredDocumentation",
               "src": "170:138:25",
               "text": "@notice returns the token uri for farmer metadata storage location\n @param id id of the token for which it retrieves string uri"
@@ -414,17 +420,17 @@
             "name": "tokenURI",
             "nameLocation": "322:8:25",
             "parameters": {
-              "id": 24328,
+              "id": 24526,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24327,
+                  "id": 24525,
                   "mutability": "mutable",
                   "name": "id",
                   "nameLocation": "339:2:25",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24332,
+                  "scope": 24530,
                   "src": "331:10:25",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -433,7 +439,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 24326,
+                    "id": 24524,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "331:7:25",
@@ -448,17 +454,17 @@
               "src": "330:12:25"
             },
             "returnParameters": {
-              "id": 24331,
+              "id": 24529,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24330,
+                  "id": 24528,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24332,
+                  "scope": 24530,
                   "src": "366:13:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -467,7 +473,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 24329,
+                    "id": 24527,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "366:6:25",
@@ -481,17 +487,17 @@
               ],
               "src": "365:15:25"
             },
-            "scope": 24343,
+            "scope": 24543,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 24342,
+            "id": 24542,
             "nodeType": "FunctionDefinition",
-            "src": "576:75:25",
+            "src": "576:90:25",
             "documentation": {
-              "id": 24333,
+              "id": 24531,
               "nodeType": "StructuredDocumentation",
               "src": "388:183:25",
               "text": "@notice mints new farmer to given address\n @param _to address of owner of created farmer token\n @param _id type (farmer)\n @param _uri farmer metadata location"
@@ -503,17 +509,17 @@
             "name": "mintFarmer",
             "nameLocation": "585:10:25",
             "parameters": {
-              "id": 24340,
+              "id": 24538,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24335,
+                  "id": 24533,
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "604:3:25",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24342,
+                  "scope": 24542,
                   "src": "596:11:25",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -522,7 +528,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 24334,
+                    "id": 24532,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "596:7:25",
@@ -536,12 +542,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 24337,
+                  "id": 24535,
                   "mutability": "mutable",
                   "name": "_id",
                   "nameLocation": "617:3:25",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24342,
+                  "scope": 24542,
                   "src": "609:11:25",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -550,7 +556,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 24336,
+                    "id": 24534,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "609:7:25",
@@ -563,12 +569,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 24339,
+                  "id": 24537,
                   "mutability": "mutable",
                   "name": "_uri",
                   "nameLocation": "636:4:25",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24342,
+                  "scope": 24542,
                   "src": "622:18:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -577,7 +583,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 24338,
+                    "id": 24536,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "622:6:25",
@@ -592,12 +598,40 @@
               "src": "595:46:25"
             },
             "returnParameters": {
-              "id": 24341,
+              "id": 24541,
               "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "650:0:25"
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24540,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24542,
+                  "src": "660:4:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 24539,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "660:4:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "659:6:25"
             },
-            "scope": 24343,
+            "scope": 24543,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -607,13 +641,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 24323,
+              "id": 24521,
               "name": "IERC721",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 20822,
               "src": "155:7:25"
             },
-            "id": 24324,
+            "id": 24522,
             "nodeType": "InheritanceSpecifier",
             "src": "155:7:25"
           }
@@ -623,13 +657,13 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          24343,
+          24543,
           20822,
           21210
         ],
         "name": "IFarmer",
         "nameLocation": "144:7:25",
-        "scope": 24344,
+        "scope": 24544,
         "usedErrors": []
       }
     ],

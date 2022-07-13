@@ -4,49 +4,68 @@ pragma solidity ^0.8.13;
 import "openzeppelin-contracts/contracts/token/ERC1155/ERC1155.sol";
 // import "solmate/auth/Owned.sol";
 
-import "./Farmer.sol";
-import "./Consumer.sol";
-import "./Basket.sol";
+import "./interfaces/IFarmer.sol";
+import "./interfaces/IConsumer.sol";
+import "./interfaces/IBasket.sol";
+
+
+struct A {
+    uint256 area_id;
+    address governor;
+    address rule_contract;
+    string data_url;
+    uint256[3] FCB; // [ F , C , B ] nr of
+}
 
 
 // is ERC1155("https://potato.bond/api/v1/{id}")
-contract Area {
+contract Area  {
     
 
     /// ### Storage ##################
     string constant base_uri = "https://potato.bond/api/v1/";
     uint constant MAX= type(uint256).max -1;
 
-    Farmer F;
-    Consumer C;
-    Basket B;
-
+    address initOwner;
+    IFarmer F;
+    IConsumer C;
+    IBasket B;
+    
     mapping(uint256 => address) areaIdCustomRulesContract;
     mapping(uint256 => address) areaGovernor; /// @dev alternative: isFarmer[0[InArea OR Gov == CustomRules 
-    mapping(uint256 => uint256[11579208923731619542357098500868790785326998464007930619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
+    mapping(uint256 => uint256[1157920892373161954235709850086879078532699830619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
     mapping(address => address) farmChain;
 
     uint256 public globalId;
-
+    
     /// ### Errors ##################
 
     /// ### Events ##################
 
     event fcbComplete(address indexed _this, address _f, address _c, address _b);
     event newFarmerJoinedArea(uint256 indexed _areaID, address indexed _who, uint256 farmerid);
-    event newAreaCreated(uint256 indexed _areaId, address indexed _byWho, uint256 farmerid);
-    event newFarmerNominatedForArea(uint256 indexed _areaId, address indexed _bywho, address nominated);
+    event newAreaCreated(uint256 indexed _areaID, address indexed _byWho, uint256 farmerid);
+    event newFarmerNominatedForArea(uint256 indexed _areaID, address indexed _bywho, address nominated);
+    event FailedToJoin(uint256 indexed _areaID, address _sender); 
+
 
     constructor() {
-        /// @dev reconsider I ! store cc
-        F= new Farmer(address(this));
-        C= new Consumer(address(this));
-        B= new Basket(address(this));
+        // /// @dev reconsider I ! store cc
+        // F= new Farmer(address(this));
+        // C= new Consumer(address(this));
+        // B= new Basket(address(this));
 
-        emit fcbComplete(address(this), address(F), address(C), address(B));
+        // emit fcbComplete(address(this), address(F), address(C), address(B));
+        initOwner = msg.sender;
     }
 
-
+    function setFCB(address _f, address _c, address _b) external{
+        require(msg.sender == initOwner);
+        F = IFarmer(_f);
+        C = IConsumer(_c);
+        B = IBasket(_b);
+        initOwner = address(1337);
+    }
     /// ### Modifiers ##################
 
 
@@ -75,6 +94,7 @@ contract Area {
             areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
             farmChain[msg.sender] = address(uint160(globalId));
 
+            // mint area not farmer
             require( _mintFarmer(msg.sender, globalId, farmerUri));
              
             emit newAreaCreated(globalId, msg.sender, globalId);
@@ -90,6 +110,7 @@ contract Area {
             emit newFarmerJoinedArea(_areaID, msg.sender, globalId);
             return farmerUri;
         } else {
+            emit FailedToJoin(_areaID, msg.sender);
             revert("Uninvited");
         }
     }
@@ -106,17 +127,17 @@ contract Area {
         emit newFarmerNominatedForArea(_area, msg.sender, _newFarmer);
     }
 
-    function _changeCustumAreaRules(uint256 _areaID, address _newRulesAddress) external returns(bool) {
-        require(farmChain[msg.sender] == address(uint160(_areaID)), "UnAuth");
+    // function _changeCustumAreaRules(uint256 _areaID, address _newRulesAddress) external returns(bool) {
+    //     require(farmChain[msg.sender] == address(uint160(_areaID)), "UnAuth");
 
-        areaIdCustomRulesContract[_areaID] = _newRulesAddress;
-    }
+    //     areaIdCustomRulesContract[_areaID] = _newRulesAddress;
+    // }
 
-    function _changeAreaGovernor(uint256 _areaID, address _govAddress) external returns(bool) {
-        require(farmChain[msg.sender] == address(uint160(_areaID)) || farmChain[msg.sender] == address(0), "UnAuth");
+    // function _changeAreaGovernor(uint256 _areaID, address _govAddress) external returns(bool) {
+    //     require(farmChain[msg.sender] == address(uint160(_areaID)) || farmChain[msg.sender] == address(0), "UnAuth");
         
-        farmChain[_govAddress] = farmChain[_govAddress] == address(0) ? address(uint160(_areaID)) : address(0);
-    } 
+    //     farmChain[_govAddress] = farmChain[_govAddress] == address(0) ? address(uint160(_areaID)) : address(0);
+    // } 
 
     /// ### Private ##################
     function __customRulesBefore(uint256 areaId, bytes4 funcSing) private returns (bool) {

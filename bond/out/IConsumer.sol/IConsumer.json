@@ -330,10 +330,10 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IConsumer.sol",
-    "id": 24320,
+    "id": 24518,
     "exportedSymbols": {
       "IConsumer": [
-        24319
+        24517
       ],
       "IERC165": [
         21210
@@ -346,7 +346,7 @@
     "src": "39:350:24",
     "nodes": [
       {
-        "id": 24307,
+        "id": 24505,
         "nodeType": "PragmaDirective",
         "src": "39:24:24",
         "literals": [
@@ -357,28 +357,28 @@
         ]
       },
       {
-        "id": 24308,
+        "id": 24506,
         "nodeType": "ImportDirective",
         "src": "65:67:24",
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "file": "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 24320,
+        "scope": 24518,
         "sourceUnit": 20823,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 24319,
+        "id": 24517,
         "nodeType": "ContractDefinition",
         "src": "134:255:24",
         "nodes": [
           {
-            "id": 24318,
+            "id": 24516,
             "nodeType": "FunctionDefinition",
             "src": "318:68:24",
             "documentation": {
-              "id": 24311,
+              "id": 24509,
               "nodeType": "StructuredDocumentation",
               "src": "173:140:24",
               "text": "@notice returns the token uri for consumer metadata storage location\n @param id id of the token for which it retrieves string uri"
@@ -390,17 +390,17 @@
             "name": "tokenURI",
             "nameLocation": "327:8:24",
             "parameters": {
-              "id": 24314,
+              "id": 24512,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24313,
+                  "id": 24511,
                   "mutability": "mutable",
                   "name": "id",
                   "nameLocation": "344:2:24",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24318,
+                  "scope": 24516,
                   "src": "336:10:24",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -409,7 +409,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 24312,
+                    "id": 24510,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "336:7:24",
@@ -424,17 +424,17 @@
               "src": "335:12:24"
             },
             "returnParameters": {
-              "id": 24317,
+              "id": 24515,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24316,
+                  "id": 24514,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 24318,
+                  "scope": 24516,
                   "src": "371:13:24",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -443,7 +443,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 24315,
+                    "id": 24513,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "371:6:24",
@@ -457,7 +457,7 @@
               ],
               "src": "370:15:24"
             },
-            "scope": 24319,
+            "scope": 24517,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -467,13 +467,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 24309,
+              "id": 24507,
               "name": "IERC721",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 20822,
               "src": "157:7:24"
             },
-            "id": 24310,
+            "id": 24508,
             "nodeType": "InheritanceSpecifier",
             "src": "157:7:24"
           }
@@ -483,13 +483,13 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          24319,
+          24517,
           20822,
           21210
         ],
         "name": "IConsumer",
         "nameLocation": "144:9:24",
-        "scope": 24320,
+        "scope": 24518,
         "usedErrors": []
       }
     ],

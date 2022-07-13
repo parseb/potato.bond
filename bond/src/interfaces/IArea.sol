@@ -16,7 +16,7 @@ interface IArea {
     function belongsTo(address who, uint256 areaId) external view returns (bool belongs);
 
     /// @notice this function might make you a farmer
-    /// @param areaId the area in which you were nominated as a farmer
+    /// @param areaId the area in which you were nominated as a farmer pass 0 to create new area
     function becomeFarmer(uint256 areaId) external view returns(uint256 farmerID);
 
 }

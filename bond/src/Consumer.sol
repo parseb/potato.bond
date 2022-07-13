@@ -5,6 +5,12 @@ import "solmate/tokens/ERC721.sol";
 import "solmate/auth/Owned.sol";
 
 
+struct C {
+    uint256 area_id;
+    uint256[2] balances; // [ Pending , Claimed ]
+    string data_url;
+}
+
 contract Consumer is ERC721("Consumer", "EATS"), Owned(msg.sender) {
 
 
