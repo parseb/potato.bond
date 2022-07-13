@@ -17,10 +17,8 @@ struct A {
     uint256[3] FCB; // [ F , C , B ] nr of
 }
 
-
 // is ERC1155("https://potato.bond/api/v1/{id}")
-contract Area  {
-    
+contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
 
     /// ### Storage ##################
     string constant base_uri = "https://potato.bond/api/v1/";
@@ -31,8 +29,7 @@ contract Area  {
     IConsumer C;
     IBasket B;
     
-    mapping(uint256 => address) areaIdCustomRulesContract;
-    mapping(uint256 => address) areaGovernor; /// @dev alternative: isFarmer[0[InArea OR Gov == CustomRules 
+    mapping(uint256 => A) getAreaById; 
     mapping(uint256 => uint256[1157920892373161954235709850086879078532699830619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
     mapping(address => address) farmChain;
 
@@ -46,8 +43,8 @@ contract Area  {
     event newFarmerJoinedArea(uint256 indexed _areaID, address indexed _who, uint256 farmerid);
     event newAreaCreated(uint256 indexed _areaID, address indexed _byWho, uint256 farmerid);
     event newFarmerNominatedForArea(uint256 indexed _areaID, address indexed _bywho, address nominated);
-    event FailedToJoin(uint256 indexed _areaID, address _sender); 
-
+    event FailedToJoinOrBecome(uint256 indexed _areaID, address _sender); 
+    event plusOne(uint256 _gid);
 
     constructor() {
         // /// @dev reconsider I ! store cc
@@ -76,41 +73,49 @@ contract Area  {
         require(__customRulesAfter(_areaID, msg.sig));
     }
 
-
     /// ### Errors ##################
 
     /// ### Public ##################
 
     /// ### External ##################
+
     function becomeFarmer(uint256 _areaID) external returns (string memory farmerUri) {
         require(! belongsTo(msg.sender, _areaID), "Already in");
         require(_areaID <= globalId, "Invalid Id");
 
-        globalIncrement();
-
-        farmerUri = string.concat(base_uri, string(abi.encodePacked(globalId)));
         
         if(_areaID == 0) {
-            areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
             farmChain[msg.sender] = address(uint160(globalId));
+            
+            /// @dev duplicate balance check reconsider
+            farmerUri = _makeFarmer();
+            bytes  memory data = bytes(abi.encodePacked(msg.sender));
+            // mint area
+            _mint(msg.sender, 0, 1,data);
+            areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
 
-            // mint area not farmer
-            require( _mintFarmer(msg.sender, globalId, farmerUri));
+            // assign area
              
             emit newAreaCreated(globalId, msg.sender, globalId);
             return farmerUri;
         }
 
-        if (belongsTo(farmChain[msg.sender], _areaID)) 
+        else if (belongsTo(farmChain[msg.sender], _areaID)) 
         {
             areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
-             /// Call Farmer to mint to msg.sender
-            require( _mintFarmer(msg.sender, globalId, farmerUri));
-            
+
+             /// if no farmer nft, mints
+            farmerUri = _makeFarmer();
+
+            bytes  memory data = bytes(abi.encodePacked(msg.sender));
+            // mint area
+            _mint(msg.sender, 0, 1,data);
+            areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
+
             emit newFarmerJoinedArea(_areaID, msg.sender, globalId);
             return farmerUri;
         } else {
-            emit FailedToJoin(_areaID, msg.sender);
+            emit FailedToJoinOrBecome(_areaID, msg.sender);
             revert("Uninvited");
         }
     }
@@ -120,7 +125,7 @@ contract Area  {
         return 1;
     }
 
-    function nominateFarmer(address _newFarmer, uint256 _area) external  {
+    function inviteFarmer(address _newFarmer, uint256 _area) external  {
         require(farmChain[_newFarmer] == address(0) && belongsTo(msg.sender, _area));
         /// allows multiple nominations
         farmChain[_newFarmer] = msg.sender;
@@ -139,6 +144,22 @@ contract Area  {
     //     farmChain[_govAddress] = farmChain[_govAddress] == address(0) ? address(uint160(_areaID)) : address(0);
     // } 
 
+
+    /// ### Override ##################
+
+     function _mint(
+        address to,
+        uint256 id,
+        uint256 amount,
+        bytes memory data
+    ) internal override (ERC1155) {
+
+        globalIncrement();
+        id = globalId;
+
+        super._mint(to,id,amount,data);
+    }
+
     /// ### Private ##################
     function __customRulesBefore(uint256 areaId, bytes4 funcSing) private returns (bool) {
         true;
@@ -148,22 +169,32 @@ contract Area  {
         true;
     }
 
-    function globalIncrement() private returns (uint256) {
-        unchecked { ++ globalId; }
+    function _makeFarmer() private returns (string memory fU) {
+        if(F.balanceOf(msg.sender) == 0) {
+                fU = string.concat(base_uri, string(abi.encodePacked(globalId)));
+                globalIncrement();
+                F.mintFarmer(msg.sender, globalId, fU); 
+            }
     }
 
-    function _mintFarmer(address _becomesFarmer, uint256 _id, string memory _uri) private returns (bool) {
-        return F.mintFarmer(_becomesFarmer, _id, _uri);
+    function globalIncrement() private returns (uint256) {
+        unchecked { ++ globalId; }
+        emit plusOne(globalId);
     }
+
+
 
     /// ### View ##################
 
-        function belongsTo(address who, uint256 areaId) public view returns (bool) {
-            if (areaParticipantId[areaId][uint256(uint160(who))] != 0) return true; 
-        }
+    function belongsTo(address who, uint256 areaId) public view returns (bool) {
+        if (areaParticipantId[areaId][uint256(uint160(who))] != 0) return true; 
+    }
 
-        function getFCB() external view returns (address,address,address) {
-            return (address(F), address(B), address(C));
-        }
+    function getFCB() external view returns (address,address,address) {
+        return (address(F), address(B), address(C));
+    }
 
+    function getArea(uint256 id) public view returns (A memory) {
+        return getAreaById[id];
+    }
 }

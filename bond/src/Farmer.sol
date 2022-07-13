@@ -25,11 +25,9 @@ contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
         return farmerIdURI[id];
     }
 
-    function mintFarmer(address _to, uint256 _id, string memory _uri) external onlyOwner() returns(bool s) {
-        uint b0 = balanceOf(_to);
-        farmerIdURI[_id] = _uri;
+    function mintFarmer(address _to, uint256 _id, string memory _uri) external onlyOwner() {
         _safeMint(_to, _id);
-        s= (b0 < balanceOf(_to));
+        farmerIdURI[_id] = _uri;
     } 
 
 
@@ -42,8 +40,11 @@ contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
         uint256 id
     ) public override {
         if (to != address(0) || from != address(0)) revert("Role not transferable");
-
         super.transferFrom(from,to,id);
+    } 
+
+    function _mint(address to, uint256 id) internal override {
+        _balanceOf[to] == 0 ? super._mint(to, id) : revert("is farmer");
     } 
 
     function approve(address spender, uint256 id) public override {

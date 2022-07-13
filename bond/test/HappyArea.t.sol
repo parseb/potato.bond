@@ -64,10 +64,10 @@ contract ContractTest is Test {
         assertTrue(gId == 0);
         vm.prank(aFarmer);
         A.becomeFarmer(0);
-        assertTrue(A.globalId() == 1);
+        assertTrue(A.globalId() == 2);
         vm.prank(bFarmer);
         A.becomeFarmer(0);
-        assertTrue(A.globalId() == 2);
+        assertTrue(A.globalId() == 4);
 
         vm.prank(cFarmer);
         vm.expectRevert("Uninvited");
@@ -76,34 +76,34 @@ contract ContractTest is Test {
         vm.expectRevert("Invalid Id");
         A.becomeFarmer(9001);
 
-        assertTrue(A.belongsTo(aFarmer,1), "Farmer not belonging");
+        assertTrue(A.belongsTo(aFarmer,2), "Farmer not belonging");
 
 
         vm.prank(aFarmer);
-        A.nominateFarmer(cFarmer, 1);
+        A.inviteFarmer(cFarmer, 2);
 
-        assertTrue(A.belongsTo(aFarmer,1), "Farmer not belonging");
+        assertTrue(A.belongsTo(aFarmer,2), "Farmer not belonging");
         
         vm.prank(cFarmer);
         assertTrue(F.balanceOf(cFarmer) == 0, "Is farmer Already");
         vm.prank(cFarmer);
-        A.becomeFarmer(1);
+        A.becomeFarmer(2);
         vm.prank(cFarmer);
         vm.expectRevert("Already in");
-        A.becomeFarmer(1);
+        A.becomeFarmer(2);
         
         vm.prank(address(999));
         vm.expectRevert("Uninvited");
         A.becomeFarmer(1);
         
         vm.prank(cFarmer);
-        A.nominateFarmer(address(999), 1);
+        A.inviteFarmer(address(999), 2);
         vm.prank(address(999));
-        A.becomeFarmer(1);
+        A.becomeFarmer(2);
 
         vm.prank(address(999));
         vm.expectRevert("Already in");
-        A.becomeFarmer(1);
+        A.becomeFarmer(2);
 
 
     }
