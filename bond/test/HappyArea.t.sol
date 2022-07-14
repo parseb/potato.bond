@@ -40,6 +40,7 @@ contract ContractTest is Test {
     IConsumer C;
     IBasket B;
 
+
     function setUp() public {
         vm.prank(theOwner);
         A = new Area();
@@ -56,20 +57,40 @@ contract ContractTest is Test {
         B= IBasket(b);
         
         gId = A.globalId();
+
     }
 
-
-
-    function testBecomesFarmer() public {
+    function aF() internal returns (bool) {
         assertTrue(gId == 0);
         vm.prank(aFarmer);
         A.becomeFarmer(0);
         assertTrue(A.globalId() == 2);
         assertTrue(A.belongsTo(aFarmer, 2));
+        assertTrue(F.balanceOf(aFarmer) > 0, "Failed to mint" );
+        uint aBalance1 = A.balanceOf(aFarmer,3);
+        return ( aBalance1 > 1 && A.belongsTo(aFarmer, 2));
+    }
+
+    function testBecomesFarmer() public {
+        bytes memory placeholder = bytes("placehoder");
+        assertTrue(gId == 0);
+        vm.prank(aFarmer);
+        A.becomeFarmer(0);
+        assertTrue(A.globalId() == 2);
+        assertTrue(A.belongsTo(aFarmer, 2));
+        assertTrue(F.balanceOf(aFarmer) > 0, "Failed to mint" );
+        uint aBalance1 = A.balanceOf(aFarmer,3);
+        assertTrue(aBalance1 > 1, "no balance or 3 is Area" );
+
+        vm.prank(aFarmer);
+        A.safeTransferFrom(aFarmer,cFarmer,3,999, placeholder );
+        assertTrue(aBalance1 > A.balanceOf(aFarmer,3), "balance check failed");
+
         vm.prank(bFarmer);
         A.becomeFarmer(0);
         assertTrue(A.globalId() == 4);
         assertTrue(A.belongsTo(bFarmer, 4));
+        assertTrue(A.balanceOf(bFarmer, 5)> 111, "No area token balance");
 
         vm.prank(cFarmer);
         vm.expectRevert("Uninvited");
@@ -89,6 +110,15 @@ contract ContractTest is Test {
         vm.prank(cFarmer);
         A.becomeFarmer(2);
         assertTrue(A.belongsTo(cFarmer,2), "cFarmer not belonging");
+        assertTrue(A.balanceOf(cFarmer, 3)> 111, "cFarmer does not have Area token balance after joining" );
+        
+        aBalance1 = A.balanceOf(aFarmer,3);
+        assertTrue(aBalance1 > 1, "no balance or 3 is Area" );
+        vm.prank(aFarmer);
+        A.safeTransferFrom(aFarmer,cFarmer,3,999, placeholder );
+        assertTrue(aBalance1 > A.balanceOf(aFarmer,3), "balance check failed");
+
+
         vm.prank(cFarmer);
         vm.expectRevert("Already in");
         A.becomeFarmer(2);
@@ -106,44 +136,62 @@ contract ContractTest is Test {
         vm.expectRevert("Already in");
         A.becomeFarmer(2);
 
+        /// already farmer, can't be consumer in same area
+        vm.prank(aFarmer);
+        vm.expectRevert("Already in or farmer");
+        A.joinAsConsumer(2);
     }
 
 
-    function testChangesGovernor() public {
-        assertTrue(false);
-    }
-
-    function testChangesRulesContract() public {
-        assertTrue(false);
-    }
-
-    function testRolesNotTransferable() public {
-        assertTrue(false);
-    }
-
-    function testCreatesArea() public {
-        assertTrue(false);
-    }
-
-    function testCreatesBasket() public {
-        assertTrue(false);
-    }
 
     function testBecomesConsumer() public {
-        assertTrue(false);
+        assertTrue(aF(), "failed to setup area and aFarmer");
+        vm.startPrank(aConsummer);
+        vm.expectRevert("Area must exist");
+        A.joinAsConsumer(52);
+
+        A.joinAsConsumer(1);
+        assertTrue(A.belongsTo(aConsummer, 1),"Should Belong");
+        assertTrue(C.balanceOf(aConsummer) == 1,"should have Consummer nft");
+        vm.stopPrank();
+
     }
 
-    function testBuysBasket() public {
-        assertTrue(false);
-    }
+    // function testChangesGovernor() public {
+    //     assertTrue(false);
+    // }
 
-    function testTransfersBasket() public {
-        assertTrue(false);
-    }
+    // function testChangesRulesContract() public {
+    //     assertTrue(false);
+    // }
 
-    function testRedeemsBasket() public {
-        assertTrue(false);
-    }
+    // function testRolesNotTransferable() public {
+    //     assertTrue(false);
+    // }
+
+    // function testCreatesArea() public {
+    //     assertTrue(false);
+    // }
+
+    // function testCreatesBasket() public {
+    //     assertTrue(false);
+    // }
+
+    // function testBecomesConsumer() public {
+    //     assertTrue(false);
+    // }
+
+    // function testBuysBasket() public {
+    //     assertTrue(false);
+    // }
+
+    // function testTransfersBasket() public {
+    //     assertTrue(false);
+    // }
+
+    // function testRedeemsBasket() public {
+    //     assertTrue(false);
+    // }
 
 
 

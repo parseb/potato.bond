@@ -7,6 +7,7 @@ import "openzeppelin-contracts/contracts/token/ERC1155/ERC1155.sol";
 import "./interfaces/IFarmer.sol";
 import "./interfaces/IConsumer.sol";
 import "./interfaces/IBasket.sol";
+import "./interfaces/IArea.sol";
 
 
 struct A {
@@ -18,7 +19,7 @@ struct A {
 }
 
 // is ERC1155("https://potato.bond/api/v1/{id}")
-contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
+contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
     /// ### Storage ##################
     string constant base_uri = "https://potato.bond/api/v1/";
@@ -33,9 +34,14 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
     mapping(uint256 => A) getAreaById; 
     mapping(uint256 => uint256[1157920892373161954235709850086879078532699830619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
     mapping(address => address) farmChain;
+    mapping(uint256 => uint256) totalSupply; // Increments for fungible. Is 1 for Area.
+
     uint256 public globalId;
     
     /// ### Errors ##################
+
+    error areaNotTokenTransferable(); 
+    error RuleContractReturnedFalse();
 
     /// ### Events ##################
 
@@ -102,6 +108,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         {
             farmerUri = _makeFarmer();
             bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
+
             areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
 
             _mint(msg.sender, _areaID +1, ONE, data);
@@ -115,11 +122,27 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         }
     }
 
-    function becomeCustomer(uint256 _areaID) external returns (uint256 farmerId)  {
-        globalIncrement();
-        return 1;
+    function joinAsConsumer(uint _areaID) external returns (bool s) {
+        require(! belongsTo(msg.sender, _areaID), "Already in or farmer");
+        A memory area = getAreaById[_areaID];
+        s = C.balanceOf(msg.sender) == 1;
+        require( area.area_id > 1,"Area must exist");
+
+        if (s) {
+            addIDtoArea(C.getIdOfConsummer(msg.sender), _areaID);
+            unchecked { ++ getAreaById[_areaID].fcb[1]; }
+        } else {
+
+            require( _makeConsummer(), "failed to make consummer");
+            addIDtoArea(C.getIdOfConsummer(msg.sender), _areaID);
+            unchecked { ++ getAreaById[_areaID].fcb[1]; }
+        }
+        s = C.balanceOf(msg.sender) > 0 && belongsTo(msg.sender, _areaID);
     }
 
+
+
+    /// @inheritdoc IArea
     function inviteFarmer(address _newFarmer, uint256 _area) external  {
         require(farmChain[_newFarmer] == address(0) && belongsTo(msg.sender, _area));
 
@@ -128,10 +151,8 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         emit newFarmerNominatedForArea(_area, msg.sender, _newFarmer);
     }
 
-    function changeAreaGovernor(uint _areaID, address _newGov) external  onlyAreaGovernor(_areaID) returns(address) {
-        require(_newGov != address(0), "Can't do 0");
-        getAreaById[_areaID].governor = _newGov;
-        emit changedGovernorOfAreaTo(_areaID, _newGov);
+    function addIDtoArea(uint _id, uint _area) private {
+        areaParticipantId[_area][uint256(uint160(msg.sender))] = _area;
     }
 
     function changeRulesOfArea(uint _areaID, address _newRulesAddress) external onlyAreaGovernor(_areaID) {
@@ -152,21 +173,69 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
         if (id == 0) {
             globalIncrement();
             id = globalId;
+            totalSupply[id] = 1;
          }
+        totalSupply[id] = amount;
         super._mint(to,id,amount,data);
+    }
+
+    // function _afterTokenTransfer(
+    //     address operator,
+    //     address from,
+    //     address to,
+    //     uint256[] memory ids,
+    //     uint256[] memory amounts,
+    //     bytes memory data
+    // ) internal override {
+        
+    // }
+
+    function _beforeTokenTransfer(
+        address operator,
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) internal override {
+        // if(from != address(0)) {
+        // uint x;
+        // for(x; x < ids.length;) {
+            
+        //     if (totalSupply[ids[x]] == 1) revert areaNotTokenTransferable();
+        //     (bool s, ) = getAreaById[x+1].rule_contract != address(0)  ? getAreaById[ids[x]-1].rule_contract.call(abi.encodePacked(msg.sig, operator, from, to, ids, amounts, data)) : (true, data);
+        //     if (!s) revert RuleContractReturnedFalse();
+        //     unchecked { ++ x; }
+        // }
+        // }
     }
 
     /// ### Private ##################
 
+    function changeAreaGovernor(uint _areaID, address _newGov) private  onlyAreaGovernor(_areaID) returns(address) {
+        require(_newGov != address(0), "Can't do 0");
+        getAreaById[_areaID].governor = _newGov;
+        emit changedGovernorOfAreaTo(_areaID, _newGov);
+    }
+
+    /// @dev @todo change to id returns.. maybe.
     function _makeFarmer() private returns (string memory fU) {
         if(F.balanceOf(msg.sender) == 0) {
-                fU = string.concat(base_uri, string(abi.encodePacked(globalId)));
                 globalIncrement();
-                F.mintFarmer(msg.sender, globalId, fU); 
+                F.mintFarmer(msg.sender, globalId, fU);
+                fU = string.concat(base_uri, string(abi.encodePacked(globalId)));
+
+
             } else {
                 fU = string.concat(base_uri, string(abi.encodePacked(F.getIdOf(msg.sender))));
             }
     }
+
+    function _makeConsummer() private returns (bool) {
+        C.mintConsumer(msg.sender, globalId, string.concat(base_uri, string(abi.encodePacked(globalId))));
+        globalIncrement();
+        return (C.balanceOf(msg.sender) == 1);
+     }
 
     function globalIncrement() private returns (uint256) {
         unchecked { ++ globalId; }
@@ -182,10 +251,14 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}") {
     }
 
     function getFCB() external view returns (address,address,address) {
-        return (address(F), address(B), address(C));
+        return (address(F), address(C), address(B));
     }
 
     function getArea(uint256 id) public view returns (A memory) {
         return getAreaById[id];
+    }
+
+    function getAreaMetaData(uint256 id) public view returns (string memory) {
+        getAreaById[id].data_url;
     }
 }
