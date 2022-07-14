@@ -10,4 +10,7 @@ interface IConsumer is IERC721 {
     /// @param id id of the token for which it retrieves string uri
     function tokenURI(uint256 id) external view returns (string memory);
 
+    function mintConsumer(address whoBecomes, uint id, string memory uri) external;
+
+    function getIdOfConsummer(address who) external returns (uint);
 }

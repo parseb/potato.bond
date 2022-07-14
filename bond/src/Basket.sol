@@ -16,7 +16,7 @@ contract Basket is ERC721("Farm Basket","POTATO"), Owned(msg.sender) {
     }
 
 
-    function tokenURI(uint256 id) public view override(ERC721) returns (string memory) {
+    function tokenURI(uint256 id) public view override(ERC721) returns (string memory farmerUri) {
         return basketIdURI[id];
     }
 

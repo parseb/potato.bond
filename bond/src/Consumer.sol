@@ -15,7 +15,7 @@ contract Consumer is ERC721("Consumer", "EATS"), Owned(msg.sender) {
 
 
     mapping(uint256 => string) consumerIdURI;
-
+    mapping(address => uint) consummerById;
     constructor(address _Area) {
         owner = _Area;
     }
@@ -27,6 +27,7 @@ contract Consumer is ERC721("Consumer", "EATS"), Owned(msg.sender) {
 
     function mintConsumer(address _to, uint256 _id, string memory _uri) external onlyOwner() returns(bool) {
         _safeMint(_to, _id);
+        consummerById[_to] = _id;
         consumerIdURI[_id] = _uri;
     } 
 
@@ -48,6 +49,10 @@ contract Consumer is ERC721("Consumer", "EATS"), Owned(msg.sender) {
 
     function setApprovalForAll(address operator, bool approved) public override {
         revert("C'est ne pas possible.");
+     }
+
+     function getIdOfConsummer(address _c) public view returns (uint) {
+        return consummerById[_c];
      }
 
 }
