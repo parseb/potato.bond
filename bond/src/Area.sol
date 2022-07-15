@@ -9,6 +9,7 @@ import "./interfaces/IConsumer.sol";
 import "./interfaces/IBasket.sol";
 import "./interfaces/IArea.sol";
 
+// import "ERC721/IERC721A.sol";
 
 struct A {
     uint256 area_id;
@@ -36,10 +37,10 @@ struct sC {
 
 struct sB {
     uint256 area_id;
+    uint256 price;
     address farmer_address;
     address consumer_address;
-    uint256 price;
-    uint256 erc_address;
+    address erc20;
     //state; // farmer minted and owned 1/0, bought and unclaimed 1/1, bouth and claimed 0/1 & burn
 }
 
@@ -66,7 +67,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     mapping(address => address) farmChain;
     mapping(uint256 => uint256) totalSupply; // Increments for fungible. Is 1 for Area.
 
-    uint256 public globalId;
+    uint256 public globalId; // @dev duplicate view retrieval fx
     
     /// ### Errors ##################
 
@@ -82,8 +83,8 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     event FailedToJoinOrBecome(uint256 indexed _areaID, address _sender); 
     event plusOne(uint256 _gid);
     event changedGovernorOfAreaTo(uint indexed _areaID, address indexed _to);
-    event changedRulesOfArea(uint256 indexed areaID, address indexed _newRulesAddress);
-
+    event changedRulesOfArea(uint256 indexed _areaID, address indexed _newRulesAddress);
+    event newBasket(uint indexed _areaID, address indexed _farmer, uint gID);
     constructor() { initOwner = msg.sender; }
     
     function setFCB(address _f, address _c, address _b) external {
@@ -171,8 +172,33 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         s = C.balanceOf(msg.sender) > 0 && belongsTo(msg.sender, _areaID);
     }
 
-    function mintBaskets(uint _araeId, uint amount, uint price, address erc20, string memory CID) external returns (bool) {
-        return true;
+
+// struct sB {
+//     uint256 area_id;
+//     address farmer_address;
+//     address consumer_address;
+//     uint256 price;
+//     uint256 erc_address;
+//     //state; // farmer minted and owned 1/0, bought and unclaimed 1/1, bouth and claimed 0/1 & burn
+// }
+
+    function mintBaskets(uint _areaID, uint amount, uint price, address erc20, string memory CID) external returns (uint lastId) {
+        require(belongsTo(msg.sender,_areaID), "Not in Area");
+        require(amount * price * uint160(erc20) > 1, "ZeroVal not allowed");
+        /// @dev consider explicit "to" basket owner at mint
+        require ( B.printBasket(globalId, amount, msg.sender, CID), "Mint f");
+        lastId = globalId;
+
+        for(globalId; globalId < (amount + lastId);) { 
+            getBasketById[globalId].area_id = _areaID;
+            getBasketById[globalId].farmer_address = msg.sender;
+            getBasketById[globalId].price = price;
+            getBasketById[globalId].erc20 = erc20; /// @dev maybe check that or add to area
+            
+            emit newBasket(_areaID, msg.sender, globalId);
+            globalIncrement();
+        }
+
     }
 
 
@@ -292,5 +318,9 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
     function getAreaMetaData(uint256 id) public view returns (string memory) {
         getAreaById[id].data_url;
+    }
+
+    function getCurrentGId() external view returns (uint256) {
+        return globalId;
     }
 }
