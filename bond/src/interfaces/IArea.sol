@@ -35,6 +35,12 @@ interface IArea {
     ///         a basket is a non fungible token that stands in as a promise to produce the goods it represents to its bearer
     ///         within the advertised terms outlined in the metadata 
     ///         such as specific products and quantities, claimable between the data of & date of
-    function mintBaskets(uint _areaID, uint amount, uint price, address erc20, string memory CID) external returns(uint);
+    function mintBaskets(uint _areaID, uint amount, uint price, address erc20,  uint[2] memory _redeamable, string memory CID) external returns(uint);
 
+
+    function basketTransferCallBack(uint _basketID, bytes calldata data) external returns (bool);
+}
+
+interface IRulerContract {
+    function basketTransfer(uint basketID, bytes calldata data) external returns (bool);
 }
