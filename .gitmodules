@@ -7,3 +7,6 @@
 [submodule "bond/lib/solmate"]
 	path = bond/lib/solmate
 	url = https://github.com/Rari-Capital/solmate
+[submodule "bond/lib/ERC721A"]
+	path = bond/lib/ERC721A
+	url = https://github.com/chiru-labs/ERC721A
