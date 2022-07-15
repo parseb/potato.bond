@@ -12,10 +12,35 @@ import "./interfaces/IArea.sol";
 
 struct A {
     uint256 area_id;
+    uint256[3] fcb; // [ Farmers , Consummers , Baskets ] nr of
     address governor;
     address rule_contract;
     string data_url;
-    uint256[3] fcb; // [ F , C , B ] nr of
+    string ipfs;
+}
+
+struct sF {
+    uint256 area_id;
+    uint256 issued;
+    uint256 fulfilled;
+    address farmerAddress;
+    //address referred_by; farmchain[farmerAddress] = refferedBy; if 0 Area root
+    string ipfs;
+}
+
+struct sC {
+    uint256 area_id;
+    uint256[2] p_c;
+    address ipfs; 
+}
+
+struct sB {
+    uint256 area_id;
+    address farmer_address;
+    address consumer_address;
+    uint256 price;
+    uint256 erc_address;
+    //state; // farmer minted and owned 1/0, bought and unclaimed 1/1, bouth and claimed 0/1 & burn
 }
 
 // is ERC1155("https://potato.bond/api/v1/{id}")
@@ -31,7 +56,12 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     IConsumer C;
     IBasket B;
     
-    mapping(uint256 => A) getAreaById; 
+    mapping(uint256 => A) getAreaById;
+    mapping(uint256 => sF) getFarmerById;
+    mapping(uint256 => sC) getConsummerById;
+    mapping(uint256 => sB) getBasketById;
+    /// @dev reconsider ^
+
     mapping(uint256 => uint256[1157920892373161954235709850086879078532699830619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
     mapping(address => address) farmChain;
     mapping(uint256 => uint256) totalSupply; // Increments for fungible. Is 1 for Area.
@@ -80,7 +110,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
     /// ### External ##################
 
-    function becomeFarmer(uint256 _areaID) external returns (string memory farmerUri) {
+    function becomeFarmer(uint256 _areaID, string memory ipfsCID) external returns (string memory farmerUri) {
         require(! belongsTo(msg.sender, _areaID), "Already in");
         require(_areaID <= globalId, "Invalid Id");
 
@@ -88,7 +118,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         if(_areaID == 0) {
             farmChain[msg.sender] = address(uint160(globalId+2));
 
-            farmerUri = _makeFarmer();
+            farmerUri = _makeFarmer(ipfsCID);
 
             getAreaById[globalId].area_id = globalId+1;
             getAreaById[globalId].governor = msg.sender;
@@ -106,7 +136,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
         else if (belongsTo(farmChain[msg.sender], _areaID)) 
         {
-            farmerUri = _makeFarmer();
+            farmerUri = _makeFarmer(ipfsCID);
             bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
 
             areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
@@ -122,7 +152,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         }
     }
 
-    function joinAsConsumer(uint _areaID) external returns (bool s) {
+    function joinAsConsumer(uint _areaID, string memory _ipfs) external returns (bool s) {
         require(! belongsTo(msg.sender, _areaID), "Already in or farmer");
         A memory area = getAreaById[_areaID];
         s = C.balanceOf(msg.sender) == 1;
@@ -132,14 +162,18 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
             addIDtoArea(C.getIdOfConsummer(msg.sender), _areaID);
             unchecked { ++ getAreaById[_areaID].fcb[1]; }
         } else {
-
-            require( _makeConsummer(), "failed to make consummer");
-            addIDtoArea(C.getIdOfConsummer(msg.sender), _areaID);
+            require( _makeConsummer(_ipfs), "failed to make consummer");
+            uint consummerID = C.getIdOfConsummer(msg.sender);
+            addIDtoArea(consummerID, _areaID);
             unchecked { ++ getAreaById[_areaID].fcb[1]; }
+            
         }
         s = C.balanceOf(msg.sender) > 0 && belongsTo(msg.sender, _areaID);
     }
 
+    function mintBaskets(uint _araeId, uint amount, uint price, address erc20, string memory CID) external returns (bool) {
+        return true;
+    }
 
 
     /// @inheritdoc IArea
@@ -203,7 +237,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         // for(x; x < ids.length;) {
             
         //     if (totalSupply[ids[x]] == 1) revert areaNotTokenTransferable();
-        //     (bool s, ) = getAreaById[x+1].rule_contract != address(0)  ? getAreaById[ids[x]-1].rule_contract.call(abi.encodePacked(msg.sig, operator, from, to, ids, amounts, data)) : (true, data);
+        //     (bool s, ) = getAreaById[x+1].rule_contract != address(0)  ? getAreaById[ids[x]-1].rule_contract.call(bytes.concat4(bytes(msg.sig), bytes20(operator), bytes20(from), bytes20(to), bytes(ids), bytes(amounts), data) : (true, data);
         //     if (!s) revert RuleContractReturnedFalse();
         //     unchecked { ++ x; }
         // }
@@ -219,20 +253,18 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     }
 
     /// @dev @todo change to id returns.. maybe.
-    function _makeFarmer() private returns (string memory fU) {
+    function _makeFarmer(string memory _ipfs) private returns (string memory fU) {
         if(F.balanceOf(msg.sender) == 0) {
                 globalIncrement();
                 F.mintFarmer(msg.sender, globalId, fU);
-                fU = string.concat(base_uri, string(abi.encodePacked(globalId)));
-
-
+                fU = string.concat(base_uri, string(abi.encodePacked(globalId)) );
             } else {
-                fU = string.concat(base_uri, string(abi.encodePacked(F.getIdOf(msg.sender))));
+                fU = string.concat(base_uri, string(abi.encodePacked(globalId)));
             }
     }
 
-    function _makeConsummer() private returns (bool) {
-        C.mintConsumer(msg.sender, globalId, string.concat(base_uri, string(abi.encodePacked(globalId))));
+    function _makeConsummer(string memory _ipfs) private returns (bool) {
+        C.mintConsumer(msg.sender, globalId, _ipfs);
         globalIncrement();
         return (C.balanceOf(msg.sender) == 1);
      }

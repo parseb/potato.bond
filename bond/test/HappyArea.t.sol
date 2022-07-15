@@ -31,6 +31,8 @@ contract ContractTest is Test {
     address bFarmer = address(70);
     address cFarmer = address(77);
 
+    string ipfsPlaceholder = "02caed65cb297da311ed1fffb9c48090c7d2c1dbf39c6fc346f7c9962fc5198e";
+
     Area A;
     uint256 gId;
     Farmer Fa;
@@ -63,7 +65,7 @@ contract ContractTest is Test {
     function aF() internal returns (bool) {
         assertTrue(gId == 0);
         vm.prank(aFarmer);
-        A.becomeFarmer(0);
+        A.becomeFarmer(0,ipfsPlaceholder);
         assertTrue(A.globalId() == 2);
         assertTrue(A.belongsTo(aFarmer, 2));
         assertTrue(F.balanceOf(aFarmer) > 0, "Failed to mint" );
@@ -75,7 +77,7 @@ contract ContractTest is Test {
         bytes memory placeholder = bytes("placehoder");
         assertTrue(gId == 0);
         vm.prank(aFarmer);
-        A.becomeFarmer(0);
+        A.becomeFarmer(0,ipfsPlaceholder);
         assertTrue(A.globalId() == 2);
         assertTrue(A.belongsTo(aFarmer, 2));
         assertTrue(F.balanceOf(aFarmer) > 0, "Failed to mint" );
@@ -87,17 +89,17 @@ contract ContractTest is Test {
         assertTrue(aBalance1 > A.balanceOf(aFarmer,3), "balance check failed");
 
         vm.prank(bFarmer);
-        A.becomeFarmer(0);
+        A.becomeFarmer(0, ipfsPlaceholder);
         assertTrue(A.globalId() == 4);
         assertTrue(A.belongsTo(bFarmer, 4));
         assertTrue(A.balanceOf(bFarmer, 5)> 111, "No area token balance");
 
         vm.prank(cFarmer);
         vm.expectRevert("Uninvited");
-        A.becomeFarmer(1);
+        A.becomeFarmer(1,ipfsPlaceholder);
         vm.prank(cFarmer);
         vm.expectRevert("Invalid Id");
-        A.becomeFarmer(9001);
+        A.becomeFarmer(9001, ipfsPlaceholder);
 
         assertTrue(A.belongsTo(aFarmer,2), "aFarmer not belonging");
 
@@ -108,7 +110,7 @@ contract ContractTest is Test {
         vm.prank(cFarmer);
         assertTrue(F.balanceOf(cFarmer) == 0, "Is farmer Already");
         vm.prank(cFarmer);
-        A.becomeFarmer(2);
+        A.becomeFarmer(2, ipfsPlaceholder);
         assertTrue(A.belongsTo(cFarmer,2), "cFarmer not belonging");
         assertTrue(A.balanceOf(cFarmer, 3)> 111, "cFarmer does not have Area token balance after joining" );
         
@@ -121,25 +123,25 @@ contract ContractTest is Test {
 
         vm.prank(cFarmer);
         vm.expectRevert("Already in");
-        A.becomeFarmer(2);
+        A.becomeFarmer(2,ipfsPlaceholder);
         
         vm.prank(address(999));
         vm.expectRevert("Uninvited");
-        A.becomeFarmer(1);
+        A.becomeFarmer(1, ipfsPlaceholder);
         
         vm.prank(cFarmer);
         A.inviteFarmer(address(999), 2);
         vm.prank(address(999));
-        A.becomeFarmer(2);
+        A.becomeFarmer(2, ipfsPlaceholder);
 
         vm.prank(address(999));
         vm.expectRevert("Already in");
-        A.becomeFarmer(2);
+        A.becomeFarmer(2, ipfsPlaceholder);
 
         /// already farmer, can't be consumer in same area
         vm.prank(aFarmer);
         vm.expectRevert("Already in or farmer");
-        A.joinAsConsumer(2);
+        A.joinAsConsumer(2, ipfsPlaceholder);
     }
 
 
@@ -148,14 +150,20 @@ contract ContractTest is Test {
         assertTrue(aF(), "failed to setup area and aFarmer");
         vm.startPrank(aConsummer);
         vm.expectRevert("Area must exist");
-        A.joinAsConsumer(52);
+        A.joinAsConsumer(52, ipfsPlaceholder);
 
-        A.joinAsConsumer(1);
+        A.joinAsConsumer(1, ipfsPlaceholder);
         assertTrue(A.belongsTo(aConsummer, 1),"Should Belong");
         assertTrue(C.balanceOf(aConsummer) == 1,"should have Consummer nft");
         vm.stopPrank();
 
     }
+
+
+    function testCreatesBaskets() public {
+        assertTrue(true);
+    }
+
 
     // function testChangesGovernor() public {
     //     assertTrue(false);
