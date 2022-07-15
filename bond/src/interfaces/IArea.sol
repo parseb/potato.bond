@@ -4,6 +4,7 @@ pragma solidity >=0.8.0;
 
 interface IArea {
 
+    function getCurrentGId() external view returns (uint256);
 
     /// @notice returns the metadata storage access url provided an existing id
     /// @param areaID numeric ID of ordered area
@@ -34,6 +35,6 @@ interface IArea {
     ///         a basket is a non fungible token that stands in as a promise to produce the goods it represents to its bearer
     ///         within the advertised terms outlined in the metadata 
     ///         such as specific products and quantities, claimable between the data of & date of
-    function mintBaskets(uint _araeId, uint amount, uint price, address erc20, string memory CID) external returns(bool);
+    function mintBaskets(uint _areaID, uint amount, uint price, address erc20, string memory CID) external returns(uint);
 
 }

@@ -161,7 +161,23 @@ contract ContractTest is Test {
 
 
     function testCreatesBaskets() public {
+        //vm.assume(_aToM > 0);
         assertTrue(true);
+        assertTrue(aF(), "failed to setup area and aFarmer");
+        uint idStart = A.globalId();
+        uint amountToMint = 306;
+
+        vm.startPrank(aFarmer);
+        vm.expectRevert("Not in Area");
+        A.mintBaskets(1312,amountToMint,4334525345, address(324523), ipfsPlaceholder);
+
+        vm.expectRevert("ZeroVal not allowed");
+        A.mintBaskets(2,amountToMint,435345, address(0), ipfsPlaceholder);
+
+        A.mintBaskets(2,amountToMint,435345, address(3453450), ipfsPlaceholder);
+        assertTrue(A.globalId() == idStart + amountToMint, "id progression invariant");
+
+        vm.stopPrank();
     }
 
 
