@@ -32,6 +32,7 @@ contract ContractTest is Test {
     address cFarmer = address(77);
 
     string ipfsPlaceholder = "02caed65cb297da311ed1fffb9c48090c7d2c1dbf39c6fc346f7c9962fc5198e";
+    bytes placeholder;
 
     Area A;
     uint256 gId;
@@ -59,7 +60,7 @@ contract ContractTest is Test {
         B= IBasket(b);
         
         gId = A.globalId();
-
+        placeholder = bytes("placehoder");
     }
 
     function aF() internal returns (bool) {
@@ -74,7 +75,7 @@ contract ContractTest is Test {
     }
 
     function testBecomesFarmer() public {
-        bytes memory placeholder = bytes("placehoder");
+        
         assertTrue(gId == 0);
         vm.prank(aFarmer);
         A.becomeFarmer(0,ipfsPlaceholder);
@@ -162,20 +163,30 @@ contract ContractTest is Test {
 
     function testCreatesBaskets() public {
         //vm.assume(_aToM > 0);
-        assertTrue(true);
         assertTrue(aF(), "failed to setup area and aFarmer");
         uint idStart = A.globalId();
         uint amountToMint = 306;
-
+        uint initialBalance = B.balanceOf(aFarmer);
+        uint256[2] memory redeamableRange;
+        redeamableRange[0] = block.timestamp*2;
+        redeamableRange[1] = redeamableRange[0] *2;
         vm.startPrank(aFarmer);
         vm.expectRevert("Not in Area");
-        A.mintBaskets(1312,amountToMint,4334525345, address(324523), ipfsPlaceholder);
+        A.mintBaskets(1312,amountToMint,4334525345, address(324523),redeamableRange, ipfsPlaceholder);
+        vm.expectRevert("ZeroVal or lowTime");
+        A.mintBaskets(2,amountToMint,435345, address(0), redeamableRange, ipfsPlaceholder);
+        A.mintBaskets(2,amountToMint,435345, address(3453450), redeamableRange, ipfsPlaceholder);
 
-        vm.expectRevert("ZeroVal not allowed");
-        A.mintBaskets(2,amountToMint,435345, address(0), ipfsPlaceholder);
+        uint aBalance  = B.balanceOf(aFarmer); 
+        uint tsupply = B.totalSupply();
+        assertTrue(A.globalId() == idStart + amountToMint, "id progression");
+        assertTrue(aBalance == initialBalance + amountToMint, "1+1!=2");
 
-        A.mintBaskets(2,amountToMint,435345, address(3453450), ipfsPlaceholder);
-        assertTrue(A.globalId() == idStart + amountToMint, "id progression invariant");
+        
+        B.safeTransferFrom(aFarmer, address(1012), (idStart + amountToMint) / 2, placeholder);
+        assertTrue(B.balanceOf(aFarmer) == aBalance -1, "smth wrong with transfer or balances");
+        assertTrue(B.totalSupply() == tsupply, "transfer affects total supply");
+
 
         vm.stopPrank();
     }

@@ -41,6 +41,7 @@ struct sB {
     address farmer_address;
     address consumer_address;
     address erc20;
+    uint256[2] redeamable; // @dev do smth
     //state; // farmer minted and owned 1/0, bought and unclaimed 1/1, bouth and claimed 0/1 & burn
 }
 
@@ -182,9 +183,11 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 //     //state; // farmer minted and owned 1/0, bought and unclaimed 1/1, bouth and claimed 0/1 & burn
 // }
 
-    function mintBaskets(uint _areaID, uint amount, uint price, address erc20, string memory CID) external returns (uint lastId) {
+    function mintBaskets(uint _areaID, uint amount, uint price, address erc20, uint[2] memory _redeamable, string memory CID) external returns (uint lastId) {
         require(belongsTo(msg.sender,_areaID), "Not in Area");
-        require(amount * price * uint160(erc20) > 1, "ZeroVal not allowed");
+        require(amount * price * uint160(erc20) * _redeamable[0] * _redeamable[1] > block.timestamp, "ZeroVal or lowTime");
+        
+        
         /// @dev consider explicit "to" basket owner at mint
         require ( B.printBasket(globalId, amount, msg.sender, CID), "Mint f");
         lastId = globalId;
@@ -194,7 +197,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
             getBasketById[globalId].farmer_address = msg.sender;
             getBasketById[globalId].price = price;
             getBasketById[globalId].erc20 = erc20; /// @dev maybe check that or add to area
-            
+            getBasketById[globalId].redeamable = _redeamable; 
             emit newBasket(_areaID, msg.sender, globalId);
             globalIncrement();
         }
@@ -219,6 +222,16 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         require(_newRulesAddress.code.length > 0, "Need contract for rules.");
         getAreaById[_areaID].rule_contract = _newRulesAddress;
         emit changedRulesOfArea(_areaID, _newRulesAddress);
+    }
+
+
+    function basketTransferCallBack(uint _basketID, bytes calldata data) external returns (bool) {
+        require(msg.sender == address(B));
+        sB memory b = getBasketById[_basketID];
+        if (getAreaById[b.area_id].rule_contract == address(0)) return true;
+        /// @dev @todo ruller contract not implemented
+        return IRulerContract(getAreaById[b.area_id].rule_contract).basketTransfer(_basketID, data);        
+
     }
 
     /// ### Override ##################
