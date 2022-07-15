@@ -86,6 +86,10 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     event changedGovernorOfAreaTo(uint indexed _areaID, address indexed _to);
     event changedRulesOfArea(uint256 indexed _areaID, address indexed _newRulesAddress);
     event newBasket(uint indexed _areaID, address indexed _farmer, uint gID);
+    event NewBasketsInArea(uint indexed _areaID, address indexed _farmer, uint howmany);
+
+
+
     constructor() { initOwner = msg.sender; }
     
     function setFCB(address _f, address _c, address _b) external {
@@ -202,6 +206,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
             globalIncrement();
         }
 
+        emit NewBasketsInArea(_areaID,msg.sender, amount);
     }
 
 
