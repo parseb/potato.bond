@@ -20,7 +20,7 @@ interface IArea {
     ///         first, you can create a new area by passing areaID as 0
     ///         second, join an area by specifying its id given an existing invitation
     /// @param _areaID the area in which you were nominated as a farmer pass 0 to create new area
-    function becomeFarmer(uint256 _areaID) external returns(string memory farmerUri);
+    function becomeFarmer(uint256 _areaID, string memory CID) external returns(string memory farmerUri);
 
     /// @notice use this to invite a farmer to an area to which you
     function inviteFarmer(address _newFarmer, uint256 _area) external;
@@ -28,6 +28,12 @@ interface IArea {
     /// @notice entry point for consumers. arbitrary, area specific rules might apply,m example:
     ///         a consumer might become so associated as a result of a direct or secondary market basket acquisition
     /// @param _areaID the area you want to join
-    function joinAsConsumer(uint _areaID) external returns (bool s);
+    function joinAsConsumer(uint _areaID, string memory CID) external returns (bool s);
+
+    /// @notice function for farmers to mint basket of goods as an ERC721
+    ///         a basket is a non fungible token that stands in as a promise to produce the goods it represents to its bearer
+    ///         within the advertised terms outlined in the metadata 
+    ///         such as specific products and quantities, claimable between the data of & date of
+    function mintBaskets(uint _araeId, uint amount, uint price, address erc20, string memory CID) external returns(bool);
 
 }
