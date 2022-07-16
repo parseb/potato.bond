@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  owner: MyString
+  governor: MyString
   nrc: MyString
   nrf: MyString
   area_name: MyString
-  rules_address: MyString
+  rule_contract: MyString
   data_url: MyString
   area_id: MyString
 
 two:
-  owner: MyString
+  governor: MyString
   nrc: MyString
   nrf: MyString
   area_name: MyString
-  rules_address: MyString
+  rule_contract: MyString
   data_url: MyString
   area_id: MyString

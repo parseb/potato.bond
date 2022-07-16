@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Bellow here are just helper functions to manage app state
    */
-  signInButton = document.getElementById('sign-in');
+  signInButton = document.getElementById('sign-in-button');
   signInButton.addEventListener('click', () => signIn("metamask"));
   signOutButton = document.getElementById('sign-out');
   signOutButton.addEventListener('click', signOut);
