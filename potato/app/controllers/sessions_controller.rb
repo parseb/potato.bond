@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
       "#{request.protocol}#{request.host_with_port}",
       '1',
       {
-        statement: 'SIWE Rails Example',
+        statement: 'potato.bond sign-in',
         nonce: nonce,
         chain_id: params[:chainId]
       }

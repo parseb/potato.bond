@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :baskets
+  resources :consumers
+  resources :farmers
+  resources :areas
   root 'sessions#index'
 
   get 'profile' => 'sessions#profile', :as => 'profile'
