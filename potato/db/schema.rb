@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_11_140529) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_16_072835) do
   create_table "areas", force: :cascade do |t|
     t.string "governor"
     t.string "nrc"
@@ -19,6 +19,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_140529) do
     t.string "rule_contract"
     t.string "data_url"
     t.string "area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "baskets", force: :cascade do |t|
+    t.string "data_url"
+    t.string "farmer_address"
+    t.string "consumer_address"
+    t.string "state"
+    t.string "nft_id"
+    t.string "area_id"
+    t.string "price"
+    t.string "erc_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,6 +64,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_140529) do
     t.string "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", primary_key: "address", id: :string, force: :cascade do |t|
+    t.datetime "last_seen", precision: nil
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address"], name: "index_users_on_address", unique: true
   end
 
 end
