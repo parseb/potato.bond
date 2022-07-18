@@ -1,8 +1,14 @@
-from brownie import Area, Farmer, Basket, Consumer, accounts
+from brownie import Farmer, Basket, Consumer, accounts, interface
 
-def main():
+def deploy():
     acct = accounts.load('69')
-    Farmer.deploy(--------, {'from': acct})
-    Basket.deploy(--------, {'from': acct})
-    Consumer.deploy(--------, {'from': acct})
-    Area.deploy(--------, {'from': acct})
+    #a = Area.deploy({'from': acct})
+    areaAddress="0xf5c442e8bc9b99f7b601fddc5957de9408a738cf"
+    f =Farmer.deploy(areaAddress, {'from': acct})
+    c = Consumer.deploy(areaAddress, {'from': acct})
+    b = Basket.deploy(areaAddress, {'from': acct})
+    print("Farmer: "+ str(f), "Consumer: "+ str(c), "Basket: "+ str(b))
+    IA= interface.IArea(areaAddress)
+    IA.setFCB(f.address, c.address,b.address, {'from':acct})
+
+    

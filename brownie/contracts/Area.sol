@@ -77,17 +77,16 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
     /// ### Events ##################
 
-    event fcbComplete(address indexed _this, address _f, address _c, address _b);
-    event newFarmerJoinedArea(uint256 indexed _areaID, address indexed _who, uint256 farmerid);
-    event newAreaCreated(uint256 indexed _areaID, address indexed _byWho, uint256 farmerid);
-    event newFarmerNominatedForArea(uint256 indexed _areaID, address indexed _bywho, address nominated);
+    event fcbComplete(address indexed _this, uint indexed, uint256 indexed _gID, address _f, address _c, address _b);
+    event newFarmerJoinedArea(uint256 indexed _areaID, address indexed _who, uint256 indexed _gID);
+    event newAreaCreated(uint256 indexed _areaID, address indexed _byWho, uint256 indexed _gID,);
+    event newFarmerNominatedForArea(uint256 indexed _areaID, address indexed _bywho, address nominated, uint256 indexed _gID);
     event FailedToJoinOrBecome(uint256 indexed _areaID, address _sender); 
-    event plusOne(uint256 _gid);
-    event changedGovernorOfAreaTo(uint indexed _areaID, address indexed _to);
+    event plusOne(uint256 indexed _gid);
+    event changedGovernorOfAreaTo(uint indexed _areaID, address indexed _to, uint256 indexed _gID);
     event changedRulesOfArea(uint256 indexed _areaID, address indexed _newRulesAddress);
-    event newBasket(uint indexed _areaID, address indexed _farmer, uint gID);
-    event NewBasketsInArea(uint indexed _areaID, address indexed _farmer, uint howmany);
-
+    event newBasket(uint indexed _areaID, address indexed _farmer, uint256 indexed _gID);
+    event NewBasketsInArea(uint indexed _areaID, address indexed _farmer, uint howmany, uint256 indexed _gID,);
 
 
     constructor() { initOwner = msg.sender; }
@@ -99,7 +98,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         B = IBasket(_b);
         initOwner = address(1337);
 
-        emit fcbComplete(address(this), _f, _c, _b);
+        emit fcbComplete(address(this), 0, _f, _c, _b); // _areaID indexed to 0
     }
 
     /// ### Modifiers ##################

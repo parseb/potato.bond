@@ -18,7 +18,6 @@ import "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol";
 import "src/interfaces/IArea.sol";
 
 
-
 contract ContractTest is Test {
 
     address theOwner = address(306);
@@ -189,6 +188,23 @@ contract ContractTest is Test {
 
 
         vm.stopPrank();
+    }
+
+    function testGetAll() public {
+        uint maxId = A.getCurrentGId();
+        uint a = 1;
+        /// c fuzz nr of farmers / area /baskets and array len @todo
+        uint[10] memory farmers;
+        uint[10] memory areas;
+        for(a;a <= maxId;) {
+            (sA memory aaa, sB memory bbb, sC memory ccc, sF memory fff) = A.getAll(a);
+            if (aaa.area_id > 0) areas[a] = aaa.area_id;
+            if (fff.area_id > 0) farmers[a] = fff.area_id;
+            assertTrue( areas[a] + farmers[a] >= 2);
+            unchecked { ++ a;}
+        }
+
+
     }
 
 
