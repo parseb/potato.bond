@@ -171,10 +171,10 @@ contract ContractTest is Test {
         redeamableRange[1] = redeamableRange[0] *2;
         vm.startPrank(aFarmer);
         vm.expectRevert("Not in Area");
-        A.mintBaskets(1312,amountToMint,4334525345, address(324523),redeamableRange, ipfsPlaceholder);
+        A.mintBaskets(1312,amountToMint,4334525345, address(324523),redeamableRange[0], redeamableRange[1], ipfsPlaceholder);
         vm.expectRevert("ZeroVal or lowTime");
-        A.mintBaskets(2,amountToMint,435345, address(0), redeamableRange, ipfsPlaceholder);
-        A.mintBaskets(2,amountToMint,435345, address(3453450), redeamableRange, ipfsPlaceholder);
+        A.mintBaskets(2,amountToMint,435345, address(0), redeamableRange[0], redeamableRange[1], ipfsPlaceholder);
+        A.mintBaskets(2,amountToMint,435345, address(3453450), redeamableRange[0], redeamableRange[1], ipfsPlaceholder);
 
         uint aBalance  = B.balanceOf(aFarmer); 
         uint tsupply = B.totalSupply();

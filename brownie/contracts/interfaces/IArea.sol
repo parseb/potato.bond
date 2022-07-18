@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.0;
 
+import "../structs.sol";
+
 
 interface IArea {
-    /// @notice sets address of _f farmer _c ERC721 consumer ERC721 _b basket ERC721A contr
-    function setFCB(address _f, address _c, address _b) external;
+   /// @notice sets address of _f farmer _c ERC721 consumer ERC721 _b basket ERC721A contr
+   function setFCB(address _f, address _c, address _b) external;
 
     function getCurrentGId() external view returns (uint256);
 
@@ -39,9 +41,16 @@ interface IArea {
     ///         such as specific products and quantities, claimable between the data of & date of
     function mintBaskets(uint _areaID, uint amount, uint price, address erc20,  uint[2] memory _redeamable, string memory CID) external returns(uint);
 
+    /// @notice get data... 
+    function getAll(uint _id) external view returns (sA memory, sB memory,sC memory,sF memory);
 
-    function basketTransferCallBack(uint _basketID, bytes calldata data) external returns (bool);
+    function getFCB() external view returns (address,address,address);
+
+    function getArea(uint256 id) external view returns (sA memory);
+
+
 }
+
 
 interface IRulerContract {
     function basketTransfer(uint basketID, bytes calldata data) external returns (bool);

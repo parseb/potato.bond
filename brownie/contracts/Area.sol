@@ -254,6 +254,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
          }
         totalSupply[id] = amount;
         super._mint(to,id,amount,data);
+        globalIncrement(); /// this might be extra, seemed like it was missing
     }
 
     // function _afterTokenTransfer(
