@@ -29,7 +29,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     mapping(uint256 => sA
 ) getAreaById;
     mapping(uint256 => sF) getFarmerById;
-    mapping(uint256 => sC) getConsummerById;
+    mapping(uint256 => sC) getConsumerById;
     mapping(uint256 => sB) getBasketById;
     /// @dev reconsider ^
 
@@ -93,6 +93,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
             farmChain[msg.sender] = address(uint160(globalId+2));
 
             farmerUri = _makeFarmer(ipfsCID);
+            getFarmerById[globalId].area_id = globalId+1; /// @dev confusing 1-1 && 1-many
 
             getAreaById[globalId].area_id = globalId+1;
             getAreaById[globalId].governor = msg.sender;
@@ -128,8 +129,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
     function joinAsConsumer(uint _areaID, string memory _ipfs) external returns (bool s) {
         require(! belongsTo(msg.sender, _areaID), "Already in or farmer");
-        sA
- memory area = getAreaById[_areaID];
+        sA memory area = getAreaById[_areaID];
         s = C.balanceOf(msg.sender) == 1;
         require( area.area_id > 1,"Area must exist");
 
@@ -138,8 +138,12 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
             unchecked { ++ getAreaById[_areaID].fcb[1]; }
         } else {
             require( _makeConsummer(_ipfs), "failed to make consummer");
-            uint consummerID = C.getIdOfConsummer(msg.sender);
-            addIDtoArea(consummerID, _areaID);
+            uint consumerID = C.getIdOfConsummer(msg.sender);
+            addIDtoArea(consumerID, _areaID);
+
+            getConsumerById[consumerID].area_id = _areaID; /// @dev should prob. be habtm 
+            getConsumerById[consumerID].ipfs = _ipfs;
+
             unchecked { ++ getAreaById[_areaID].fcb[1]; }
             
         }
@@ -156,9 +160,9 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 //     //state; // farmer minted and owned 1/0, bought and unclaimed 1/1, bouth and claimed 0/1 & burn
 // }
 
-    function mintBaskets(uint _areaID, uint amount, uint price, address erc20, uint[2] memory _redeamable, string memory CID) external returns (uint lastId) {
+    function mintBaskets(uint _areaID, uint amount, uint price, address erc20, uint rStart, uint rEnd, string memory CID) external returns (uint lastId) {
         require(belongsTo(msg.sender,_areaID), "Not in Area");
-        require(amount * price * uint160(erc20) * _redeamable[0] * _redeamable[1] > block.timestamp, "ZeroVal or lowTime");
+        require(amount * price * uint160(erc20) * rStart * rEnd > block.timestamp, "ZeroVal or lowTime");
         
         
         /// @dev consider explicit "to" basket owner at mint
@@ -170,7 +174,9 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
             getBasketById[globalId].farmer_address = msg.sender;
             getBasketById[globalId].price = price;
             getBasketById[globalId].erc20 = erc20; /// @dev maybe check that or add to area
-            getBasketById[globalId].redeamable = _redeamable; 
+            getBasketById[globalId].redeamable[0] = rStart;
+            getBasketById[globalId].redeamable[1] = rEnd;
+
             emit newBasket(_areaID, msg.sender, globalId);
             globalIncrement();
         }
@@ -270,6 +276,10 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
                 globalIncrement();
                 F.mintFarmer(msg.sender, globalId, fU);
                 fU = string.concat(base_uri, string(abi.encodePacked(globalId)) );
+
+                getFarmerById[globalId].farmerAddress = msg.sender;
+                getFarmerById[globalId].ipfs = fU;
+
             } else {
                 fU = string.concat(base_uri, string(abi.encodePacked(globalId)));
             }
@@ -316,7 +326,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     // }
 
     // function getConsummer(address _consumerAddress) public view returns (sC memory CCC) {
-    //     CCC = getConsummerById[C.getIdOfConsummer(_consumerAddress)];
+    //     CCC = getConsumerById[C.getIdOfConsummer(_consumerAddress)];
     // }
 
     // function getBasket(uint _id) public view returns (sB memory) {
@@ -332,7 +342,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
      sA
  memory aaa = getAreaById[_id];
      sB memory bbb = getBasketById[_id];
-     sC memory ccc = getConsummerById[_id];
+     sC memory ccc = getConsumerById[_id];
      sF memory fff = getFarmerById[_id];
      return (aaa,bbb,ccc,fff);
     }
