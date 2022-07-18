@@ -3,6 +3,8 @@ pragma solidity >=0.8.0;
 
 
 interface IArea {
+    /// @notice sets address of _f farmer _c ERC721 consumer ERC721 _b basket ERC721A contr
+    function setFCB(address _f, address _c, address _b) external;
 
     function getCurrentGId() external view returns (uint256);
 
