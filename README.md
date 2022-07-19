@@ -12,6 +12,9 @@ ASAT🇷🇴 <br>
 <i><b>leverages local coincidences of needs and wants for change. </b> <br>
 [potato.bond](http://www.potato.bond) aims to be permissionless infrastructure in service of locally aware and globally conscious modes of production, distribution and ownership.</i>
 
+## Foreword
+
+[paragraph about the importance of food (you eat food) and the history of experimentation on the background of agricultural policy]
 
 ## Farmer
 First there was the farmer. No potato without farmer. Praised be. 
@@ -22,9 +25,9 @@ A farmer is a number that self-advertises to the rest of the world as such throu
 
 ## Area 
 
-The farmer inhabited the lands. And the multitude of lands constituted an Area. Be them geographical or economical, physical or imaginary, areas are to be bounded only by the imaginary of the farmer. A farmer can belong to many areas. (Circles of compassion, identity or marketable verticals.)
+The farmer inhabited the lands. And the multitude of lands constituted an Area. Be them geographical or economical, physical or imaginary, areas are to be bounded only by the imaginary of the farmer. A farmer and A consumer can belong to many areas. (Circles of compassion, identity or marketable verticals.)
 
-An area is intended to be a govenrable collaborative surface defined particularly along external needs and identities. The global registry of Areas extends along the lines of ERC1155. 
+An area is intended to be a govenrable collaborative surface defined along external needs and identities. An area is where the rules are set and acted upon. An area "is a DAO".The global registry of Areas extends along the lines of ERC1155. 
 
 The following global rules apply: 
 - 1 (**18) area specific fungible token is minted for both farmer and consummer on a finalized Farmer-Basket-Consumer exchage.
@@ -43,9 +46,22 @@ Potato is good. A basket of potatoes is better and as such is the core unit of e
  Afterall, the consumer role is just an abstract role and not a personality crafting activity nor a way to fight the bad guys... right? Being a role, in the same way Farmer is, it follows ERC721 rules. A consummer is defined by the act of consumming from an area. Gaining and maintaining the role of consummer in an area is subject to area rules. A customer can consume from many areas. How one becomes a consummer in an area, and what being and doing so entitles is at the discretion of that particular area.
 <br>
 
+## Area Governing Contract
+
+An area can have rules. These rules are to be determined by the area owner(s) be them farmers, consumers, creditors etc. These rules are event-based, and executed on structural actions. This is an option, not a requirement, intended to make this need based extensible. Example of possible rules:
+
+- basket resale tax
+- a farmer or a consumer joining an area inquires a payment
+- reputation threshold ruled credit facilities
+
+<br>
+
+Rules contract is called through the IRulerContract interface. Think of the above as the internet and its global rules and protocols (http, DHCP etc) and of the Rules contract as an application specific (area specific) web server... maybe.
+
 ___
 
-This is by no means aimed to be prescriptive but rather to provide some primordial structure for experimentation.
+This is by no means aimed to be prescriptive but rather to amount to a contribution in the below hinted-at direction  and provide some primitive, primordial structure for experimentation.
+
 
 ## Ideology
 
@@ -55,14 +71,25 @@ The CSA wikipedia page, has an 'ideology section' which I believe to significant
 
 Let me however indulge in spelling out some of the goodies of this "make the world a better place"-ism. The post-ideology <i>Ubermensch</i> would call these competitive advantages. <br>
 
-- less consumption might be desieble, but since we do not want to alienate the snowflakes, we'll call it <b>more efficient consumption</b>. The fact that the spawning of goods, particularly those of universal human necessity can be locally incentivised and coordinated, affords more time for oil to stay in the ground and lorry drivers to seldomly afford a weekend with the grandchildren in the vegetable garden.
+- less consumption might be desieble, but since we do not want to alienate the snowflakes, we'll call it <i>more efficient consumption</i>. The fact that the spawning of goods, particularly those of universal human necessity can be locally incentivised and coordinated, affords more time for oil to stay in the ground and lorry drivers to seldomly afford a weekend with the grandchildren in the vegetable garden.
 
 - money that grows on trees and makes sounds when the wind of change is blowing, is good money. As such, if a farmer's potato basket NFT redeamable in 2 years is higher than the price of a potato basket that is redeamable today, you can be sure that the ancestral wind of change is trying to say something. The potato yield curve is a potential indicator of food insecurity, in that area, or in the area between that area and the Equator. Or not, since potatoes fair rather well in sand.
 
-- gives smaller production operations a chance to compete and integrate into the local context. Also makes experimentation (by assumed broad cost distribution) more likely. Imagine finding a way out of like industrial-packed-monoculture-profit-centered farming dude... pass that shit.
+- what if 'banking the unbanked' does not mean giving the rural poor access to USDC but radther allowing the to mint their own 'rice backed' money. Being able to tokenize and sell future production is a likely good gateway drug in that direction. A rice-banana-cocoa-coffee 'mint' backed algo-stable might just make sense.
 
 
+<br>
+<br>
 
+<br>
+<br>
+
+<br>
+<br>
+
+<br>
+<br>
+<hr>
 
 ## potato.bond
 ___

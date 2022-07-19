@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   post 'message' => 'sessions#message', :as => 'message'
   post 'sign-out' => 'sessions#sign_out', :as => 'sign-out'
 
+  post 'current-known-gid' => 'sessions#getgid'
+
   resources :users
   resources :sessions
 end

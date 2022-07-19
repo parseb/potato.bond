@@ -1,0 +1,1 @@
+forge create --rpc-url https://polygon-mumbai.g.alchemy.com/v2/Bf6umbh0nxEYQr8QBWRXVRbf6-oZ9Tua --private-key 866e4284b0ec0db11419bb75d20326853aaf33081f950a7683dbf65d30fe1561 src/Area.sol:Area
