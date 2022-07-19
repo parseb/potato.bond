@@ -22,4 +22,6 @@ buyer2 = accounts.load('buyer2') # 0x2291CB6803454c68De8B1c3b50081aC4fC291a2B
 A.becomeFarmer('0',"testCIDSTRING",{"from": farmer1})
 gid = A.getCurrentGId()
 A.joinAsConsumer(gid-1, "ipfsconsummer1", {"from": buyer1})
+
+#VC ERC20 value conduct 0x2ac65Be3f3aCA115Ae97669Dd3f0B8EA47A300Be
 A.mintBasket(gid-1, 20, 1234567901000000000, "0x2ac65Be3f3aCA115Ae97669Dd3f0B8EA47A300Be", [chain.time()*2, chain.time()*3], "thisisianIPFSCID", {"from":farmer1});

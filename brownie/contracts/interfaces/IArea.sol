@@ -54,4 +54,6 @@ interface IArea {
 
 interface IRulerContract {
     function basketTransfer(uint basketID, bytes calldata data) external returns (bool);
+    function farmerJoinsArea(uint areaID) external returns (bool);
+    function customerJoinsArea(uint areaID) external returns (bool);
 }

@@ -1078,11 +1078,10 @@ const AreaContract = async () => {
 
 async function getLastId() {
   const Area = await AreaContract();
-  let tx = Area.getCurrentGId();
-  tx.then( (tx) => {
-    console.log("LastId tx - ", tx.toString());
-    return tx.toString();
-  });
+  let tx = await Area.getCurrentGId();
+  console.log("LastId tx - ", tx.toString());
+  return tx;
+
 }
 
 const signIn = async (connector) => {
@@ -1202,7 +1201,17 @@ const connectedState = async (lastSeen, address, ens) => {
   mainWrapper.classList.remove('d-none');
 
   const AAA = await AreaContract();
-  const lastId = getLastId();
+  let lastId = await getLastId();
+
+  
+
+  
+  fetch(`/current-known-gid/?gid=${lastId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': getCSRF(),
+    },});
 
  
 };

@@ -55,7 +55,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     event changedRulesOfArea(uint256 indexed _areaID, address indexed _newRulesAddress);
     event newBasket(uint indexed _areaID, address indexed _farmer, uint256 indexed _gID);
     event NewBasketsInArea(uint indexed _areaID, address indexed _farmer, uint howmany, uint256 indexed _gID);
-
+    event consIDaddedToArea(uint indexed _areaID, uint indexed consummerID, address sender);
 
 
     constructor() { initOwner = msg.sender; }
@@ -195,6 +195,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
     function addIDtoArea(uint _id, uint _area) private {
         areaParticipantId[_area][uint256(uint160(msg.sender))] = _area;
+        emit consIDaddedToArea(_id, _area, msg.sender);
     }
 
     function changeRulesOfArea(uint _areaID, address _newRulesAddress) external onlyAreaGovernor(_areaID) {
