@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_16_072835) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_19_131806) do
   create_table "areas", force: :cascade do |t|
     t.string "governor"
     t.string "nrc"
@@ -62,6 +62,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_16_072835) do
     t.string "area_address"
     t.string "nft_id"
     t.string "area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "global_states", force: :cascade do |t|
+    t.string "gid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

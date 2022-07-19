@@ -1,0 +1,24 @@
+Deployer: 0xb3f204a5f3dabef6be51015fd57e307080db6498
+Deployed to: 0x164dc1865210e5cff1718c145d32d81765be0d51
+Transaction hash: 0x88d647b6fe4c9f052c7a7f4c8a44e4b4c464ea51602d98f5c90c653c577d0642
+
+
+Transaction sent: 0x690ecdff8bf63d89fe890fc801e3117468c61d8089f6039ad4a470b033ad6821
+  Gas price: 32.133934535 gwei   Gas limit: 1193302   Nonce: 58
+  Farmer.constructor confirmed   Block: 27240440   Gas used: 1084820 (90.91%)
+  Farmer deployed at: 0xA80FE70C3C2B352ba181372DC6D72fD6234e6051
+
+Transaction sent: 0xc0d83cce7c1b28bd7a3819290f8c2e7f1ac7b1f1058e261992c9981eb958a5ed
+  Gas price: 32.061456272 gwei   Gas limit: 1177436   Nonce: 59
+  Consumer.constructor confirmed   Block: 27240442   Gas used: 1070397 (90.91%)
+  Consumer deployed at: 0x5C2047F6BF4040b1bb4451777b470EFB44eEdC4A
+
+Transaction sent: 0xc0b42694171d9e7c21355dba37cd28fb4aa1ab97c76bb3344f81baf6a6363598
+  Gas price: 32.035871304 gwei   Gas limit: 1239629   Nonce: 60
+  Basket.constructor confirmed   Block: 27240444   Gas used: 1126936 (90.91%)
+  Basket deployed at: 0xd3AB598CA12D50B36a786286c04aEd4E49434E48
+
+Farmer: 0xA80FE70C3C2B352ba181372DC6D72fD6234e6051 Consumer: 0x5C2047F6BF4040b1bb4451777b470EFB44eEdC4A Basket: 0xd3AB598CA12D50B36a786286c04aEd4E49434E48
+Transaction sent: 0x433bbdee4f462aea9b98239c178965a6067117e060284fd4a70bd62588c9ddff
+  Gas price: 32.009469526 gwei   Gas limit: 106342   Nonce: 61
+  Transaction confirmed   Block: 27240446   Gas used: 96675 (90.91%)

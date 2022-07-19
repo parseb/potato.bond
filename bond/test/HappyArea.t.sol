@@ -18,7 +18,6 @@ import "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol";
 import "src/interfaces/IArea.sol";
 
 
-
 contract ContractTest is Test {
 
     address theOwner = address(306);
@@ -172,10 +171,10 @@ contract ContractTest is Test {
         redeamableRange[1] = redeamableRange[0] *2;
         vm.startPrank(aFarmer);
         vm.expectRevert("Not in Area");
-        A.mintBaskets(1312,amountToMint,4334525345, address(324523),redeamableRange, ipfsPlaceholder);
+        A.mintBaskets(1312,amountToMint,4334525345, address(324523),redeamableRange[0], redeamableRange[1], ipfsPlaceholder);
         vm.expectRevert("ZeroVal or lowTime");
-        A.mintBaskets(2,amountToMint,435345, address(0), redeamableRange, ipfsPlaceholder);
-        A.mintBaskets(2,amountToMint,435345, address(3453450), redeamableRange, ipfsPlaceholder);
+        A.mintBaskets(2,amountToMint,435345, address(0), redeamableRange[0], redeamableRange[1], ipfsPlaceholder);
+        A.mintBaskets(2,amountToMint,435345, address(3453450), redeamableRange[0], redeamableRange[1], ipfsPlaceholder);
 
         uint aBalance  = B.balanceOf(aFarmer); 
         uint tsupply = B.totalSupply();
@@ -189,6 +188,23 @@ contract ContractTest is Test {
 
 
         vm.stopPrank();
+    }
+
+    function testGetAll() public {
+        uint maxId = A.getCurrentGId();
+        uint a = 1;
+        /// c fuzz nr of farmers / area /baskets and array len @todo
+        uint[10] memory farmers;
+        uint[10] memory areas;
+        for(a;a <= maxId;) {
+            (sA memory aaa, sB memory bbb, sC memory ccc, sF memory fff) = A.getAll(a);
+            if (aaa.area_id > 0) areas[a] = aaa.area_id;
+            if (fff.area_id > 0) farmers[a] = fff.area_id;
+            assertTrue( areas[a] + farmers[a] >= 2);
+            unchecked { ++ a;}
+        }
+
+
     }
 
 

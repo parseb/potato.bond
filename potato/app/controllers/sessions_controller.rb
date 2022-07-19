@@ -2,10 +2,21 @@ require 'siwe'
 require 'json'
 
 class SessionsController < ApplicationController
+  # include SessionsHelper
   protect_from_forgery with: :null_session
 
   def index
+    @gid = GlobalState.last ? GlobalState.last.gid  : "0"
     render 'index'
+  end
+
+  def getgid
+    @givenId = params[:gid].to_i
+    lastId = GlobalState.last ? GlobalState.last.id : 0;
+    if ( @givenId > lastId || @givenId == 0) 
+      helpers.fetchAndUpdateAll(@givenId, lastId)
+    end
+    
   end
 
   def sign_in
@@ -43,7 +54,7 @@ class SessionsController < ApplicationController
       "#{request.protocol}#{request.host_with_port}",
       '1',
       {
-        statement: 'SIWE Rails Example',
+        statement: 'potato.bond sign-in',
         nonce: nonce,
         chain_id: params[:chainId]
       }
