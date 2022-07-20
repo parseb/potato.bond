@@ -1,22 +1,6 @@
-Transaction sent: 0x2a46be4809da9a40ec66f724e1f53dbb858567edf337737641d243298bfc8f61
-  Gas price: 32.9315 gwei   Gas limit: 1193302   Nonce: 41
-  Farmer.constructor confirmed   Block: 27224788   Gas used: 1084820 (90.91%)
-  Farmer deployed at: 0x30a6b6708c8544b32926BE6Fbd03f27cd01D85e4
+areaMaddr = "0x5e2c0bc8705addbd360c7ee749ff8d7dc5f13269"
 
-
-Transaction sent: 0xfdf9dbdd0556b1ba56e0a9efb1cd2cacc11bcc5f97f6f059eb5a238b3d89c0c1
-  Gas price: 30.981319957 gwei   Gas limit: 1177436   Nonce: 42
-  Consumer.constructor confirmed   Block: 27224896   Gas used: 1070397 (90.91%)
-  Consumer deployed at: 0xC00cDfa2a36E4B8aDa253a5bd90f4f7b43171558
-
-Transaction sent: 0x5a84fac41e2d9f2353d832b791ed45232030cf23746d1ea68c79bdbf4fe919fb
-  Gas price: 30.225002425 gwei   Gas limit: 1239629   Nonce: 43
-  Basket.constructor confirmed   Block: 27224970   Gas used: 1126936 (90.91%)
-  Basket deployed at: 0xd1924049d907b48D7Ea619ED8c08Fad5Bb47A483
-
-Waiting for https://api-testnet.polygonscan.com/api to process contract...
-Verification submitted successfully. Waiting for result...
-Verification pending...
-Verification pending...
-Verification pending...
-Verification complete. Result: Pass - Verified
+#2
+farmerAt = "0x2C6AFA0111C4646cae3E5FC21226D1a816C37B82"
+consumerAt = "0x50F62f9b4930571D973a646AECC59933Bd5E4648"
+basketAt = "0x620B5892c71773A9A6e92da827610e43c8618518"  

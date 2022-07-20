@@ -8,6 +8,8 @@ import "./interfaces/IFarmer.sol";
 import "./interfaces/IConsumer.sol";
 import "./interfaces/IBasket.sol";
 import "./interfaces/IArea.sol";
+
+
 import "./structs.sol";
 
 // import "ERC721/IERC721A.sol";
@@ -33,7 +35,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     mapping(uint256 => sB) getBasketById;
     /// @dev reconsider ^
 
-    mapping(uint256 => uint256[1157920892373161954235709850086879078532699830619910000]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
+    mapping(uint256 => uint256[1157920892373161954235709850086879078532699830619910001]) areaParticipantId; /// @dev areaID, uint256[][uint256(uint160(_who))] = participantID - how stupid is this?
     mapping(address => address) farmChain;
     mapping(uint256 => uint256) totalSupply; // Increments for fungible. Is 1 for Area.
 
@@ -65,7 +67,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         F = IFarmer(_f);
         C = IConsumer(_c);
         B = IBasket(_b);
-        initOwner = address(1337);
+        /// initOwner = address(1337); renounce ownership @dev uncomment
 
         emit fcbComplete(address(this), 0, _f, _c, _b);
     }
@@ -90,29 +92,31 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
 
         
         if(_areaID == 0) {
-            farmChain[msg.sender] = address(uint160(globalId+2));
-
+            globalIncrement();
             farmerUri = _makeFarmer(ipfsCID);
-            getFarmerById[globalId].area_id = globalId+1; /// @dev confusing 1-1 && 1-many
-
-            getAreaById[globalId].area_id = globalId+1;
-            getAreaById[globalId].governor = msg.sender;
-            getAreaById[globalId].data_url = string.concat(base_uri, string(abi.encodePacked(globalId)));
-            getAreaById[globalId].fcb[0] = 1;
+            farmChain[msg.sender] = address(uint160(globalId));
 
             bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
             _mint(msg.sender, 0, 1, data);
-            _mint(msg.sender, globalId + 1, ONE, data);
-            areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
 
+            getAreaById[globalId].area_id = globalId;
+            getAreaById[globalId].governor = msg.sender;
+            getAreaById[globalId].data_url = string.concat(base_uri, string(abi.encodePacked(globalId)));
+            getAreaById[globalId].fcb[0] = 1;
+            areaParticipantId[globalId][uint256(uint160(msg.sender))] = globalId;
+            getFarmerById[globalId].area_id = globalId; /// @dev confusing 1-1 && 1-many
+            
+            globalIncrement();
+            _mint(msg.sender, globalId, ONE, data);
             emit newAreaCreated(globalId, msg.sender, globalId);
             return farmerUri;
         }
 
         else if (belongsTo(farmChain[msg.sender], _areaID)) 
-        {
+        {   
+            globalIncrement();
             farmerUri = _makeFarmer(ipfsCID);
-            bytes  memory data = bytes(abi.encode(getAreaById[globalId]));
+            bytes  memory data = bytes(abi.encode(getAreaById[globalId])); //~
 
             areaParticipantId[_areaID][uint256(uint160(msg.sender))] = globalId;
 
@@ -131,7 +135,7 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
         require(! belongsTo(msg.sender, _areaID), "Already in or farmer");
         sA memory area = getAreaById[_areaID];
         s = C.balanceOf(msg.sender) == 1;
-        require( area.area_id > 1,"Area must exist");
+        require( area.area_id >= 1,"Area must exist");
 
         if (s) {
             addIDtoArea(C.getIdOfConsummer(msg.sender), _areaID);
@@ -274,7 +278,6 @@ contract Area is ERC1155("https://potato.bond/api/v1/{id}"), IArea {
     /// @dev @todo change to id returns.. maybe.
     function _makeFarmer(string memory _ipfs) private returns (string memory fU) {
         if(F.balanceOf(msg.sender) == 0) {
-                globalIncrement();
                 F.mintFarmer(msg.sender, globalId, fU);
                 fU = string.concat(base_uri, string(abi.encodePacked(globalId)) );
 

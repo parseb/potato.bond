@@ -17,9 +17,8 @@ contract Consumer is ERC721("Consumer", "EATS"), Owned(msg.sender) {
     mapping(uint256 => string) consumerIdURI;
     mapping(address => uint) consummerById;
     constructor(address _Area) {
-        owner = _Area;
+        setOwner(_Area);
     }
-
 
     function tokenURI(uint256 id) public view override(ERC721) returns (string memory) {
         return consumerIdURI[id];

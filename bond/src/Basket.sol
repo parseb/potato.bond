@@ -13,7 +13,8 @@ contract Basket is ERC721A("Basket","POTATO"), Owned(msg.sender) {
     
     IArea A;
     constructor(address _Area) {
-        owner = _Area;
+        setOwner(_Area);
+    
         A = IArea(_Area);
         _currentIndex = A.getCurrentGId();
     }

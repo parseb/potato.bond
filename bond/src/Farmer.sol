@@ -18,7 +18,7 @@ contract Farmer is ERC721("Farmer", "FArM"), Owned(msg.sender) {
     mapping(uint256 => string) farmerIdURI;
     mapping(address => uint) idOf;
     constructor(address _Area) {
-        owner = _Area;
+        setOwner(_Area);
     }
 
     function tokenURI(uint256 id) public view override(ERC721) returns (string memory) {

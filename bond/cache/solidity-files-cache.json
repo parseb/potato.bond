@@ -823,8 +823,8 @@
       }
     },
     "src/Area.sol": {
-      "lastModificationDate": 1658226320553,
-      "contentHash": "e9526c2c2701761268d3fd389dc30d78",
+      "lastModificationDate": 1658326299031,
+      "contentHash": "b17612dafad2dc4a073034be89ed9d30",
       "sourceName": "src/Area.sol",
       "solcConfig": {
         "settings": {
@@ -877,8 +877,8 @@
       }
     },
     "src/Basket.sol": {
-      "lastModificationDate": 1658227736178,
-      "contentHash": "efb04dfd99517c45a7bd308583d50605",
+      "lastModificationDate": 1658326779222,
+      "contentHash": "5e45e48ab51dbe977e900303f331eb4b",
       "sourceName": "src/Basket.sol",
       "solcConfig": {
         "settings": {
@@ -921,8 +921,8 @@
       }
     },
     "src/Consumer.sol": {
-      "lastModificationDate": 1658228543168,
-      "contentHash": "473f6c2b5b9f4fe5413e8460873153d3",
+      "lastModificationDate": 1658326747531,
+      "contentHash": "99d9749ed413bdb6912c137348e8fb16",
       "sourceName": "src/Consumer.sol",
       "solcConfig": {
         "settings": {
@@ -962,8 +962,8 @@
       }
     },
     "src/Farmer.sol": {
-      "lastModificationDate": 1658228600937,
-      "contentHash": "1c55bc1f17797e7a9b2be2a5b789c6a5",
+      "lastModificationDate": 1658326733911,
+      "contentHash": "bf89d4dc02dc8b1e76e1c5a9e180bc8c",
       "sourceName": "src/Farmer.sol",
       "solcConfig": {
         "settings": {
@@ -1206,8 +1206,8 @@
       }
     },
     "test/HappyArea.t.sol": {
-      "lastModificationDate": 1658166826167,
-      "contentHash": "bbdcaee2c40c8cc36610dcf614cdcc31",
+      "lastModificationDate": 1658326906745,
+      "contentHash": "f9057c64c2958641e6b9ae2d62017c33",
       "sourceName": "test/HappyArea.t.sol",
       "solcConfig": {
         "settings": {

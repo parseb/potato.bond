@@ -1202,11 +1202,10 @@ const connectedState = async (lastSeen, address, ens) => {
 
   const AAA = await AreaContract();
   let lastId = await getLastId();
-
   
 
   
-  fetch(`/current-known-gid/?gid=${lastId}`, {
+  fetch(`/current-known-gid/?gid="${lastId.toString()}"?chainId="${chainId}"`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
