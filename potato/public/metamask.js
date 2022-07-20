@@ -1064,7 +1064,7 @@ let signOutButton;
 let userData;
 
 let AA = {
-  'maticmum': '0x164dC1865210E5cff1718C145D32D81765Be0D51',
+  'maticmum': '0x5e2c0bc8705addbd360c7ee749ff8d7dc5f13269',
   'matic': ''
 }
 
@@ -1202,10 +1202,11 @@ const connectedState = async (lastSeen, address, ens) => {
 
   const AAA = await AreaContract();
   let lastId = await getLastId();
+  // let chainId = await provider.getNetwork();
   
 
   
-  fetch(`/current-known-gid/?gid="${lastId.toString()}"?chainId="${chainId}"`, {
+  fetch(`/current-known-gid/?gid="${lastId.toString()}"`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
