@@ -1003,7 +1003,7 @@
       }
     },
     "src/interfaces/IArea.sol": {
-      "lastModificationDate": 1658166739572,
+      "lastModificationDate": 1658252031051,
       "contentHash": "6d38724482db4662bd4144e202d8cc6a",
       "sourceName": "src/interfaces/IArea.sol",
       "solcConfig": {
@@ -1168,7 +1168,7 @@
       }
     },
     "src/structs.sol": {
-      "lastModificationDate": 1658165750878,
+      "lastModificationDate": 1658252031051,
       "contentHash": "71838a320111c361a22fa81684c3ccb3",
       "sourceName": "src/structs.sol",
       "solcConfig": {

@@ -5,39 +5,76 @@ require 'forwardable'
 require "httparty"
 
 
+
 class SessionsController < ApplicationController
   # include SessionsHelper
   protect_from_forgery with: :null_session
+  before_action :set_addresses
 
   def index
     @gid = GlobalState.last ? GlobalState.last.gid  : "0"
     render 'index'
   end
 
-  # def returns_contracts(_cid)
+  def set_addresses
+    @areaMaddr = "0x5e2c0bc8705addbd360c7ee749ff8d7dc5f13269"
+    @farmerAt = "0x2C6AFA0111C4646cae3E5FC21226D1a816C37B82"
+    @consumerAt = "0x50F62f9b4930571D973a646AECC59933Bd5E4648"
+    @basketAt = "0x620B5892c71773A9A6e92da827610e43c8618518"  
 
-  #   rpcs = { 80001 => "MUMBAI" }
-  #   client = Eth::Client.create ENV[rpcs[_cid.to_i]]
-      
-  
+    return @areaMaddr, @farmerAt, @consumerAt, @basketAt
+  end
 
-  #   abiA = File.read('app/helpers/ABI/area')
-  #   abiF = File.read('app/helpers/ABI/farmer')
-  #   abiB = File.read('app/helpers/ABI/basket')
-  #   abiC = File.read('app/helpers/ABI/consumer')
-  #   binding.break
+  def returns_contracts(_cid)
 
-  #   cA = Eth::Contract.from_abi( abi: abiA, address: areaMaddr, name: "Area")
-  #   cF = Eth::Contract.create(client: client, name: "Farmer", address: farmerAt, abi: abiF)
-  #   cB = Eth::Contract.create(client: client, name: "Basket", address: basketAt, abi: abiB)
-  #   cC = Eth::Contract.create(client: client, name: "Consumer", address: basketAt, abi: abiC)
-  #   #binding.break
-  #   return cA,cF,cB,cC
-  # end
+    #rpcs = { 80001 => "MUMBAI" }
+    #client = Eth::Client.create ENV[rpcs[_cid.to_i]]
+    #      # https://polygon-mumbai.infura.io/v3/50aa16cee61840d6829372af4df207ec
+
+    @web3 = Web3::Eth::Rpc.new host: 'polygon-mumbai.infura.io',
+                          connect_options: {
+                            open_timeout: 20,
+                            read_timeout: 140,
+                            use_ssl: true,
+                            rpc_path: "/v3/50aa16cee61840d6829372af4df207ec"
+                          }
+
+    #abiA = File.read('app/assets/ABI/area')
+
+    abi721 = File.read('app/assets/ABI/721')
+    areaI = File.read('app/assets/ABI/areaI')
+
+    #abiF = File.read('app/assets/ABI/farmer')
+    #abiB = File.read('app/assets/ABI/basket')
+    #abiC = File.read('app/assets/ABI/consumer')
+
+    #aa = web3.eth.contract(abiA);
+    #ff = web3.eth.contract(abiF);
+    #bb = web3.eth.contract(abiB);
+    #cc = web3.eth.contract(abiC);
+
+    ierc721 = @web3.eth.contract(abi721)
+    areaI = @web3.eth.contract(areaI)
+
+    # @cA = aa.at(@areaMaddr)
+    # @cF = ff.at(@farmerAt)
+    # @cB = bb.at(@basketAt)
+    # @cC = cc.at(@consumerAt)
+    
+    @cA = areaI.at(@areaMaddr)
+    @cF = ierc721.at(@farmerAt)
+    @cB = ierc721.at(@basketAt)
+    @cC = ierc721.at(@consumerAt)
+
+    #binding.break
+    return @cA, @cF,@cB,@cC,@web3
+  end
 
   # def get_ids_A(_chainId)
   #     x = HTTP.get("https://api.covalenthq.com/v1/80001/tokens/0x164dC1865210E5cff1718C145D32D81765Be0D51/nft_token_ids/?quote-currency=USD&format=JSON&key=ckey_dd30be32fd7244ebaf9cc39ae10")
   # end
+
+
 
   def get_ids_covalent(_chainId, baskerAddr)
     #bbb =[]
@@ -47,11 +84,6 @@ class SessionsController < ApplicationController
   end
 
   def fetchAndUpdateAll(_start, _end, _chainId)
-      areaMaddr = "0x5e2c0bc8705addbd360c7ee749ff8d7dc5f13269"
-      farmerAt = "0x2C6AFA0111C4646cae3E5FC21226D1a816C37B82"
-      consumerAt = "0x50F62f9b4930571D973a646AECC59933Bd5E4648"
-      basketAt = "0x620B5892c71773A9A6e92da827610e43c8618518"  
-
       
       puts("#{_start} ------ fech and update all #{_chainId} ------- #{_end}")
       # refactor this to exclude any existing gId & skip classes
@@ -59,25 +91,27 @@ class SessionsController < ApplicationController
       b_last = Basket.any? ? Basket.last.nft_id.to_i : 0
       c_last = Consumer.any? ? Consumer.last.nft_id.to_i : 0
       f_last = Farmer.any? ? Farmer.last.nft_id.to_i : 0
-      basket_ids = get_ids_covalent(_chainId, basketAt).map{|i| i.to_i if i.to_i > b_last}
-      consumer_ids = get_ids_covalent(_chainId,consumerAt).map{|i| i.to_i if i.to_i > c_last}
-      farmer_ids = get_ids_covalent(_chainId,farmerAt).map{|i| i.to_i if i.to_i > f_last}
+      basket_ids = get_ids_covalent(_chainId, @basketAt).map{|i| i.to_i if i.to_i > b_last}
+      consumer_ids = get_ids_covalent(_chainId,@consumerAt).map{|i| i.to_i if i.to_i > c_last}
+      farmer_ids = get_ids_covalent(_chainId,@farmerAt).map{|i| i.to_i if i.to_i > f_last}
       area_ids = []
       all = farmer_ids + basket_ids + consumer_ids
       z=all.max
-
       z.times do |z| ! all.include?(z) ? area_ids << z : 0 end
       
 
-      
-      return true
+      # returns_contracts(80001)
+      # binding.break
+      #no working ruby web3 library found. revert to javascript
+
+      return [area_ids,farmer_ids,consumer_ids,farmer_ids]
   end
 
   def getgid
     @givenId = params[:gid].to_i
     lastId = GlobalState.last ? GlobalState.last.id : 0;
     if ( @givenId > lastId || @givenId == 0) 
-      fetchAndUpdateAll(@givenId, lastId, 80001 )
+      fetchAndUpdateAll(@givenId, lastId, 80001)
     end
     
   end

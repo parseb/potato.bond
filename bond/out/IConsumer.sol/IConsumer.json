@@ -374,10 +374,10 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IConsumer.sol",
-    "id": 27453,
+    "id": 27444,
     "exportedSymbols": {
       "IConsumer": [
-        27452
+        27443
       ],
       "IERC165": [
         23050
@@ -390,7 +390,7 @@
     "src": "39:503:26",
     "nodes": [
       {
-        "id": 27424,
+        "id": 27415,
         "nodeType": "PragmaDirective",
         "src": "39:24:26",
         "literals": [
@@ -401,28 +401,28 @@
         ]
       },
       {
-        "id": 27425,
+        "id": 27416,
         "nodeType": "ImportDirective",
         "src": "65:67:26",
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "file": "openzeppelin-contracts/contracts/token/ERC721/IERC721.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 27453,
+        "scope": 27444,
         "sourceUnit": 22663,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 27452,
+        "id": 27443,
         "nodeType": "ContractDefinition",
         "src": "134:408:26",
         "nodes": [
           {
-            "id": 27435,
+            "id": 27426,
             "nodeType": "FunctionDefinition",
             "src": "318:68:26",
             "documentation": {
-              "id": 27428,
+              "id": 27419,
               "nodeType": "StructuredDocumentation",
               "src": "173:140:26",
               "text": "@notice returns the token uri for consumer metadata storage location\n @param id id of the token for which it retrieves string uri"
@@ -434,17 +434,17 @@
             "name": "tokenURI",
             "nameLocation": "327:8:26",
             "parameters": {
-              "id": 27431,
+              "id": 27422,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 27430,
+                  "id": 27421,
                   "mutability": "mutable",
                   "name": "id",
                   "nameLocation": "344:2:26",
                   "nodeType": "VariableDeclaration",
-                  "scope": 27435,
+                  "scope": 27426,
                   "src": "336:10:26",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -453,7 +453,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 27429,
+                    "id": 27420,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "336:7:26",
@@ -468,17 +468,17 @@
               "src": "335:12:26"
             },
             "returnParameters": {
-              "id": 27434,
+              "id": 27425,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 27433,
+                  "id": 27424,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 27435,
+                  "scope": 27426,
                   "src": "371:13:26",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -487,7 +487,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 27432,
+                    "id": 27423,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "371:6:26",
@@ -501,13 +501,13 @@
               ],
               "src": "370:15:26"
             },
-            "scope": 27452,
+            "scope": 27443,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 27444,
+            "id": 27435,
             "nodeType": "FunctionDefinition",
             "src": "392:79:26",
             "functionSelector": "b74f17fb",
@@ -517,17 +517,17 @@
             "name": "mintConsumer",
             "nameLocation": "401:12:26",
             "parameters": {
-              "id": 27442,
+              "id": 27433,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 27437,
+                  "id": 27428,
                   "mutability": "mutable",
                   "name": "whoBecomes",
                   "nameLocation": "422:10:26",
                   "nodeType": "VariableDeclaration",
-                  "scope": 27444,
+                  "scope": 27435,
                   "src": "414:18:26",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -536,7 +536,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 27436,
+                    "id": 27427,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "414:7:26",
@@ -550,12 +550,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 27439,
+                  "id": 27430,
                   "mutability": "mutable",
                   "name": "id",
                   "nameLocation": "439:2:26",
                   "nodeType": "VariableDeclaration",
-                  "scope": 27444,
+                  "scope": 27435,
                   "src": "434:7:26",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -564,7 +564,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 27438,
+                    "id": 27429,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "434:4:26",
@@ -577,12 +577,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 27441,
+                  "id": 27432,
                   "mutability": "mutable",
                   "name": "uri",
                   "nameLocation": "457:3:26",
                   "nodeType": "VariableDeclaration",
-                  "scope": 27444,
+                  "scope": 27435,
                   "src": "443:17:26",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -591,7 +591,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 27440,
+                    "id": 27431,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "443:6:26",
@@ -606,18 +606,18 @@
               "src": "413:48:26"
             },
             "returnParameters": {
-              "id": 27443,
+              "id": 27434,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "470:0:26"
             },
-            "scope": 27452,
+            "scope": 27443,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 27451,
+            "id": 27442,
             "nodeType": "FunctionDefinition",
             "src": "477:63:26",
             "functionSelector": "950abc1e",
@@ -627,17 +627,17 @@
             "name": "getIdOfConsummer",
             "nameLocation": "486:16:26",
             "parameters": {
-              "id": 27447,
+              "id": 27438,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 27446,
+                  "id": 27437,
                   "mutability": "mutable",
                   "name": "who",
                   "nameLocation": "511:3:26",
                   "nodeType": "VariableDeclaration",
-                  "scope": 27451,
+                  "scope": 27442,
                   "src": "503:11:26",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -646,7 +646,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 27445,
+                    "id": 27436,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "503:7:26",
@@ -662,17 +662,17 @@
               "src": "502:13:26"
             },
             "returnParameters": {
-              "id": 27450,
+              "id": 27441,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 27449,
+                  "id": 27440,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 27451,
+                  "scope": 27442,
                   "src": "534:4:26",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -681,7 +681,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 27448,
+                    "id": 27439,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "534:4:26",
@@ -695,7 +695,7 @@
               ],
               "src": "533:6:26"
             },
-            "scope": 27452,
+            "scope": 27443,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -705,13 +705,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 27426,
+              "id": 27417,
               "name": "IERC721",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 22662,
               "src": "157:7:26"
             },
-            "id": 27427,
+            "id": 27418,
             "nodeType": "InheritanceSpecifier",
             "src": "157:7:26"
           }
@@ -721,13 +721,13 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          27452,
+          27443,
           22662,
           23050
         ],
         "name": "IConsumer",
         "nameLocation": "144:9:26",
-        "scope": 27453,
+        "scope": 27444,
         "usedErrors": []
       }
     ],
