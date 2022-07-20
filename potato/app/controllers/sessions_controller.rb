@@ -56,15 +56,20 @@ class SessionsController < ApplicationController
       puts("#{_start} ------ fech and update all #{_chainId} ------- #{_end}")
       # refactor this to exclude any existing gId & skip classes
       # or just call Area.getALL where id> current, filter after type and save in db
-      b_last = Basket.any? ? Basket.last.token_id : 0
-      c_last = Consumer.any? ? Consumer.last.token_id : 0
-      f_last = Farmer.any? ? Farmer.last.token_id : 0
-      basket_ids = get_ids_covalent(_chainId, basketAt).map(|i| i if i > b_last)
-      consumer_ids = get_ids_covalent(_chainId,consumerAt).map(|i| i if i > c_last)
-      farmer_ids = get_ids_covalent(_chainId,farmerAt).map(|i| i if i > f_last)
+      b_last = Basket.any? ? Basket.last.nft_id.to_i : 0
+      c_last = Consumer.any? ? Consumer.last.nft_id.to_i : 0
+      f_last = Farmer.any? ? Farmer.last.nft_id.to_i : 0
+      basket_ids = get_ids_covalent(_chainId, basketAt).map{|i| i.to_i if i.to_i > b_last}
+      consumer_ids = get_ids_covalent(_chainId,consumerAt).map{|i| i.to_i if i.to_i > c_last}
+      farmer_ids = get_ids_covalent(_chainId,farmerAt).map{|i| i.to_i if i.to_i > f_last}
+      area_ids = []
+      all = farmer_ids + basket_ids + consumer_ids
+      z=all.max
 
+      z.times do |z| ! all.include?(z) ? area_ids << z : 0 end
+      
 
-
+      
       return true
   end
 
