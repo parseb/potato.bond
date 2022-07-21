@@ -1076,12 +1076,36 @@ const AreaContract = async () => {
   return areaC.connect(signer);
 }
 
+//// --- .. /// \\\\ ----~!!! Not needed since all fetch from Area
+// const FarmerContract = async () => {
+//   const p = new ethers.providers.Web3Provider(window.ethereum);
+//   let signer = p.getSigner();
+//   network = await p.getNetwork();
+//   const areaC = new ethers.Contract(AA[network.name], AreaABI, p);
+//   return areaC.connect(signer);
+// }
+
+// const ConsumerContract = async () => {
+//   const p = new ethers.providers.Web3Provider(window.ethereum);
+//   let signer = p.getSigner();
+//   network = await p.getNetwork();
+//   const areaC = new ethers.Contract(AA[network.name], AreaABI, p);
+//   return areaC.connect(signer);
+// }
+
+// const BasketContract = async () => {
+//   const p = new ethers.providers.Web3Provider(window.ethereum);
+//   let signer = p.getSigner();
+//   network = await p.getNetwork();
+//   const areaC = new ethers.Contract(AA[network.name], AreaABI, p);
+//   return areaC.connect(signer);
+// }
+
 async function getLastId() {
   const Area = await AreaContract();
   let tx = await Area.getCurrentGId();
   console.log("LastId tx - ", tx.toString());
   return tx;
-
 }
 
 const signIn = async (connector) => {
@@ -1204,6 +1228,65 @@ const connectedState = async (lastSeen, address, ens) => {
   let lastId = await getLastId();
   // let chainId = await provider.getNetwork();
   
+  async function postCreateResource(resourceNamePlural, item) {
+  
+    selector = ['areas', 'baskets', 'consumers', 'farmers']
+
+    const Area = await AreaContract();
+    let tx = await Area.getAll(item);
+    data = '';
+
+    switch (resourceNamePlural) {
+      case 'areas':
+        r = tx[0]
+        for (const [key, value] of Object.entries(r)) {
+          console.log(`${key}: ${value}`);
+          data += `?${key}=${value.toString()}&`
+        }
+        break;
+      case 'baskets':
+        ///bbbb
+        // r = tx[1]
+        // for (const [key, value] of Object.entries(r)) {
+        //   console.log(`${key}: ${value}`);
+        //   data += `?${key}=${value.toString()}&`
+        // }
+        //data = `?area_id=${r['area_id'].toString()}&?price=${r[]}`
+        console.log("basket")
+        break;
+      case 'consumers':
+        // r = tx[2]
+        // for (const [key, value] of Object.entries(r)) {
+        //   console.log(`${key}: ${value}`);
+        //   data += `?${key}=${value.toString()}&`
+        // }
+        // ///ccc
+        console.log("consumer")
+
+        break;
+      case 'farmers':
+        ////fff
+        // for (const [key, value] of Object.entries(r)) {
+        //   console.log(`${key}: ${value}`);
+        //   data += `?${key}=${value.toString()}&`
+        // }
+        // r = tx[3]
+        // break;
+        console.log("farmer")
+    }
+
+    console.log("data after switch : ", `${data}`);
+
+    fetch(`/${resourceNamePlural}/${data}"`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': getCSRF(),
+      },}).then( async (res) => {
+        if( res.status === 200) { console.log(`${resourceNamePlural} with id ${item} created`)}
+      })
+
+  }
 
   
   fetch(`/current-known-gid/?gid="${lastId.toString()}"`, {
@@ -1211,7 +1294,24 @@ const connectedState = async (lastSeen, address, ens) => {
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': getCSRF(),
-    },});
+    },}).then(async (res) => {
+      if (res.status === 200) {
+        res.json().then((res) => {
+          XXXX = res[0];
+          console.log( XXXX );
+          XXXX.areas.forEach(async function (item){
+            await postCreateResource('areas', item);
+          });
+          XXXX.farmers.forEach(console.log(1));
+          XXXX.baskets.forEach(console.log(2));
+          XXXX.consumers.forEach(console.log(3));
+        });
+      } else {
+        res.json().then((err) => {
+          console.error(err);
+        });
+      }
+    });
 
  
 };

@@ -29,15 +29,15 @@ class SessionsController < ApplicationController
 
     #rpcs = { 80001 => "MUMBAI" }
     #client = Eth::Client.create ENV[rpcs[_cid.to_i]]
-    #      # https://polygon-mumbai.infura.io/v3/50aa16cee61840d6829372af4df207ec
+    #      # https://polygon-mumbai.infura.io/v3/
 
-    @web3 = Web3::Eth::Rpc.new host: 'polygon-mumbai.infura.io',
-                          connect_options: {
-                            open_timeout: 20,
-                            read_timeout: 140,
-                            use_ssl: true,
-                            rpc_path: "/v3/50aa16cee61840d6829372af4df207ec"
-                          }
+    # @web3 = Web3::Eth::Rpc.new host: 'polygon-mumbai.infura.io',
+    #                       connect_options: {
+    #                         open_timeout: 20,
+    #                         read_timeout: 140,
+    #                         use_ssl: true,
+    #                         rpc_path: "/v3/{KEEEEYEYYYY}"
+    #                       }
 
     #abiA = File.read('app/assets/ABI/area')
 
@@ -104,16 +104,21 @@ class SessionsController < ApplicationController
       # binding.break
       #no working ruby web3 library found. revert to javascript
 
-      return [area_ids,farmer_ids,consumer_ids,farmer_ids]
+      return  ['areas': area_ids, 'farmers': farmer_ids, 'consumers': consumer_ids, 'baskets': basket_ids]
   end
 
   def getgid
     @givenId = params[:gid].to_i
     lastId = GlobalState.last ? GlobalState.last.id : 0;
     if ( @givenId > lastId || @givenId == 0) 
-      fetchAndUpdateAll(@givenId, lastId, 80001)
+      g = GlobalState.last ? GlobalState.last : GlobalState.new
+      g.gid = @givenId
+      newIds = fetchAndUpdateAll(@givenId, lastId, 80001)
+      g.fetchables = newIds
+      g.fetchables.to_s
+      g.save!
+    render json: newIds
     end
-    
   end
 
 
@@ -140,6 +145,7 @@ class SessionsController < ApplicationController
     if current_user
       current_user.seen
       current_user.save
+
       render json: { ens: session[:ens], address: session[:address], lastSeen: current_user.last_seen }
     else
       head :no_content
