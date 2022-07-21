@@ -99,6 +99,13 @@ class SessionsController < ApplicationController
       z=all.max
       z.times do |z| ! all.include?(z) ? area_ids << z : 0 end
       
+      # fetchables  = GlobalState.last.fetchables.to_json
+      # basket_ids = basket_ids - fechables['baskets']
+      # consumer_ids = consumer_ids - fechables['consumers']
+      # farmer_ids = farmer_ids - fetchables['farmers']
+
+
+
 
       # returns_contracts(80001)
       # binding.break
@@ -108,16 +115,17 @@ class SessionsController < ApplicationController
   end
 
   def getgid
-    @givenId = params[:gid].to_i
-    lastId = GlobalState.last ? GlobalState.last.id : 0;
-    if ( @givenId > lastId || @givenId == 0) 
+    @givenId = params[:gid].tr('^0-9', '').to_i
+    lastId = GlobalState.last ? GlobalState.last.gid.to_i : 0 
+    if (  @givenId > lastId ) 
       g = GlobalState.last ? GlobalState.last : GlobalState.new
-      g.gid = @givenId
-      newIds = fetchAndUpdateAll(@givenId, lastId, 80001)
+      # g.gid = @givenId
+      newIds = fetchAndUpdateAll(lastId, @givenId, 80001)
       g.fetchables = newIds
-      g.fetchables.to_s
-      g.save!
-    render json: newIds
+      g.save
+      render json: newIds
+    else
+      render json: true
     end
   end
 

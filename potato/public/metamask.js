@@ -1225,86 +1225,42 @@ const connectedState = async (lastSeen, address, ens) => {
   mainWrapper.classList.remove('d-none');
 
   const AAA = await AreaContract();
-  let lastId = await getLastId();
+  const lastId = await getLastId();
   // let chainId = await provider.getNetwork();
-  
-  async function postCreateResource(resourceNamePlural, item) {
-  
-    selector = ['areas', 'baskets', 'consumers', 'farmers']
 
-    const Area = await AreaContract();
-    let tx = await Area.getAll(item);
-    data = '';
-
-    switch (resourceNamePlural) {
-      case 'areas':
-        r = tx[0]
-        for (const [key, value] of Object.entries(r)) {
-          console.log(`${key}: ${value}`);
-          data += `?${key}=${value.toString()}&`
-        }
-        break;
-      case 'baskets':
-        ///bbbb
-        // r = tx[1]
-        // for (const [key, value] of Object.entries(r)) {
-        //   console.log(`${key}: ${value}`);
-        //   data += `?${key}=${value.toString()}&`
-        // }
-        //data = `?area_id=${r['area_id'].toString()}&?price=${r[]}`
-        console.log("basket")
-        break;
-      case 'consumers':
-        // r = tx[2]
-        // for (const [key, value] of Object.entries(r)) {
-        //   console.log(`${key}: ${value}`);
-        //   data += `?${key}=${value.toString()}&`
-        // }
-        // ///ccc
-        console.log("consumer")
-
-        break;
-      case 'farmers':
-        ////fff
-        // for (const [key, value] of Object.entries(r)) {
-        //   console.log(`${key}: ${value}`);
-        //   data += `?${key}=${value.toString()}&`
-        // }
-        // r = tx[3]
-        // break;
-        console.log("farmer")
-    }
-
-    console.log("data after switch : ", `${data}`);
-
-    fetch(`/${resourceNamePlural}/${data}"`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': getCSRF(),
-      },}).then( async (res) => {
-        if( res.status === 200) { console.log(`${resourceNamePlural} with id ${item} created`)}
-      })
-
-  }
-
-  
-  fetch(`/current-known-gid/?gid="${lastId.toString()}"`, {
+  fetch(`/current-known-gid/?gid="${parseInt(lastId)}"`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': getCSRF(),
     },}).then(async (res) => {
-      if (res.status === 200) {
-        res.json().then((res) => {
+      if (res.status === 200 ) {
+        console.log("this is res--- " );
+        res.json().then( (res) => {
           XXXX = res[0];
           console.log( XXXX );
-          XXXX.areas.forEach(async function (item){
-            await postCreateResource('areas', item);
+          XXXX.areas.forEach( function (item){
+            setTimeout(() => { 
+              postCreateResource('areas', item); 
+          }, parseInt(item) * 500);      
           });
-          XXXX.farmers.forEach(console.log(1));
-          XXXX.baskets.forEach(console.log(2));
-          XXXX.consumers.forEach(console.log(3));
+          XXXX.farmers.forEach( function (item){
+            setTimeout(() => { 
+             postCreateResource('farmers', item);
+          },parseInt(item) * 500);
+          });
+          XXXX.baskets.forEach( function (item){
+            setTimeout(() => { 
+
+             postCreateResource('baskets', item);
+          },parseInt(item) * 500);
+          });
+          XXXX.consumers.forEach(function (item){
+            setTimeout(() => { 
+
+             postCreateResource('consumers', item);
+          },parseInt(item) * 500);
+          });
         });
       } else {
         res.json().then((err) => {
@@ -1312,6 +1268,68 @@ const connectedState = async (lastSeen, address, ens) => {
         });
       }
     });
+
+
+  async function postCreateResource(resourceNamePlural, item) {
+  
+    selector = ['areas', 'baskets', 'consumers', 'farmers']
+
+      const Area = await AreaContract();
+      let tx = await Area.getAll(item);
+      data = '';
+      setTimeout(() => { 
+              switch (resourceNamePlural) {
+        case 'areas':
+          r = tx[0]
+          console.log("r  ", r );
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key}: ${value}`);
+            data += `${key}=${value}&`
+          }
+          console.log("--area--")
+  
+          break;
+        case 'baskets':
+          r = tx[1]
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key}: ${value}`);
+            data += `${key}=${value}&`
+          }
+          console.log("--basket--")
+  
+          break;
+        case 'consumers':
+          r = tx[2]
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key}: ${value}`);
+            data += `${key}=${value}&`
+          }
+          console.log("--consumer--")
+  
+          break;
+        case 'farmers':
+          r = tx[3]
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key}: ${value}`);
+            data += `${key}=${value}&nft_id=${item}`;
+          }
+          console.log("--farmer--")
+          break;
+      }
+     }, parseInt(item)* 500 );
+  
+      await fetch(`/${resourceNamePlural}/?${data}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': getCSRF(),
+        },}).then( async (res) => {
+          if( res.status === 200) { console.log(`${resourceNamePlural} with id ${item} created`)}
+        })
+      console.log('ran after 1/3 second delay')
+
+  }
+
 
  
 };
