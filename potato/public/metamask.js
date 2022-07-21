@@ -1228,6 +1228,66 @@ const connectedState = async (lastSeen, address, ens) => {
   const lastId = await getLastId();
   // let chainId = await provider.getNetwork();
 
+  async function postCreateResource(resourceNamePlural, item) {
+  
+    selector = ['areas', 'baskets', 'consumers', 'farmers']
+      console.log("getting - ", resourceNamePlural, " - ", item);
+      const Area = await AreaContract();
+      const tx = await Area.getAll(item);
+      let data = '';
+      setTimeout(() => { 
+      switch (resourceNamePlural) {
+        case 'areas':
+          r = tx[0]
+          console.log("r  ", r );
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key} - ${value}`);
+            data += `${key}=${value}&`
+          }
+          console.log("--area--")
+  
+          break;
+        case 'baskets':
+          r = tx[1]
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key}: ${value}`);
+            data += `${key}=${value}&`
+          }
+          console.log("--basket--")
+  
+          break;
+        case 'consumers':
+          r = tx[2]
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key}: ${value}`);
+            data += `${key}=${value}&`
+          }
+          console.log("--consumer--")
+  
+          break;
+        case 'farmers':
+          r = tx[3]
+          for (const [key, value] of Object.entries(r)) {
+            console.log(`${key}: ${value}`);
+            data += `${key}=${value}&nft_id=${item}`;
+          }
+          console.log("--farmer--")
+          break;
+      }
+     
+  
+      fetch(`/${resourceNamePlural}/?${data}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': getCSRF(),
+        },}).then( async (res) => {
+          if( res.status === 200) { console.log(`${resourceNamePlural} with id ${item} created`)}
+        })
+      console.log('ran after 1/3 second delay')
+    }, parseInt(item)* 500 );
+  }
+
   fetch(`/current-known-gid/?gid="${parseInt(lastId)}"`, {
     method: 'POST',
     headers: {
@@ -1269,66 +1329,6 @@ const connectedState = async (lastSeen, address, ens) => {
       }
     });
 
-
-  async function postCreateResource(resourceNamePlural, item) {
-  
-    selector = ['areas', 'baskets', 'consumers', 'farmers']
-
-      const Area = await AreaContract();
-      let tx = await Area.getAll(item);
-      data = '';
-      setTimeout(() => { 
-              switch (resourceNamePlural) {
-        case 'areas':
-          r = tx[0]
-          console.log("r  ", r );
-          for (const [key, value] of Object.entries(r)) {
-            console.log(`${key}: ${value}`);
-            data += `${key}=${value}&`
-          }
-          console.log("--area--")
-  
-          break;
-        case 'baskets':
-          r = tx[1]
-          for (const [key, value] of Object.entries(r)) {
-            console.log(`${key}: ${value}`);
-            data += `${key}=${value}&`
-          }
-          console.log("--basket--")
-  
-          break;
-        case 'consumers':
-          r = tx[2]
-          for (const [key, value] of Object.entries(r)) {
-            console.log(`${key}: ${value}`);
-            data += `${key}=${value}&`
-          }
-          console.log("--consumer--")
-  
-          break;
-        case 'farmers':
-          r = tx[3]
-          for (const [key, value] of Object.entries(r)) {
-            console.log(`${key}: ${value}`);
-            data += `${key}=${value}&nft_id=${item}`;
-          }
-          console.log("--farmer--")
-          break;
-      }
-     }, parseInt(item)* 500 );
-  
-      await fetch(`/${resourceNamePlural}/?${data}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': getCSRF(),
-        },}).then( async (res) => {
-          if( res.status === 200) { console.log(`${resourceNamePlural} with id ${item} created`)}
-        })
-      console.log('ran after 1/3 second delay')
-
-  }
 
 
  

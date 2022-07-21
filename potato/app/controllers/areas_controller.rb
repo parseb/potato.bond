@@ -7,7 +7,7 @@ def show
 end
 
 def create
-    @a = Area.new()
+    @a = Area.new
     @a.area_id = area_params[:area_id]
     @a.governor = area_params[:governor]
     @a.nrc = area_params[:fcb].split(",")[1]

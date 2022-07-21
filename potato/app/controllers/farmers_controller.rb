@@ -1,6 +1,6 @@
 class FarmersController < ApplicationController
     def create
-        @f = Farmer.new()
+        @f = Farmer.new
         @f.area_id = farmer_params[:area_id]
         @f.address = farmer_params[:farmer_address]
         @f.data_url = farmer_params[:ipfs]
@@ -10,7 +10,7 @@ class FarmersController < ApplicationController
 
         @f.save
         render json: true
-
+#this does not save as expected
     end
 
 

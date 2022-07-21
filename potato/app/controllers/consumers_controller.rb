@@ -1,7 +1,7 @@
 class ConsumersController < ApplicationController
 
     def create
-        @c = Consumer.new()
+        @c = Consumer.new
         @c.area_id = consumer_params[:area_id]
         @c.address = consumer_params[:address]
         @c.nft_id = consumer_params[:nft_id]
