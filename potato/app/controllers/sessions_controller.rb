@@ -101,7 +101,7 @@ class SessionsController < ApplicationController
       area_ids = []
       all = farmer_ids + basket_ids + consumer_ids
       z = all.max
-      z.times do |z| ! all.include?(z) ? area_ids << z : 0 end
+      if ! z.nil? then z.times do |z| ! all.include?(z) ? area_ids << z : 0 end end
       
       # fetchables  = GlobalState.last.fetchables.to_json
       # basket_ids = basket_ids - fechables['baskets']
@@ -123,7 +123,9 @@ class SessionsController < ApplicationController
       g = GlobalState.last ? GlobalState.last : GlobalState.new
       # g.gid = @givenId
       newIds = fetchAndUpdateAll(lastId, @givenId, 80001)
+      to_add = @givenId - lastId + (g.gid.to_i)
       g.fetchables = newIds
+      g.gid = to_add
       g.save
       render json: newIds
     else

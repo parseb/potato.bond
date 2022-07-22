@@ -1287,7 +1287,7 @@ const connectedState = async (lastSeen, address, ens) => {
         },}).then( async (res) => {
           if( res.status === 200) { console.log(`${resourceNamePlural} with id ${item} created`)}
         })
-      console.log('ran after 1/3 second delay')
+
     }, parseInt(item)* 500 );
   }
 
