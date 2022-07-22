@@ -18,6 +18,21 @@ class BasketsController < ApplicationController
     end
 
 
+    def new
+        @basket = Basket.new
+    end
+
+
+    def index 
+        @baskets = Basket.all
+        render json: @baskets
+    end
+
+
+    def show
+        @basket = Basket.find_by(nft_id: basket_params[:nft_id])
+        render json: @basket
+    end
     # id: nil,                                                     
     # data_url: nil,                                               
     # farmer_address: nil,                                         

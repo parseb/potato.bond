@@ -35,8 +35,20 @@
   <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
     <div class="accordion-body">
         <div class="row">
-                <div class="col-8">Total Constituent Simples: <span id='gid'> <%= @gid  %> </span> </div>
-                <div class="col-4"></div> 
+                <div class="col-8">
+                  <p>Total Constituent Simples: <span id='gid'> <%= @gid  %> </span></p> <br>
+                  <p>Total Minted Baskets: <span id='gid'> <%= @basket_nr  %> </span></p> <br>
+                  <p>Total Registered Farmers: <span id='gid'> <%= @farmers_nr  %> </span></p> <br>
+                  <p>Total Number of Unique Areas: <span id='gid'> <%= @area_nr  %> </span></p> <br>
+                </div>
+                <div class="col-4 border border-primary border-2 m-8">
+              <iframe id="hyper iframe"
+                class="text text-righ float-right"
+                width="auto"
+                height="auto"
+                src="https://code.hyperdapp.dev/flow/QmRqwJDmBGCFEVuYNiPBFZyAy6rCyDueoATkR6je7YSB4v">
+              </iframe>
+              </div> 
         </div>
     </div>
   </div>

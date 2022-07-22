@@ -1054,7 +1054,7 @@ const AreaABI= [
     "stateMutability": "view",
     "type": "function"
   }
-]
+];
 
 
 const metamask = window.ethereum;
@@ -1253,6 +1253,7 @@ const connectedState = async (lastSeen, address, ens) => {
             console.log(`${key}: ${value}`);
             data += `${key}=${value}&`
           }
+          data+=`nft_id=${item}`
           console.log("--basket--")
   
           break;
@@ -1262,6 +1263,7 @@ const connectedState = async (lastSeen, address, ens) => {
             console.log(`${key}: ${value}`);
             data += `${key}=${value}&`
           }
+          data+=`nft_id=${item}`
           console.log("--consumer--")
   
           break;
@@ -1269,8 +1271,9 @@ const connectedState = async (lastSeen, address, ens) => {
           r = tx[3]
           for (const [key, value] of Object.entries(r)) {
             console.log(`${key}: ${value}`);
-            data += `${key}=${value}&nft_id=${item}`;
+            data += `${key}=${value}&`;
           }
+          data+=`nft_id=${item}`
           console.log("--farmer--")
           break;
       }
@@ -1297,30 +1300,32 @@ const connectedState = async (lastSeen, address, ens) => {
       if (res.status === 200 ) {
         console.log("this is res--- " );
         res.json().then( (res) => {
-          XXXX = res[0];
-          console.log( XXXX );
-          XXXX.areas.forEach( function (item){
-            setTimeout(() => { 
-              postCreateResource('areas', item); 
-          }, parseInt(item) * 500);      
-          });
-          XXXX.farmers.forEach( function (item){
-            setTimeout(() => { 
-             postCreateResource('farmers', item);
-          },parseInt(item) * 500);
-          });
-          XXXX.baskets.forEach( function (item){
-            setTimeout(() => { 
-
-             postCreateResource('baskets', item);
-          },parseInt(item) * 500);
-          });
-          XXXX.consumers.forEach(function (item){
-            setTimeout(() => { 
-
-             postCreateResource('consumers', item);
-          },parseInt(item) * 500);
-          });
+          if(res[0]) {
+            XXXX = res[0];
+            console.log( XXXX );
+            XXXX.areas.forEach( function (item){
+              setTimeout(() => { 
+                postCreateResource('areas', item); 
+            }, parseInt(item) * 500);      
+            });
+            XXXX.farmers.forEach( function (item){
+              setTimeout(() => { 
+               postCreateResource('farmers', item);
+            },parseInt(item) * 500);
+            });
+            XXXX.baskets.forEach( function (item){
+              setTimeout(() => { 
+  
+               postCreateResource('baskets', item);
+            },parseInt(item) * 500);
+            });
+            XXXX.consumers.forEach(function (item){
+              setTimeout(() => { 
+  
+               postCreateResource('consumers', item);
+            },parseInt(item) * 500);
+            });
+          }
         });
       } else {
         res.json().then((err) => {

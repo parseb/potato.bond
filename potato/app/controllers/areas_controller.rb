@@ -19,10 +19,22 @@ def create
 end
 
 
-def index
 
+def new
+    @area = Area.new
 end
 
+
+def index 
+    @areas = Area.all
+    render json: @areas
+end
+
+
+def show
+    @area = Area.find(area_params[:id])
+    render json: @area
+end
 
 def ensure_noedit
     true

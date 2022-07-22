@@ -10,6 +10,22 @@ class ConsumersController < ApplicationController
     end
 
 
+
+    def new
+        @consumer = Consumer.new
+    end
+
+
+    def index 
+        @consumers = Consumer.all
+        render json: @consumers
+    end
+
+
+    def show
+        @consumer = Consumer.find_by(nft_id: farmer_params[:nft_id])
+        render json: @consumer
+    end
     # id: nil,                                                            
     # address: nil,                                                       
     # name: nil,                                                          

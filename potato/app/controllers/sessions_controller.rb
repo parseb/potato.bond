@@ -13,6 +13,10 @@ class SessionsController < ApplicationController
 
   def index
     @gid = GlobalState.last ? GlobalState.last.gid  : "0"
+    @farmers_nr = Farmer.count
+    @basket_nr = Basket.count
+    @area_nr = Area.count
+
     render 'index'
   end
 
@@ -96,15 +100,13 @@ class SessionsController < ApplicationController
       farmer_ids = get_ids_covalent(_chainId,@farmerAt).map{|i| i.to_i if i.to_i > f_last}
       area_ids = []
       all = farmer_ids + basket_ids + consumer_ids
-      z=all.max
+      z = all.max
       z.times do |z| ! all.include?(z) ? area_ids << z : 0 end
       
       # fetchables  = GlobalState.last.fetchables.to_json
       # basket_ids = basket_ids - fechables['baskets']
       # consumer_ids = consumer_ids - fechables['consumers']
       # farmer_ids = farmer_ids - fetchables['farmers']
-
-
 
 
       # returns_contracts(80001)

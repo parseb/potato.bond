@@ -7,12 +7,27 @@ class FarmersController < ApplicationController
         @f.amount_issued = farmer_params[:issued]
         @f.fulfilled = farmer_params[:fulfilled]
         @f.nft_id = farmer_params[:nft_id]
-
+        binding.break
         @f.save
         render json: true
 #this does not save as expected
     end
 
+    def new
+        @farmer = Farmer.new
+    end
+
+
+    def index 
+        @farmers = Farmer.all
+        render json: @farmers
+    end
+
+
+    def show
+        @farmer = Farmer.find_by(nft_id: farmer_params[:nft_id])
+        render json: @farmer
+    end
 
     # id: nil,                                                            
     # address: nil,                                                       
