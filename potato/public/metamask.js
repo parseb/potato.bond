@@ -1086,11 +1086,41 @@ const joinAreaValidate = async () => {
   if (ethers.utils.isAddress(invitedFarmer.value)) {
     invitedFarmer.classList.remove("invalid-yellow");
     invitedFarmer.classList.add("valid-green");
+  } else if (invitedFarmer.value == "") {
+    invitedFarmer.classList = "";
   } else {
     invitedFarmer.classList.remove("valid-green");
     invitedFarmer.classList.add("invalid-yellow");
   }
   
+}
+
+const joinAsFarmer = async () => {
+  areaid = areaIDtoJoin.value;
+  currentFarmerCIDifAny = currentFarmerCID.value;
+  const Area = await AreaContract();
+
+  ////@todo explicit create farmer logic
+  //// current: passing 0 creates farmer,none saved to d
+  /// expected: collect and save functional infromation to db and ipfs
+
+
+
+  let tx = Area.becomeFarmer(areaid, currentFarmerCID);
+  console.log(tx)
+  tx.then( (tx) =>{
+    let ZZ = tx.value.toString();
+    if (currentFarmerCIDifAny == ZZ) {
+      console.log(`existing farmer (you) joined area ${areaid}`);
+    } else {
+      console.log(`congrats on becoming a farmer!  ipfs://${ZZ}`);
+      //// fetch and save to db;
+    }
+  })
+
+
+  //let becameFarmer = Area.becomeFarmer(areaid,currentFarmerCID);
+
 }
 
 
@@ -1402,6 +1432,9 @@ document.addEventListener('DOMContentLoaded', () => {
   userData = document.getElementById('user-data');
   mainWrapper = document.getElementById('main-wrapper');
   tcs_gid = document.getElementById('gid');
-  invitedFarmer = document.getElementById("inivtedFarmer")
+  invitedFarmer = document.getElementById("inivtedFarmer");
+  joinFarmerBtn = document.getElementById("joinFarmerBtn");
+  currentFarmerCID = document.getElementById("currentFarmerCIDValueHidden");
+  areaIDtoJoin = document.getElementById("areaIDtoJoin")
 
 });

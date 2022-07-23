@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
   before_action :set_addresses
 
   def index
+    
     @gid = GlobalState.last ? GlobalState.last.gid  : "0"
     @farmers_nr = Farmer.count
     @basket_nr = Basket.count
@@ -23,7 +24,9 @@ class SessionsController < ApplicationController
       @area = Area.find_by(governor: current_user.address)
       @baskets_farmer = Basket.where(farmer_address: current_user.address)
       @baskets_consumer = Basket.where(consumer_address: current_user.address)
+      if ! @farmer.nil? then @farmerdataurl = @farmer.data_url else @farmerdataurl = "" end
     end
+    
 
     render 'index'
 
@@ -104,13 +107,18 @@ class SessionsController < ApplicationController
       b_last = Basket.any? ? Basket.last.nft_id.to_i : 0
       c_last = Consumer.any? ? Consumer.last.nft_id.to_i : 0
       f_last = Farmer.any? ? Farmer.last.nft_id.to_i : 0
-      basket_ids = get_ids_covalent(_chainId, @basketAt).map{|i| i.to_i if i.to_i > b_last}
-      consumer_ids = get_ids_covalent(_chainId,@consumerAt).map{|i| i.to_i if i.to_i > c_last}
-      farmer_ids = get_ids_covalent(_chainId,@farmerAt).map{|i| i.to_i if i.to_i > f_last}
-      area_ids = []
-      all = farmer_ids + basket_ids + consumer_ids
+
+      basket_ids=[]
+      consumer_ids=[]
+      farmer_ids=[]
+      all=[]
+      basket_ids += get_ids_covalent(_chainId, @basketAt).map{|i| i.to_i if i.to_i > b_last} 
+      consumer_ids += get_ids_covalent(_chainId,@consumerAt).map{|i| i.to_i if i.to_i > c_last}
+      farmer_ids += get_ids_covalent(_chainId,@farmerAt).map{|i| i.to_i if i.to_i > f_last}
+      area_ids = [] #@todo might need to retrace this... proabably not... it's absolutelly totally fine. maybe not. probably not.
+      all += farmer_ids.compact + basket_ids.compact + consumer_ids.compact
       z = all.max
-      if ! z.nil? then z.times do |z| ! all.include?(z) ? area_ids << z : 0 end end
+      if ! z.nil? then z.times do |v| ! all.include?(v) ? area_ids << z : 0 end end
       
       # fetchables  = GlobalState.last.fetchables.to_json
       # basket_ids = basket_ids - fechables['baskets']
