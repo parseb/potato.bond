@@ -17,7 +17,14 @@ class SessionsController < ApplicationController
     @basket_nr = Basket.count
     @area_nr = Area.count
 
+    @farmer = Farmer.find_by(address: current_user.address)
+    @consumer = Consumer.find_by(address: current_user.address )
+    @area = Area.find_by(governor: current_user.address)
+    @baskets_farmer = Basket.where(farmer_address: current_user.address)
+    @baskets_consumer = Basket.where(consumer_address: current_user.address)
+
     render 'index'
+
   end
 
   def set_addresses

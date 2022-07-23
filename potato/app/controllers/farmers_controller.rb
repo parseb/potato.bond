@@ -2,13 +2,12 @@ class FarmersController < ApplicationController
     def create
         @f = Farmer.new
         @f.area_id = farmer_params[:area_id]
-        @f.address = farmer_params[:farmer_address]
+        @f.address = farmer_params[:farmerAddress]
         @f.data_url = farmer_params[:ipfs]
         @f.amount_issued = farmer_params[:issued]
         @f.amount_fulfilled = farmer_params[:fulfilled]
         @f.gps = farmer_params[:gps]
         @f.nft_id = farmer_params[:nft_id]
-        
         @f.save 
 
         render json: @f.data_url

@@ -10,7 +10,6 @@ class ConsumersController < ApplicationController
     end
 
 
-
     def new
         @consumer = Consumer.new
     end
