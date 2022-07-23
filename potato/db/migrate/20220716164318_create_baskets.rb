@@ -9,6 +9,7 @@ class CreateBaskets < ActiveRecord::Migration[7.0]
       t.string :area_id
       t.string :price
       t.string :erc_address
+      t.text :description
 
       t.timestamps
     end

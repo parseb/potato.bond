@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_131806) do
     t.string "rule_contract"
     t.string "data_url"
     t.string "area_id"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_131806) do
     t.string "area_id"
     t.string "price"
     t.string "erc_address"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -46,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_131806) do
     t.string "area_address"
     t.string "nft_id"
     t.string "area_id"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -62,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_131806) do
     t.string "area_address"
     t.string "nft_id"
     t.string "area_id"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

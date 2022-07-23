@@ -3,43 +3,13 @@ require 'json'
 require 'eth'
 require 'forwardable'
 require "httparty"
-require 'nft_storage'
+
 
 
 class SessionsController < ApplicationController
   # include SessionsHelper
   protect_from_forgery with: :null_session
   before_action :set_addresses
-  before_action :config_nftstorage, only: :save_to_ipfs
-
-
-  def save_to_ipfs
-    render json: 'saved to ipfs'
-  
-  end
-
-  def config_nftstorage    
-        # Load the gem
-    require 'nft_storage'
-
-    # Setup authorization
-    NFTStorage.configure do |config|
-      # Configure Bearer authorization (JWT): bearerAuth
-      config.access_token = ENV['']
-    end
-
-    api_instance = NFTStorage::NFTStorageAPI.new
-    cid = 'bafyreig7t4lcoodqfglnouts6mra34bsxhjzve3vatlhytjjqxwcyteosm' # String | CID for the NFT
-
-    begin
-      #Stop storing the content with the passed CID
-      result = api_instance.delete(cid)
-      p result
-    rescue NFTStorage::ApiError => e
-      puts "Exception when calling NFTStorageAPI->delete: #{e}"
-    end
-  end
-
 
   def index
     @gid = GlobalState.last ? GlobalState.last.gid  : "0"

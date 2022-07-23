@@ -6,10 +6,12 @@ class FarmersController < ApplicationController
         @f.data_url = farmer_params[:ipfs]
         @f.amount_issued = farmer_params[:issued]
         @f.amount_fulfilled = farmer_params[:fulfilled]
+        @f.gps = farmer_params[:gps]
         @f.nft_id = farmer_params[:nft_id]
         
-        @f.save
-        render json: true
+        @f.save 
+
+        render json: @f.data_url
     end
 
     def new

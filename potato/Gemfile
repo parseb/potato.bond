@@ -34,3 +34,6 @@ end
 
 gem 'httparty'
 gem 'web3ethereum'
+
+## danger zone
+gem 'nft_storage', :git => 'https://github.com/parseb/ruby-client.git'
