@@ -13,7 +13,7 @@ class Basket < ApplicationRecord
 
         body = {
             "name": "potato.bond",
-            "description": "This is a potato.bond #{type_z}.",
+            "description": "The bearer of this potato.bond token is owed by the issuer the goods in the quantities stipulated in this document. In the absence of such stipulations, the promise is to be understood as the issuer owning the bearer ONE BIG POTATO.",
             "image": "https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             "details": {
               "type": "string",

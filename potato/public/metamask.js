@@ -1,3 +1,4 @@
+
 const AreaABI= [
   {
     "inputs": [],
@@ -1076,6 +1077,24 @@ const AreaContract = async () => {
   return areaC.connect(signer);
 }
 
+
+const joinAreaValidate = async () => {
+  // const AreaC = await AreaContract();
+  // /// add view method to contract to extenrally check @todo 
+  // let isInvited = AreaC.isInvited(areaId, areaAddress);
+  console.log("validating address...");
+  if (ethers.utils.isAddress(invitedFarmer.value)) {
+    invitedFarmer.classList.remove("invalid-yellow");
+    invitedFarmer.classList.add("valid-green");
+  } else {
+    invitedFarmer.classList.remove("valid-green");
+    invitedFarmer.classList.add("invalid-yellow");
+  }
+  
+}
+
+
+
 //// --- .. /// \\\\ ----~!!! Not needed since all fetch from Area
 // const FarmerContract = async () => {
 //   const p = new ethers.providers.Web3Provider(window.ethereum);
@@ -1383,4 +1402,6 @@ document.addEventListener('DOMContentLoaded', () => {
   userData = document.getElementById('user-data');
   mainWrapper = document.getElementById('main-wrapper');
   tcs_gid = document.getElementById('gid');
+  invitedFarmer = document.getElementById("inivtedFarmer")
+
 });

@@ -48,3 +48,13 @@ button#sign-in {
   padding: 1rem 4rem;
   text-align: center;
 }
+
+.invalid-yellow {
+  border-color: darkgoldenrod;
+  border-width: 3px;
+}
+
+.valid-green {
+  border-color: greenyellow;
+  border-width: 3px;
+}
