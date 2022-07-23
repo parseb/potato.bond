@@ -1087,12 +1087,11 @@ const joinAreaValidate = async () => {
     invitedFarmer.classList.remove("invalid-yellow");
     invitedFarmer.classList.add("valid-green");
   } else if (invitedFarmer.value == "") {
-    invitedFarmer.classList = "";
+    invitedFarmer.classList = "form-control";
   } else {
     invitedFarmer.classList.remove("valid-green");
     invitedFarmer.classList.add("invalid-yellow");
   }
-  
 }
 
 const joinAsFarmer = async () => {
@@ -1104,9 +1103,7 @@ const joinAsFarmer = async () => {
   //// current: passing 0 creates farmer,none saved to d
   /// expected: collect and save functional infromation to db and ipfs
 
-
-
-  let tx = Area.becomeFarmer(areaid, currentFarmerCID);
+  let tx = await Area.becomeFarmer(areaid, currentFarmerCID);
   console.log(tx)
   tx.then( (tx) =>{
     let ZZ = tx.value.toString();
@@ -1117,13 +1114,28 @@ const joinAsFarmer = async () => {
       //// fetch and save to db;
     }
   })
-
-
   //let becameFarmer = Area.becomeFarmer(areaid,currentFarmerCID);
 
 }
 
+const inviteFarmer = async () => {
+  const Area = await AreaContract();
+  let prospectFarmer = invitedFarmer.value;
+  let wantedAreaID = areaIDinvited.value;
+  console.log("You are inviting ", prospectFarmer, " to Area: ", wantedAreaID);
+      // /// @notice use this to invite a farmer to an area to which you
+      // function inviteFarmer(address _newFarmer, uint256 _area) external;
+  let tx =await Area.inviteFarmer(prospectFarmer, wantedAreaID);
+  tx.then(  (t) => {
+    console.log("t", t);
+    console.log("invite transaction: ", t.value);
+    let belongsToArea = await Area.belongsTo(prospectFarmer, wantedAreaID);
+    belongsToArea.then((b)=> {
+      console.log("belongs to area: ", b.value);
+    })
+  });
 
+}
 
 //// --- .. /// \\\\ ----~!!! Not needed since all fetch from Area
 // const FarmerContract = async () => {
@@ -1435,6 +1447,9 @@ document.addEventListener('DOMContentLoaded', () => {
   invitedFarmer = document.getElementById("inivtedFarmer");
   joinFarmerBtn = document.getElementById("joinFarmerBtn");
   currentFarmerCID = document.getElementById("currentFarmerCIDValueHidden");
-  areaIDtoJoin = document.getElementById("areaIDtoJoin")
+  areaIDtoJoin = document.getElementById("areaIDtoJoin");
+  areaIDinvited = document.getElementById("areaIDtoInvite");
+
+
 
 });
