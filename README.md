@@ -6,15 +6,14 @@
 
 Teikei 🇯🇵 <br>
 [CSA](https://en.wikipedia.org/wiki/Community-supported_agriculture) 🇺🇸 <br>
+
+
 AMAP🇫🇷 <br>
 ASAT🇷🇴 <br>
 
 <i><b>leverages local coincidences of needs and wants for change. </b> <br>
 [potato.bond](http://www.potato.bond) aims to be permissionless infrastructure in service of locally aware and globally conscious modes of production, distribution and ownership.</i>
 
-## Foreword
-
-[paragraph about the importance of food (you eat food) and the history of experimentation on the background of agricultural policy]
 
 ## Farmer
 First there was the farmer. No potato without farmer. Praised be. 
@@ -83,7 +82,10 @@ Let me however indulge in spelling out some of the goodies of this "make the wor
 
 <br>
 <br>
-
+#### Some Project Slides
+![image](https://user-images.githubusercontent.com/5999852/180664607-24133c67-2497-4959-a886-1a254b36cea1.png)
+![image](https://user-images.githubusercontent.com/5999852/180664622-1e7f7f32-e8a2-4fc9-98a6-973cce1adcbd.png)
+![image](https://user-images.githubusercontent.com/5999852/180664649-7153a885-a3a1-43cb-9559-cfaccca8a96d.png)
 <br>
 <br>
 
