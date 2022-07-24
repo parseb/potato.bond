@@ -1129,13 +1129,61 @@ const inviteFarmer = async () => {
   tx.then(  (t) => {
     console.log("t", t);
     console.log("invite transaction: ", t.value);
-    let belongsToArea = await Area.belongsTo(prospectFarmer, wantedAreaID);
+    let belongsToArea = Area.belongsTo(prospectFarmer, wantedAreaID);
     belongsToArea.then((b)=> {
       console.log("belongs to area: ", b.value);
     })
   });
 
 }
+
+const createArea = async () => {
+  const Area = await AreaContract();
+  let description = areaDescription.value;
+  let ruleContract = rulesForArea.value;
+  let name = areaName.value;
+
+  // fetch(`/areas/?description=${description}&rules=${ruleContract}$name=${name}`)
+
+  await fetch('/areas',
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': getCSRF(),
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+    description,
+    ruleContract,
+    name
+    })
+  }).then((res) => { 
+    areaCID = res.text();
+    console.log("sending it to peers");
+    tx = Area.becomeFarmer(0,areaCID)
+    tx.then( (r) => {
+      console.log(r.value, " - should equal - ", areaCID);
+    })
+
+});
+
+}
+
+function ruleAreaValidate() {
+  console.log("validating address...");
+  if (ethers.utils.isAddress(rulesForArea.value)) {
+    rulesForArea.classList.remove("invalid-yellow");
+    rulesForArea.classList.add("valid-green");
+  } else if (rulesForArea.value == "") {
+    rulesForArea.classList = "form-control";
+  } else {
+    rulesForArea.classList.remove("valid-green");
+    rulesForArea.classList.add("invalid-yellow");
+  }
+}
+
+
 
 //// --- .. /// \\\\ ----~!!! Not needed since all fetch from Area
 // const FarmerContract = async () => {
@@ -1449,7 +1497,10 @@ document.addEventListener('DOMContentLoaded', () => {
   currentFarmerCID = document.getElementById("currentFarmerCIDValueHidden");
   areaIDtoJoin = document.getElementById("areaIDtoJoin");
   areaIDinvited = document.getElementById("areaIDtoInvite");
-
+  areaDescription = document.getElementById("areaDescription");
+  rulesForArea = document.getElementById("rulesForArea");
+  areaName = document.getElementById("areaName");
+  
 
 
 });

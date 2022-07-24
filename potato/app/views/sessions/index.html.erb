@@ -132,7 +132,7 @@
                 <div class="d-grid gap-2 col-6 mx-auto">
                   <button class="btn btn-outline-primary" id="joinFarmerBtn" onClick="joinAsFarmer()" type="button">Join Area</button>
                 </div>
-              </div>
+            </div>
             <div class="col-6">
                 <h6>Invite Farmer</h6>
                 <hr class="text-primary border-1">
@@ -150,7 +150,25 @@
 
               </div>
             <div class="col-12">
-                
+                <h6>Create Area</h6>
+                <hr class="text-primary border-1">
+                <div class="mb-3">
+                   <div class="mb-3">
+                  <label for="area" class="form-label">Area Name</label>
+                  <input type="text" class="form-control" id="areaName" placeholder="EthicHub-Comunidad El Progreso, 'Hasta Siempre'">
+                </div>
+                 <div class="mb-3">
+                  <label for="area" class="form-label">Rule Contract</label>
+                  <input type="text" class="form-control" onChange="ruleAreaValidate()" id="rulesForArea" placeholder="0x0000000000000000000000000000000000000000">
+                </div>
+                  <div class="mb-3">
+                  <label for="area" class="form-label">Area Description</label>
+                  <input type="text" class="form-control" id="areaDescription" placeholder="What is you and yo brethren all about?">
+                </div>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <button class="btn btn-outline-primary" id="createAreaBtn" onClick="createArea()" type="button">Create Area</button>
+                </div>
             </div>
           </div>
 
