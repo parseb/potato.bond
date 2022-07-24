@@ -7,9 +7,12 @@ def show
 end
 
 def create
+    ## @todo if condition for area with area_id already in
+    ## current: duplicates for each other record type originating in area id determination on basis of fetchID logic
+    ## desired: saves a new area if and only if one exists and is distinct from all other
     @a = Area.new
     @a.area_id = area_params[:area_id] || (GlobalState.last.gid.to_i + 1).to_s
-    @a.governor = area_params[:governor]
+    @a.governor = area_params[:governor] || current_user.address
     if area_params[:fcb]
         @a.nrc = area_params[:fcb].split(",")[1] || 0
         @a.nrf = area_params[:fcb].split(",")[0] || 0

@@ -1064,6 +1064,24 @@ let signInButton;
 let signOutButton;
 let userData;
 
+// userData = document.getElementById('user-data');
+// mainWrapper = document.getElementById('main-wrapper');
+// tcs_gid = document.getElementById('gid');
+// invitedFarmer = document.getElementById("inivtedFarmer");
+// joinFarmerBtn = document.getElementById("joinFarmerBtn");
+// currentFarmerCID = document.getElementById("currentFarmerCIDValueHidden");
+// areaIDtoJoin = document.getElementById("areaIDtoJoin");
+// areaIDinvited = document.getElementById("areaIDtoInvite");
+// areaDescription = document.getElementById("areaDescription");
+// rulesForArea = document.getElementById("rulesForArea");
+// areaName = document.getElementById("areaName");
+// areaBasketID = document.getElementById("areaBasketID");
+// howMany = document.getElementById("howMany")
+// priceOfBasket = document.getElementById("priceOfBasket");
+// rFrom = document.getElementById("rFrom");
+// rUntil = document.getElementById("rUntil");  
+// ercAddress = document.getElementById("ercAddress");
+
 let AA = {
   'maticmum': '0x5e2c0bc8705addbd360c7ee749ff8d7dc5f13269',
   'matic': ''
@@ -1175,12 +1193,28 @@ function ruleAreaValidate() {
   if (ethers.utils.isAddress(rulesForArea.value)) {
     rulesForArea.classList.remove("invalid-yellow");
     rulesForArea.classList.add("valid-green");
+    ///@todo validate if it observes IRules 
   } else if (rulesForArea.value == "") {
     rulesForArea.classList = "form-control";
   } else {
     rulesForArea.classList.remove("valid-green");
     rulesForArea.classList.add("invalid-yellow");
   }
+}
+
+function erc20priceValidate() {
+  console.log("validating ERC20...");
+  if (ethers.utils.isAddress(ercAddress.value)) {
+    ercAddress.classList.remove("invalid-yellow");
+    ercAddress.classList.add("valid-green");
+    ///@todo poke to validate as ERC20
+  } else if (ercAddress.value == "") {
+    ercAddress.classList = "form-control";
+  } else {
+    ercAddress.classList.remove("valid-green");
+    ercAddress.classList.add("invalid-yellow");
+  }
+
 }
 
 const createBaskets = async () => {
@@ -1198,13 +1232,13 @@ const createBaskets = async () => {
     // function mintBaskets(uint _areaID, uint amount, uint price, address erc20,  uint _start, uint _end, string memory CID) external returns(uint);
     console.log("creating baskets...")
 
-    const Area = await AreaContract();
-  let areaBasketID = areaBasketID.value;
-  let howMany = howMany.value;
-  let priceOfBasket = priceOfBasket.value;
-  let rFrom = rFrom.value;
-  let rUntil = rUntil.value;
-  let ercAddress = ercAddress.value;
+  const Area = await AreaContract();
+  areaBasketID = areaBasketID.value;
+  howMany = howMany.value;
+  priceOfBasket = priceOfBasket.value;
+  rFrom = rFrom.value;
+  rUntil = rUntil.value;
+  ercAddress = ercAddress.value;
   // fetch(`/areas/?description=${description}&rules=${ruleContract}$name=${name}`)
 
   await fetch('/baskets',
@@ -1219,14 +1253,17 @@ const createBaskets = async () => {
       area_id: areaBasketID,
       amount: howMany,
       price: priceOfBasket,
-    
+      erc_address: ercAddress,
     })
-  }).then((res) => { 
-    areaCID = res.text();
-    console.log("sending it to peers");
-    tx = Area.mintBaskets()
+  }).then(async (res) => { 
+    areaCID = await res.text();
+    console.log("sending it to peers... CID:",areaCID );
+    console.log(`minting ${howMany} baskets with arguments in order; ${areaBasketID, howMany, priceOfBasket, ercAddress, rFrom, rUntil, areaCID } ` )
+    // (uint _areaID, uint amount, uint price, address erc20,  uint _start, uint _end, string memory CID) external returns(uint);
+
+    tx = Area.mintBaskets(areaBasketID, howMany, priceOfBasket, ercAddress, rFrom, rUntil, ('ipfs://'+ areaCID) );
     tx.then( (r) => {
-      console.log(r.value, " - should equal - ", areaCID);
+      console.log(r.text(), " - should equal - ", );
     })
 
   });
