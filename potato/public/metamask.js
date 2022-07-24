@@ -1229,10 +1229,9 @@ const createBaskets = async () => {
       console.log(r.value, " - should equal - ", areaCID);
     })
 
-  }
+  });
 
-
-
+}
 //// --- .. /// \\\\ ----~!!! Not needed since all fetch from Area
 // const FarmerContract = async () => {
 //   const p = new ethers.providers.Web3Provider(window.ethereum);
