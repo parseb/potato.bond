@@ -96,7 +96,7 @@
                     <% if @baskets_farmer %> 
                     <% @baskets_farmer.each do |b| %>
                     <p>   
-                      <a href=<%= "#{b.data_url}" %>> data </a> | nft_id : <%= b.nft_id %> 
+                      <a href=<%= "ipfs//#{b.data_url}" %>> data </a> | nft_id : <%= b.nft_id %> 
                     </p>
                       <% end %>
                       <% else %> 
