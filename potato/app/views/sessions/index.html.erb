@@ -163,7 +163,7 @@
                 </div>
                   <div class="mb-3">
                   <label for="area" class="form-label">Area Description</label>
-                  <input type="text" class="form-control" id="areaDescription" placeholder="What is you and yo brethren all about?">
+                  <input type="textarea" class="form-control" id="areaDescription" placeholder="What is you and yo brethren all about?">
                 </div>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
@@ -196,12 +196,49 @@
         <div class="accordion-item" id="create-basket">
           <h2 class="accordion-header" id="headingFive">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-              Create Basket
+              Create Baskets
             </button>
           </h2>
           <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              <div class="col-12">
+                 <h6>Mint Baskets</h6>
+                <hr class="text-primary border-1">
+                <div class="mb-3">
+                  <label for="area" class="form-label">Area ID</label>
+                  <input type="text" class="form-control" id="areaBasketID" placeholder="mint this as part of what area?">
+                </div>
+                 <div class="mb-3">
+                  <label for="area" class="form-label">How many</label>
+                  <input type="text" class="form-control" id="howMany" placeholder="101">
+                </div>
+                <div class="mb-3">
+                  <label for="area" class="form-label">Price</label>
+                  <input type="text" class="form-control" id="priceOfBasket">
+                </div>
+                <div class="mb-3">
+                  <label for="area" class="form-label">Address of Denominationg Token</label>
+                  <input type="text" class="form-control" id="ercAddress">
+                </div>
+                <div class="row">
+                <div class="col-6">
+                  <div class="mb-3">
+                    <label for="area" class="form-label">Redeamable from</label>
+                    <input type="text" class="form-control" id="rFrom">
+                  </div>
+                </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="area" class="form-label">Redeamable until</label>
+                      <input type="text" class="form-control" id="rUntil">
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <button class="btn btn-outline-primary" id="createBasketBtn" onClick="createBaskets()" type="button">Create Basket</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

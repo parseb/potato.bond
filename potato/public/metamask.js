@@ -1183,6 +1183,54 @@ function ruleAreaValidate() {
   }
 }
 
+const createBaskets = async () => {
+   /// @notice function for farmers to mint basket of goods as an ERC721
+    ///         a basket is a non fungible token that stands in as a promise to produce the goods it represents to its bearer
+    ///         within the advertised terms outlined in the metadata 
+    ///         such as specific products and quantities, claimable between the data of & date of
+    /// @param _areaID area consumer wants to join
+    /// @param amount nr of duplicate baskets to print (how many of this)
+    /// @param price - how much for basket?
+    /// @param erc20 - address of denoming ERC20 for these baskets
+    /// @param _start when this basket can be redeemed for the underlying. unix epoch block.timstamp check
+    /// @param _end when this basket will stop being redemable (think supermarket expired - underlying claim ineligible)
+    /// @param CID ipfs metadata storage 
+    // function mintBaskets(uint _areaID, uint amount, uint price, address erc20,  uint _start, uint _end, string memory CID) external returns(uint);
+    console.log("creating baskets...")
+
+    const Area = await AreaContract();
+  let areaBasketID = areaBasketID.value;
+  let howMany = howMany.value;
+  let priceOfBasket = priceOfBasket.value;
+  let rFrom = rFrom.value;
+  let rUntil = rUntil.value;
+  let ercAddress = ercAddress.value;
+  // fetch(`/areas/?description=${description}&rules=${ruleContract}$name=${name}`)
+
+  await fetch('/baskets',
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': getCSRF(),
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      area_id: areaBasketID,
+      amount: howMany,
+      price: priceOfBasket,
+    
+    })
+  }).then((res) => { 
+    areaCID = res.text();
+    console.log("sending it to peers");
+    tx = Area.mintBaskets()
+    tx.then( (r) => {
+      console.log(r.value, " - should equal - ", areaCID);
+    })
+
+  }
+
 
 
 //// --- .. /// \\\\ ----~!!! Not needed since all fetch from Area
@@ -1500,7 +1548,11 @@ document.addEventListener('DOMContentLoaded', () => {
   areaDescription = document.getElementById("areaDescription");
   rulesForArea = document.getElementById("rulesForArea");
   areaName = document.getElementById("areaName");
-  
-
+  areaBasketID = document.getElementById("areaBasketID");
+  howMany = document.getElementById("howMany")
+  priceOfBasket = document.getElementById("priceOfBasket");
+  rFrom = document.getElementById("rFrom");
+  rUntil = document.getElementById("rUntil");  
+  ercAddress = document.getElementById("ercAddress");
 
 });
