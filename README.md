@@ -65,6 +65,17 @@ This is by no means aimed to be prescriptive but rather to amount to a contribut
 ![image](https://user-images.githubusercontent.com/5999852/180664622-1e7f7f32-e8a2-4fc9-98a6-973cce1adcbd.png)
 ![image](https://user-images.githubusercontent.com/5999852/180664649-7153a885-a3a1-43cb-9559-cfaccca8a96d.png)
 
+____
+
+## Depolyment Addresses
+
+Depolyed on Polygon Mumbai at the following addresses: <br>
+
+areaMaddr = "0x5e2c0bc8705addbd360c7ee749ff8d7dc5f13269" <br>
+farmerAt = "0x2C6AFA0111C4646cae3E5FC21226D1a816C37B82" <br>
+consumerAt = "0x50F62f9b4930571D973a646AECC59933Bd5E4648" <br>
+basketAt = "0x620B5892c71773A9A6e92da827610e43c8618518" <br>
+
 
 ## Ideology
 
