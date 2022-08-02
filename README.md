@@ -17,6 +17,7 @@ ASAT🇷🇴 <br>
 <br>
 The main innovation behind CSA is that the consumer pays for the product in advance. There's more complex socio-econmic reasoning and dynamics going on, but for the time being let's assume that's it.<br>
 This is the starting point and the core of what is suggested and implemented in this repository. If you are a farmer,by using this protocol, you get to tokenize and sell a part of your future production. <br> There's many advantages that can be projected here, so let me mention one or two. For one the consumer is not stuck in a contract and can for example hedge against inflation by selling the tokenized future production on which they have a claim for a higher price. What you can do, is automatically tax any resales or ban resales altogether of any such assets that you have issued. These are not specified but mere hypotheticals as doing one, the other, or totally unexpected stuff that only farmers can potentially imagine is to be permitted to the widest extent globally.
+
 <hr>
 
 ## Farmer
