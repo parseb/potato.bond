@@ -87,14 +87,14 @@ class SessionsController < ApplicationController
   end
 
   # def get_ids_A(_chainId)
-  #     x = HTTP.get("https://api.covalenthq.com/v1/80001/tokens/0x164dC1865210E5cff1718C145D32D81765Be0D51/nft_token_ids/?quote-currency=USD&format=JSON&key=ckey_dd30be32fd7244ebaf9cc39ae10")
+  #     x = HTTP.get("https://api.covalenthq.com/v1/80001/tokens/0x164dC1865210E5cff1718C145D32D81765Be0D51/nft_token_ids/?quote-currency=USD&format=JSON&key=#{ENV[COVALENT_API_key]}")
   # end
 
 
 
   def get_ids_covalent(_chainId, baskerAddr)
     #bbb =[]
-    url = "https://api.covalenthq.com/v1/#{_chainId}/tokens/#{baskerAddr}/nft_token_ids/?quote-currency=USD&format=JSON&page-size=100000&key=ckey_dd30be32fd7244ebaf9cc39ae10"
+    url = "https://api.covalenthq.com/v1/#{_chainId}/tokens/#{baskerAddr}/nft_token_ids/?quote-currency=USD&format=JSON&page-size=100000&key=#{ENV[COVALENT_API_key]}"
     response = HTTParty.get(url)
     return response["data"]["items"].map { |r| r["token_id"] }
   end
