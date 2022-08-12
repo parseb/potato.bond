@@ -26,7 +26,7 @@ module SessionsHelper
       end
     
       def get_ids_A()
-          x = HTTP.get("https://api.covalenthq.com/v1/80001/tokens/0x164dC1865210E5cff1718C145D32D81765Be0D51/nft_token_ids/?quote-currency=USD&format=JSON&key=ckey_dd30be32fd7244ebaf9cc39ae10")
+          x = HTTP.get("https://api.covalenthq.com/v1/80001/tokens/0x164dC1865210E5cff1718C145D32D81765Be0D51/nft_token_ids/?quote-currency=USD&format=JSON&key=#{ENV[COVALENT_API_key]}")
           return x
       end
 
